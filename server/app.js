@@ -22,8 +22,11 @@ mongoose.connect(process.env.MONGO_URI);
 // DATA MODELS
 //
 //
-import './models/entry';
 import './models/user';
+import './models/studymap';
+import './models/link';
+import './models/breadcrumb';
+import './models/message';
 
 // PASSPORT CONFIGURATION
 //
@@ -35,7 +38,10 @@ import './config/passport';
 //
 import routes from './routes/index';
 import users from './routes/users';
-import entries from './routes/entries';
+import studymaps from './routes/studymaps';
+import messages from './routes/messages';
+import links from './routes/links';
+import breadcrumbs from './routes/breadcrumbs';
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -46,8 +52,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 app.use('/', routes);
-app.use('/entries', entries);
+app.use('/studymaps', studymaps);
 app.use('/users', users);
+app.use('/messages', messages);
+app.use('/links', links);
+app.use('/breadcrumbs', breadcrumbs);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

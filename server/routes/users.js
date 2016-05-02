@@ -61,4 +61,30 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+router.param('userId', (req, res, next, userId) => {
+  User.findById(userId).populate('study_maps').exec((err, user) => {
+    if (err) return res.sendStatus(404);
+    req.user = user;
+    next();
+  });
+});
+
+router.get('/:userId', auth, (req, res) => {
+  res.json(req.user);
+});
+
+router.put('/:userId', auth, (req, res) => {
+  req.user.update({$set: req.body}, (err) => {
+    if (err) return res.status(400).json(err);
+    res.sendStatus(200);
+  })
+});
+
+router.delete('/:userId', auth, (req, res) => {
+  req.user.remove((err) => {
+    if (err) return res.status(400).json(err);
+    res.sendStatus(200);
+  });
+});
+
 export default router;

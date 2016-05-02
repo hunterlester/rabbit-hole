@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema({
   salt: String,
   hash: String,
   breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumbs'}],
-  studyMap: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],
+  study_maps: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],
   points: Number
 }, {strict: false});
 

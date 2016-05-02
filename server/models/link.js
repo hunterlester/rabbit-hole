@@ -6,7 +6,8 @@ const LinkSchema = new mongoose.Schema({
   uri: String,
   study_map: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'},
   breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumb'}],
-  links: [{type: mongoose.Schema.Types.ObjectId, ref: 'Link'}]
-});
+  links: [{type: mongoose.Schema.Types.ObjectId, ref: 'Link'}],
+  upvote: Number
+}, {strict: false});
 
 mongoose.model('Link', LinkSchema);

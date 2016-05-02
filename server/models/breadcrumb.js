@@ -6,7 +6,9 @@ const BreadcrumbSchema = new mongoose.Schema({
   study_map: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'},
   content: String,
   keywords: [],
-  date: {type: Date, default: Date.now}
+  messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
+  date: {type: Date, default: Date.now},
+  upvote: Number
 }, {strict: false});
 
 mongoose.model('Breadcrumb', BreadcrumbSchema);
