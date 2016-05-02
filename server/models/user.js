@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 
 const UserSchema = new mongoose.Schema({
+  date: {type: Date, default: Date.now},
   provider: String,
   id: String,
   displayName: String,
@@ -14,10 +15,9 @@ const UserSchema = new mongoose.Schema({
   username: String,
   salt: String,
   hash: String,
-  feed: [],
-  profile: {},
-  
-  entries: [{type: mongoose.Schema.Types.ObjectId, ref: 'Entry'}]
+  breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumbs'}],
+  studyMap: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],
+  points: Number
 }, {strict: false});
 
 UserSchema.methods.validPassword = function (password) {
