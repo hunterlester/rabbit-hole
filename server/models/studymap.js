@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const StudyMapSchema = new Mongoose.Schema({
+const StudyMapSchema = new mongoose.Schema({
   subject: String,
   keywords: [],
   date: {type: Date, default: Date.now},

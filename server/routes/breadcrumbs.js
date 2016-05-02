@@ -3,14 +3,14 @@ const router = express.Router();
 import mongoose from 'mongoose';
 const StudyMap = mongoose.model('StudyMap');
 const User = mongoose.model('User');
-const BreadCrumb = mongoose.model('BreadCrumb');
+const Breadcrumb = mongoose.model('Breadcrumb');
 const Link = mongoose.model('Link');
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
 
 router.post('/studymap', auth, (req, res) => {
-  const breadcrumb = new BreadCrumb(req.body);
+  const breadcrumb = new Breadcrumb(req.body);
   breadcrumb.save((err, breadcrumb) => {
     if (err) return res.sendStatus(500);
     StudyMap.findById(breadcrumb.study_map, (err, studymap) => {
@@ -25,7 +25,7 @@ router.post('/studymap', auth, (req, res) => {
 });
 
 router.post('/link', auth, (req, res) => {
-  const breadcrumb = new BreadCrumb(req.body);
+  const breadcrumb = new Breadcrumb(req.body);
   breadcrumb.save((err, breadcrumb) => {
     if (err) return res.sendStatus(500);
     Link.findById(breadcrumb.link, (err, link) => {

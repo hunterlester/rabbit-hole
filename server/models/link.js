@@ -1,4 +1,4 @@
-import mongooose from 'mongoose';
+import mongoose from 'mongoose';
 
 const LinkSchema = new mongoose.Schema({
   date: {type: Date, default: Date.now},

@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import mongoose from 'mongoose';
-const BreadCrumb = mongoose.model('BreadCrumb');
+const Breadcrumb = mongoose.model('Breadcrumb');
 const Message = mongoose.model('Message');
 
 import jwt from 'express-jwt';
