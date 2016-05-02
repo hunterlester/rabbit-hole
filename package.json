@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "server": "node server_bundle.js",
+    "server": "node ./build/server_bundle.js",
     "start": "babel-node ./server/index.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "test:watch": "npm run test -- --watch"
@@ -27,12 +27,14 @@
   "homepage": "https://github.com/hunterlester/rabbit-hole#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "bootstrap": "^3.3.6",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "express-jwt": "^3.3.0",
     "express-useragent": "^0.2.4",
+    "file-loader": "^0.8.5",
     "immutable": "^3.7.6",
     "jsonwebtoken": "^5.7.0",
     "material-ui": "^0.14.4",
@@ -51,7 +53,8 @@
     "redux-thunk": "^2.0.1",
     "serve-favicon": "^2.3.0",
     "source-map-support": "^0.4.0",
-    "swipe-js-iso": "^2.0.3"
+    "swipe-js-iso": "^2.0.3",
+    "url-loader": "^0.5.7"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",

@@ -11,6 +11,7 @@ injectTapEventPlugin();
 import App from './components/App';
 import {ConnectedRegister} from './components/Register';
 import {ConnectedHome} from './components/Home';
+import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
 let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api)(createStore);
