@@ -27,11 +27,6 @@ export const Register = React.createClass({
                    type='password'
                    ref='password2'/>
 
-        <TextField fullWidth={true}
-                   floatingLabelText='First Name'
-                   hintText='First Name'
-                   ref='given_name'/>
-
          <RaisedButton label="Register"
                        onTouchTap={() => {
 

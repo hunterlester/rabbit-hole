@@ -1,20 +1,54 @@
 const BASE_URL = `${location.protocol}//${location.hostname}:${location.port}/`;
 
-function callApi(entry, endpoint, authenticated) {
+function callApi(study_map, endpoint, authenticated, method) {
   let token = localStorage.getItem('token') || null;
   let userId = localStorage.getItem('_id');
   let config = {};
 
+  function configFactory(formObject, method, token) {
+    let body = Object.keys(formObject).map(key => {
+      return key + '=' + formObject[key];
+    }).join('&');
+    
+    switch (method) {
+      case 'POST':
+        return {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type':'application/x-www-form-urlencoded'
+          },
+          body: body
+        };
+
+      case 'GET':
+        return {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        };
+
+      case 'PUT':
+        let body = Object.keys(formObject).map(key => {
+          return key + '=' + formObject[key];
+        }).join('&');
+
+        return {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type':'application/x-www-form-urlencoded'
+          },
+          body: body
+        };
+
+    }
+  };
+
   if (authenticated) {
     if (token) {
-      config = {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type':'application/x-www-form-urlencoded'
-        },
-        body: `times_baby_awake=${entry.times_baby_awake}&completely_awake=${entry.completely_awake}&foods_drinks_consumed=${entry.foods_drinks_consumed}&supplements=${entry.supplements}&user=${userId}`
-      };
+      config = configFactory(study_map, method, token);
     } else {
       throw "No token saved."
     }
@@ -41,11 +75,11 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint, types, authenticated, entry } = callAPI;
+  let { endpoint, types, authenticated, study_map, method } = callAPI;
 
   const [ requestType, successType, errorType ] = types;
 
-  return callApi(entry, endpoint, authenticated).then(
+  return callApi(study_map, endpoint, authenticated, method).then(
     response =>
       next({
         response,

@@ -1,16 +1,17 @@
 import { CALL_API } from '../middleware/api';
 
-export const ENTRIES_POST = 'ENTRIES_POST';
-export const ENTRIES_SUCCESS = 'ENTRIES_SUCCESS';
-export const ENTRIES_FAILURE = 'ENTRIES_FAILURE';
+export const STUDY_MAPS_POST = 'STUDY_MAPS_POST';
+export const STUDY_MAPS_SUCCESS = 'STUDY_MAPS_SUCCESS';
+export const STUDY_MAPS_FAILURE = 'STUDY_MAPS_FAILURE';
 
-export function postEntry(entry) {
+export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
-      endpoint: 'entries',
+      method: 'POST',
+      endpoint: 'studymaps',
       authenticated: true,
-      types: [ENTRIES_POST, ENTRIES_SUCCESS, ENTRIES_FAILURE],
-      entry
+      types: [STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE],
+      study_map
     }
   }
 }

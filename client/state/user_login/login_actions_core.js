@@ -1,5 +1,5 @@
 import {requestLogin, loginError, receiveLogin, requestLogout, receiveLogout} from './login_action_factories';
-import { setEntries } from '../entry_actions';
+import { setStudyMaps } from '../study_map_actions';
 
 export function loginUser(creds) {
   let config = {
@@ -22,9 +22,9 @@ export function loginUser(creds) {
           localStorage.setItem('token', user.token);
           localStorage.setItem('username', user.username);
           localStorage.setItem('_id', user._id);
-          localStorage.setItem('entries', JSON.stringify(user.entries));
+          localStorage.setItem('study_maps', JSON.stringify(user.study_maps));
           dispatch(receiveLogin(user));
-          dispatch(setEntries(user.entries));
+          dispatch(setStudyMaps(user.study_maps));
         }
       }).catch(err => console.log("Error: ", err))
   }

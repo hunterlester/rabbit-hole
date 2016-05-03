@@ -5,7 +5,7 @@ export function registerUser(creds) {
   let config = {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: `username=${creds.username}&password=${creds.password}&given_name=${creds.given_name}`
+    body: `username=${creds.username}&password=${creds.password}`
   };
 
   return dispatch => {

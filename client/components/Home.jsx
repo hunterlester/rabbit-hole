@@ -1,7 +1,6 @@
 import React from 'react';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
-import ReactSwipe from 'react-swipe';
 import EntryForm from './EntryForm';
 import Login from './Login';
 import IconButton from 'material-ui/lib/icon-button';
@@ -13,11 +12,6 @@ import CardText from 'material-ui/lib/card/card-text';
 import { loginUser } from '../state/user_login/login_actions_core';
 import { postEntry } from '../state/api/actions';
 import moment from 'moment';
-
-const swipeOptions = {
-  startSlide: 0,
-  continuous: false
-};
 
 export const Home = React.createClass({
   mixins: [PureRenderMixin],
@@ -35,11 +29,8 @@ export const Home = React.createClass({
 
         {isAuthenticated &&
           <div>
-            <IconButton bsStyle="warning" bsSize="large" block onClick={() => this.refs.ReactSwipe.swipe.prev()}><AvBack /></IconButton>
-            <IconButton bsStyle="warning" bsSize="large" block onClick={() => this.refs.ReactSwipe.swipe.next()}><AvForward /></IconButton>
 
-            <ReactSwipe ref='ReactSwipe' id='mySwipe' swipeOptions={swipeOptions}>
-              <div key={0}>
+              <div>
                 <h1>Entries</h1>
                 {this.getEntries().reverse().map(entry =>
                   <Card>
@@ -61,11 +52,10 @@ export const Home = React.createClass({
 
               </div>
 
-              <div key={1}>
+              <div>
                 <EntryForm postEntry={(entry) => dispatch(postEntry(entry))} />
               </div>
 
-            </ReactSwipe>
           </div>
         }
       </div>

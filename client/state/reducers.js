@@ -2,8 +2,8 @@ import {Map, List} from 'immutable';
 import { combineReducers } from 'redux';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from './user_login/login_action_factories';
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './user_registration/actions';
-import { ENTRIES_POST, ENTRIES_SUCCESS, ENTRIES_FAILURE } from './api/actions';
-import { SET_ENTRIES } from './entry_actions';
+import { STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE } from './api/actions';
+import { SET_STUDY_MAPS } from './study_map_actions';
 
 const initialAuth = Map({
   isFetching: false,
@@ -67,32 +67,32 @@ function auth(state = initialAuth, action) {
   return state;
 }
 
-const parsedEntries = JSON.parse(localStorage.getItem('entries'));
+const parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
 
-const initialEntries = Map({
+const initialStudyMaps = Map({
   isFetching: false,
-  entries: parsedEntries || [],
+  study_maps: parsedStudyMaps || [],
 });
 
-function entries(state = initialEntries, action) {
+function study_maps(state = initialStudyMaps, action) {
   switch (action.type) {
-    case SET_ENTRIES:
+    case SET_STUDY_MAPS:
       return state.merge({
         isFetching: false,
-        entries: action.entries
+        study_maps: action.study_maps
       });
-    case ENTRIES_POST:
+    case STUDY_MAPS_POST:
       return state.merge({
-        entries: state.get('entries').push(Map(JSON.parse(action.response)))
+        study_maps: state.get('study_maps').push(Map(JSON.parse(action.response)))
       });
-      return state.entries.push(action.response);
-    case ENTRIES_SUCCESS:
+      // return state.study_maps.push(action.response);
+    case STUDY_MAPS_SUCCESS:
       return state.merge({
         isFetching: false,
-        entries: action.response,
+        study_maps: action.response,
         authenticated: action.authenticated || false
       });
-    case ENTRIES_FAILURE:
+    case STUDY_MAPS_FAILURE:
       return state.merge({
         isFetching: false
       });
@@ -102,7 +102,7 @@ function entries(state = initialEntries, action) {
 
 const reducers = combineReducers({
   auth,
-  entries
+  study_maps
 });
 
 export default reducers;
