@@ -34,7 +34,7 @@ router.post('/register', (req, res, next) => {
       username: user.username,
       _id: user._id,
       token: user.generateJWT(),
-      entries: user.entries
+      study_maps: user.study_maps
     })
   });
 });
@@ -53,7 +53,7 @@ router.post('/login', (req, res, next) => {
         username: user.username,
         _id: user._id,
         token: user.generateJWT(),
-        entries: user.entries
+        study_maps: user.study_maps
       });
     } else {
       return res. status(401).json(info);

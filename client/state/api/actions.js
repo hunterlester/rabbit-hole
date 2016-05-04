@@ -4,6 +4,10 @@ export const STUDY_MAPS_POST = 'STUDY_MAPS_POST';
 export const STUDY_MAPS_SUCCESS = 'STUDY_MAPS_SUCCESS';
 export const STUDY_MAPS_FAILURE = 'STUDY_MAPS_FAILURE';
 
+export const LINK_POST = 'LINK_POST';
+export const LINK_POST_SUCCESS = 'LINK_POST_SUCCESS';
+export const LINK_POST_FAILURE = 'LINK_POST_FAILURE';
+
 export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
@@ -11,7 +15,19 @@ export function postStudyMap(study_map) {
       endpoint: 'studymaps',
       authenticated: true,
       types: [STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE],
-      study_map
+      formObj: study_map
+    }
+  }
+}
+
+export function postLink(linkObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'links/studymap',
+      authenticated: true,
+      types: [LINK_POST, LINK_POST_SUCCESS, LINK_POST_FAILURE],
+      formObj: linkObj
     }
   }
 }

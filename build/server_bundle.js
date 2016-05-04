@@ -620,9 +620,10 @@ require("source-map-support").install();
 	var LocalStrategy = _passportLocal2.default.Strategy;
 	
 	var User = _mongoose2.default.model('User');
+	var StudyMap = _mongoose2.default.model('StudyMap');
 	
 	_passport2.default.use(new LocalStrategy(function (username, password, done) {
-	  User.findOne({ username: username }).populate('entries').exec(function (err, user) {
+	  User.findOne({ username: username }).populate({ path: 'study_maps', populate: { path: 'links' } }).exec(function (err, user) {
 	    if (err) {
 	      return done(err);
 	    }
@@ -727,7 +728,7 @@ require("source-map-support").install();
 	      username: user.username,
 	      _id: user._id,
 	      token: user.generateJWT(),
-	      entries: user.entries
+	      study_maps: user.study_maps
 	    });
 	  });
 	});
@@ -747,7 +748,7 @@ require("source-map-support").install();
 	        username: user.username,
 	        _id: user._id,
 	        token: user.generateJWT(),
-	        entries: user.entries
+	        study_maps: user.study_maps
 	      });
 	    } else {
 	      return res.status(401).json(info);

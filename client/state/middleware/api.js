@@ -1,15 +1,17 @@
 const BASE_URL = `${location.protocol}//${location.hostname}:${location.port}/`;
 
-function callApi(study_map, endpoint, authenticated, method) {
+function callApi(endpoint, authenticated, method, obj) {
   let token = localStorage.getItem('token') || null;
   let userId = localStorage.getItem('_id');
   let config = {};
 
-  function configFactory(formObject, method, token) {
-    let body = Object.keys(formObject).map(key => {
-      return key + '=' + formObject[key];
-    }).join('&');
-    
+  function configFactory(method, token, formObject) {
+    if (formObject) {
+      let body = Object.keys(formObject).map(key => {
+        return key + '=' + formObject[key];
+      }).join('&');
+    }
+
     switch (method) {
       case 'POST':
         return {
@@ -48,7 +50,7 @@ function callApi(study_map, endpoint, authenticated, method) {
 
   if (authenticated) {
     if (token) {
-      config = configFactory(study_map, method, token);
+      config = configFactory(method, token, obj);
     } else {
       throw "No token saved."
     }
@@ -75,11 +77,11 @@ export default store => next => action => {
     return next(action);
   }
 
-  let { endpoint, types, authenticated, study_map, method } = callAPI;
+  let { endpoint, types, authenticated, method, formObj } = callAPI;
 
   const [ requestType, successType, errorType ] = types;
 
-  return callApi(study_map, endpoint, authenticated, method).then(
+  return callApi(endpoint, authenticated, method, formObj).then(
     response =>
       next({
         response,

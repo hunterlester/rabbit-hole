@@ -51,8 +51,8 @@ module.exports = [
     target: 'web',
     devtool: 'cheap-module-source-map',
     entry: [
-      'webpack-dev-server/client?http://localhost:8080',
-      'webpack/hot/only-dev-server',
+      // 'webpack-dev-server/client?http://localhost:8080',
+      // 'webpack/hot/only-dev-server',
       './client/index.jsx'
     ],
     target: 'web',

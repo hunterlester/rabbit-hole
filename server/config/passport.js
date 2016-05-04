@@ -3,10 +3,13 @@ import passportLocal from 'passport-local';
 const LocalStrategy = passportLocal.Strategy;
 import mongoose from 'mongoose';
 const User = mongoose.model('User');
+const StudyMap = mongoose.model('StudyMap');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({username: username}).populate('entries').exec(
+    User.findOne({username: username}).populate(
+      {path: 'study_maps', populate: { path: 'links' }}
+    ).exec(
       (err, user) => {
         if (err) {
           return done(err);
