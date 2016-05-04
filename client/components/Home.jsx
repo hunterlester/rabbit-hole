@@ -8,6 +8,7 @@ import Login from './Login';
 import AppBar from 'material-ui/lib/app-bar';
 import IconMenu from 'material-ui/lib/menus/icon-menu';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import CreateNewFolder from 'material-ui/lib/svg-icons/file/create-new-folder';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import IconButton from 'material-ui/lib/icon-button';
 
@@ -44,9 +45,11 @@ export const Home = React.createClass({
           <div>
               <div>
                 <AppBar
+                  title='Rabbit Hole'
                   onTitleTouchTap={() => {
                     hashHistory.push('/');
                   }}
+                  iconElementRight={false}
                   iconElementRight={
                     <IconMenu
                       iconButtonElement={
@@ -64,11 +67,18 @@ export const Home = React.createClass({
               </div>
 
               <div>
+                <h3>Link Quick Entry</h3>
                 <LinkForm studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
               <div>
-                <h1>Subjects</h1>
+                <h3>
+                  Subjects
+                  <CreateNewFolder onClick={() => {
+                    hashHistory.push('/studyMapForm')
+                  }}/>
+                </h3>
+
                 {this.getStudyMaps().map(study_map =>
                   <Card>
                     <CardHeader

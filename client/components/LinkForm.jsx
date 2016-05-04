@@ -12,15 +12,14 @@ export default React.createClass({
         ref='uri'
         hintText='Copy & Paste link uri here'
         floatingLabelText="URI"
-        style = {{width: 1000}}
+        fullWidth={true}
       />
 
       <TextField
         ref='title'
         hintText="Helpful to describe link for future reference"
         floatingLabelText="Title"
-        rows={1}
-        style = {{width: 1000}}
+        fullWidth={true}
       />
 
       <AutoComplete
@@ -29,8 +28,7 @@ export default React.createClass({
         floatingLabelText="Subject"
         filter={AutoComplete.caseInsensitiveFilter}
         dataSource={this.props.studyMaps}
-        rows={1}
-        style = {{width: 1000}}
+        fullWidth={true}
       />
 
       <RaisedButton

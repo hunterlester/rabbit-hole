@@ -11,6 +11,7 @@ injectTapEventPlugin();
 import App from './components/App';
 import {ConnectedRegister} from './components/Register';
 import {ConnectedHome} from './components/Home';
+import {ConnectedStudyMapForm} from './components/StudyMapForm';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
@@ -21,6 +22,7 @@ const store = createStoreWithMiddleware(reducers);
 const routes = <Route component={App}>
   <Route path="/" component={ConnectedHome} />
   <Route path="/register" component={ConnectedRegister} />
+  <Route path="/studymapform" component={ConnectedStudyMapForm} />
 </Route>;
 
 ReactDOM.render(
