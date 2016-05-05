@@ -1,4 +1,5 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
 import {postStudyMap} from '../state/api/actions';
@@ -38,9 +39,7 @@ export const StudyMapForm = React.createClass({
               studyMapObj = Object.assign(studyMapObj, { [key]: this.refs[key].getValue() });
             });
             dispatch(postStudyMap(studyMapObj));
-            Object.keys(this.refs).map(key => {
-              this.refs[key].clearValue();
-            });
+            hashHistory.push('/');
           }}
         />
       </div>

@@ -27,7 +27,9 @@ export default React.createClass({
         hintText="Start typing subject"
         floatingLabelText="Subject"
         filter={AutoComplete.caseInsensitiveFilter}
-        dataSource={this.props.studyMaps}
+        dataSource={this.props.studyMaps.map(study_map => {
+          return study_map.subject;
+        })}
         fullWidth={true}
       />
 
@@ -36,11 +38,22 @@ export default React.createClass({
         onTouchTap={() => {
           let linkObj = {};
            Object.keys(this.refs).map((key) => {
-            linkObj = Object.assign(linkObj, { [key]: this.refs[key].getValue() });
+             if(key === 'study_map') {
+               this.props.studyMaps.map(study_map => {
+                 if(study_map.subject === this.refs[key].getValue()) {
+                   linkObj = Object.assign(linkObj, { [key]: study_map._id});
+                 }
+               });
+             } else {
+               linkObj = Object.assign(linkObj, { [key]: this.refs[key].getValue() });
+             }
           });
+
           this.props.postLink(linkObj);
           Object.keys(this.refs).map(key => {
-            this.refs[key].clearValue();
+            if(this.refs[key].clearValue) {
+              this.refs[key].clearValue();
+            }
           });
         }}
       />

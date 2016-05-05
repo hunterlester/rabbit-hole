@@ -16,21 +16,17 @@ import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
 
-import Table from 'material-ui/lib/table/table';
-import TableHeaderColumn from 'material-ui/lib/table/table-header-column';
-import TableRow from 'material-ui/lib/table/table-row';
-import TableHeader from 'material-ui/lib/table/table-header';
-import TableRowColumn from 'material-ui/lib/table/table-row-column';
-import TableBody from 'material-ui/lib/table/table-body';
-
 import { loginUser } from '../state/user_login/login_actions_core';
-import { postStudyMap } from '../state/api/actions';
+import { postStudyMap, postLink } from '../state/api/actions';
 import moment from 'moment';
 
 export const Home = React.createClass({
   mixins: [PureRenderMixin],
   getStudyMaps: function() {
     return this.props.study_maps || [];
+  },
+  getStudyMapLinks: function() {
+    return this.props.study_maps
   },
   render: function () {
     const { dispatch, isAuthenticated, errorMessage } = this.props;
@@ -80,25 +76,18 @@ export const Home = React.createClass({
                 </h3>
 
                 {this.getStudyMaps().map(study_map =>
-                  <Card>
+                  <Card key={study_map._id}>
                     <CardHeader
                       title={study_map.subject}
                       actAsExpander={true}
                       showExpandableButton={true}
                     />
                     <CardText expandable={true}>
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHeaderColumn>ID</TableHeaderColumn>
-                            <TableHeaderColumn>Name</TableHeaderColumn>
-                            <TableHeaderColumn>Status</TableHeaderColumn>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody>
-
-                        </TableBody>
-                      </Table>
+                      {study_map.links.map(link => {
+                        <div key={link._id}>
+                          {link.uri}
+                        </div>
+                      })}
                     </CardText>
                   </Card>
                 )}
