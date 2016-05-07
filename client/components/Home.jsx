@@ -1,6 +1,6 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+// import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
 import LinkForm from './LinkForm';
 import Login from './Login';
@@ -21,15 +21,35 @@ import { postStudyMap, postLink } from '../state/api/actions';
 import moment from 'moment';
 
 export const Home = React.createClass({
-  mixins: [PureRenderMixin],
+  shouldComponentUpdate: function(nextProps, nextState) {
+    return true;
+  },
   getStudyMaps: function() {
     return this.props.study_maps || [];
   },
-  getStudyMapLinks: function() {
-    return this.props.study_maps
+  getLinks: function(study_map) {
+    if(study_map.links.length) {
+      return study_map.links.map(link => {
+        return (
+          <Card key={link._id}>
+            <CardHeader
+              title={<a href={link.uri} target="_blank">{link.title} ||| {link.uri}</a>}
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              <div>
+
+              </div>
+            </CardText>
+          </Card>
+        );
+      });
+    }
   },
   render: function () {
     const { dispatch, isAuthenticated, errorMessage } = this.props;
+    let links;
     return (
       <div>
 
@@ -83,11 +103,10 @@ export const Home = React.createClass({
                       showExpandableButton={true}
                     />
                     <CardText expandable={true}>
-                      {study_map.links.map(link => {
-                        <div key={link._id}>
-                          {link.uri}
-                        </div>
-                      })}
+                      <h4>Links</h4>
+                      <div>
+                        {this.getLinks(study_map)}
+                      </div>
                     </CardText>
                   </Card>
                 )}
@@ -103,7 +122,6 @@ export const Home = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.auth.toJS();
-  console.log(state.study_maps.toJS());
   return {
     isAuthenticated,
     user,

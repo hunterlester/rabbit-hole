@@ -1,6 +1,6 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
-import PureRenderMixin from 'react-addons-pure-render-mixin';
+// import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
 import {postStudyMap} from '../state/api/actions';
 
@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 
 export const StudyMapForm = React.createClass({
-  mixins: [PureRenderMixin],
+  // mixins: [PureRenderMixin],
   render: function() {
     const { dispatch } = this.props;
 

@@ -1,8 +1,8 @@
-import {Map, List} from 'immutable';
+import {Map, List, fromJS} from 'immutable';
 import { combineReducers } from 'redux';
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from './user_login/login_action_factories';
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './user_registration/actions';
-import { STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE } from './api/actions';
+import { STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE, LINK_POST } from './api/actions';
 import { SET_STUDY_MAPS } from './study_map_actions';
 
 const initialAuth = Map({
@@ -85,7 +85,6 @@ function study_maps(state = initialStudyMaps, action) {
       return state.merge({
         study_maps: state.get('study_maps').push(Map(JSON.parse(action.response)))
       });
-      // return state.study_maps.push(action.response);
     case STUDY_MAPS_SUCCESS:
       return state.merge({
         isFetching: false,
@@ -96,6 +95,17 @@ function study_maps(state = initialStudyMaps, action) {
       return state.merge({
         isFetching: false
       });
+    case LINK_POST:
+        return state.merge({
+          study_maps: state.get('study_maps').map((study_map, i) => {
+            if (JSON.parse(action.response).study_map === study_map.get('_id')) {
+              console.log(study_map.toJS());
+              return study_map.set('links', study_map.get('links').push(Map(JSON.parse(action.response))));
+            } else {
+              return study_map;
+            }
+          })
+        });
   }
   return state;
 }

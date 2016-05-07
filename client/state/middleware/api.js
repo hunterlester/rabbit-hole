@@ -63,7 +63,12 @@ function callApi(endpoint, authenticated, method, obj) {
       if (!response.ok) {
         return Promise.reject(text)
       }
-
+      if(endpoint == 'studymaps') {
+        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+        parsedStudyMaps.push(JSON.parse(text));
+        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+        localStorage.setItem('study_maps', JSONstudyMaps);
+      }
       return text;
     }).catch(err => console.log(err))
 }
