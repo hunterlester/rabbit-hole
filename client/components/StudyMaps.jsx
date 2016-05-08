@@ -6,6 +6,7 @@ import LinkForm from './LinkForm';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
+import RaisedButton from 'material-ui/lib/raised-button';
 import CreateNewFolder from 'material-ui/lib/svg-icons/file/create-new-folder';
 
 import { postLink } from '../state/api/actions';
@@ -21,18 +22,12 @@ export const StudyMaps = React.createClass({
     if(study_map.links.length) {
       return study_map.links.map(link => {
         return (
-          <Card key={link._id}>
-            <CardHeader
-              title={<a href={link.uri} target="_blank">{link.title} ~ {link.uri}</a>}
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardText expandable={true}>
-              <div>
-
-              </div>
-            </CardText>
-          </Card>
+          <div key={link._id}>
+            <a href={link.uri} target="_blank">
+              <h5>{link.title}</h5>
+            </a>
+            <h6>{link.uri}</h6>
+          </div>
         );
       });
     }
@@ -45,7 +40,6 @@ export const StudyMaps = React.createClass({
           <div>
 
               <div>
-                <h5>Link Entry</h5>
                 <LinkForm studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
@@ -65,6 +59,9 @@ export const StudyMaps = React.createClass({
                       showExpandableButton={true}
                     />
                     <CardText expandable={true}>
+                      <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
+                        hashHistory.push(`/studymaps/${study_map._id}`)
+                      }}/>
                       <div>
                         {this.getLinks(study_map)}
                       </div>

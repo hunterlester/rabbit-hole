@@ -12,8 +12,9 @@ import App from './components/App';
 import {ConnectedRegister} from './components/Register';
 import {ConnectedHome} from './components/Home';
 import {ConnectedStudyMapForm} from './components/StudyMapForm';
-import {ConnectedEchoes} from './components/Echoes.jsx';
-import {ConnectedStudyMaps} from './components/StudyMaps.jsx';
+import {ConnectedEchoes} from './components/Echoes';
+import {ConnectedStudyMaps} from './components/StudyMaps';
+import {ConnectedSingleStudyMap} from './components/StudyMap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
@@ -26,6 +27,7 @@ const routes = <Route component={App}>
     <Route path="/" component={ConnectedStudyMaps} />
     <Route path="/echoes" component={ConnectedEchoes} />
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
+    <Route path="/studymaps/:studyMap" component={ConnectedSingleStudyMap} />
   </Route>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;

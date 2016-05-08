@@ -15,7 +15,6 @@ import { loginUser } from '../state/user_login/login_actions_core';
 export const Home = React.createClass({
   render: function () {
     const { dispatch, isAuthenticated, errorMessage } = this.props;
-    console.log(this.props);
     return (
       <div>
 

@@ -34,7 +34,7 @@ export default React.createClass({
       />
 
       <RaisedButton
-        label="Save"
+        label="Enter Link"
         onTouchTap={() => {
           let linkObj = {};
           let linkObjPromise = new Promise((resolve, reject) => {
