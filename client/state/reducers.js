@@ -69,7 +69,7 @@ function auth(state = initialAuth, action) {
 
 const parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
 
-const initialStudyMaps = Map({
+const initialStudyMaps = fromJS({
   isFetching: false,
   study_maps: parsedStudyMaps || [],
 });
@@ -83,7 +83,7 @@ function study_maps(state = initialStudyMaps, action) {
       });
     case STUDY_MAPS_POST:
       return state.merge({
-        study_maps: state.get('study_maps').push(Map(JSON.parse(action.response)))
+        study_maps: state.get('study_maps').push(fromJS(JSON.parse(action.response)))
       });
     case STUDY_MAPS_SUCCESS:
       return state.merge({
@@ -96,11 +96,13 @@ function study_maps(state = initialStudyMaps, action) {
         isFetching: false
       });
     case LINK_POST:
+      console.log(state.get('study_maps').toJS());
         return state.merge({
-          study_maps: state.get('study_maps').map((study_map, i) => {
-            if (JSON.parse(action.response).study_map === study_map.get('_id')) {
-              console.log(study_map.toJS());
-              return study_map.set('links', study_map.get('links').push(Map(JSON.parse(action.response))));
+          study_maps: state.get('study_maps').map(study_map => {
+            if(JSON.parse(action.response).study_map === study_map.get('_id')) {
+              return study_map.set('links',
+              study_map.get('links').push(fromJS(JSON.parse(action.response)))
+            );
             } else {
               return study_map;
             }

@@ -122,6 +122,8 @@ export const Home = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.auth.toJS();
+  console.log(state.study_maps.get('study_maps').toJS());
+  console.log(state.study_maps.toJS().study_maps);
   return {
     isAuthenticated,
     user,
