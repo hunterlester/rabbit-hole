@@ -590,6 +590,7 @@ require("source-map-support").install();
 	
 	var MessageSchema = new _mongoose2.default.Schema({
 	  user: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' },
+	  study_map: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' },
 	  breadcrumb: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'BreadCrumb' },
 	  body: String,
 	  upvote: Number
@@ -623,7 +624,7 @@ require("source-map-support").install();
 	var StudyMap = _mongoose2.default.model('StudyMap');
 	
 	_passport2.default.use(new LocalStrategy(function (username, password, done) {
-	  User.findOne({ username: username }).populate({ path: 'study_maps', populate: { path: 'links' } }).exec(function (err, user) {
+	  User.findOne({ username: username }).populate({ path: 'study_maps', populate: [{ path: 'links' }, { path: 'breadcrumbs', populate: { path: 'messages', populate: { path: 'user' } } }] }).exec(function (err, user) {
 	    if (err) {
 	      return done(err);
 	    }
@@ -837,11 +838,15 @@ require("source-map-support").install();
 	});
 	
 	router.param('studymapId', function (req, res, next, studymapId) {
-	  StudyMap.findById(studymapId, function (err, studymap) {
+	  StudyMap.findById(studymapId).populate({ path: 'breadcrumbs', populate: { path: 'messages' } }).exec(function (err, studymap) {
 	    if (err) return res.sendStatus(404);
 	    req.studymap = studymap;
 	    next();
 	  });
+	});
+	
+	router.get('/:studymapId', auth, function (req, res) {
+	  res.json(req.studymap);
 	});
 	
 	router.put('/:studymapId', auth, function (req, res) {

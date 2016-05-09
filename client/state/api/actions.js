@@ -12,6 +12,14 @@ export const BREADCRUMB_POST = 'BREADCRUMB_POST';
 export const BREADCRUMB_POST_SUCCESS = 'BREADCRUMB_POST_SUCCESS';
 export const BREADCRUMB_POST_FAILURE = 'BREADCRUMB_POST_FAILURE';
 
+export const MESSAGE_POST = 'MESSAGE_POST';
+export const MESSAGE_POST_SUCCESS = 'MESSAGE_POST_SUCCESS';
+export const MESSAGE_POST_FAILURE = 'MESSAGE_POST_FAILURE';
+
+export const STUDYMAP_GET = 'STUDYMAP_GET';
+export const STUDYMAP_GET_SUCCESS = 'STUDYMAP_GET_SUCCESS';
+export const STUDYMAP_GET_FAILURE = 'STUDYMAP_GET_FAILURE';
+
 export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
@@ -44,6 +52,29 @@ export function postBreadcrumb(breadcrumbObj) {
       authenticated: true,
       types: [BREADCRUMB_POST, BREADCRUMB_POST_SUCCESS, BREADCRUMB_POST_FAILURE],
       formObj: breadcrumbObj
+    }
+  }
+}
+
+export function postMessage(messageObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'messages',
+      authenticated: true,
+      types: [MESSAGE_POST, MESSAGE_POST_SUCCESS, MESSAGE_POST_FAILURE],
+      formObj: messageObj
+    }
+  }
+}
+
+export function getStudyMap(studyMapID) {
+  return {
+    [CALL_API]: {
+      method: 'GET',
+      endpoint: `studymaps/${studyMapID}`,
+      authenticated: true,
+      types: [STUDYMAP_GET, STUDYMAP_GET_SUCCESS, STUDYMAP_GET_FAILURE]
     }
   }
 }

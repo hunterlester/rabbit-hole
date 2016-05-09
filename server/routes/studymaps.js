@@ -23,11 +23,17 @@ router.post('/', auth, (req, res) => {
 });
 
 router.param('studymapId', (req, res, next, studymapId) => {
-  StudyMap.findById(studymapId, (err, studymap) => {
+  StudyMap.findById(studymapId).populate(
+    {path: 'breadcrumbs', populate: { path: 'messages' }}
+  ).exec( (err, studymap) => {
     if (err) return res.sendStatus(404);
     req.studymap = studymap;
     next();
   });
+});
+
+router.get('/:studymapId', auth, (req, res) => {
+  res.json(req.studymap);
 });
 
 router.put('/:studymapId', auth, (req, res) => {

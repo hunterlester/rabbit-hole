@@ -86,7 +86,21 @@ function callApi(endpoint, authenticated, method, obj) {
         });
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
+      } else if ( endpoint == 'messages' ) {
+        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+        parsedStudyMaps.find(study_map => {
+          if (JSON.parse(text).study_map == study_map._id) {
+            study_map.breadcrumbs.find(breadcrumb => {
+              if(JSON.parse(text).breadcrumb == breadcrumb._id) {
+                breadcrumb.messages.push(JSON.parse(text));
+              }
+            })
+          }
+        });
+        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+        localStorage.setItem('study_maps', JSONstudyMaps);
       }
+
       return text;
     }).catch(err => console.log(err))
 }

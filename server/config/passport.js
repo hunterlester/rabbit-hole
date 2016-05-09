@@ -8,7 +8,7 @@ const StudyMap = mongoose.model('StudyMap');
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({username: username}).populate(
-      {path: 'study_maps', populate: { path: 'links' }}
+      {path: 'study_maps', populate: [{ path: 'links' }, {path: 'breadcrumbs', populate: {path: 'messages', populate: {path: 'user'}}}]}
     ).exec(
       (err, user) => {
         if (err) {

@@ -7,12 +7,23 @@ import TextField from 'material-ui/lib/text-field';
 import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
-import {postBreadcrumb} from '../state/api/actions';
+import MessageForm from './MessageForm.jsx';
+import {postBreadcrumb, postMessage, getStudyMap } from '../state/api/actions';
 
 
 export const StudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
     return true;
+  },
+  getMessages: function(breadcrumb) {
+    if(breadcrumb.messages.length) {
+      return breadcrumb.messages.map(message => {
+        console.log(message);
+        return (
+          <div key={message._id}>{message.body} - {message.user.username}</div>
+        )
+      })
+    }
   },
   render: function() {
     const { isAuthenticated, user, study_map, dispatch} = this.props;
@@ -68,8 +79,11 @@ export const StudyMap = React.createClass({
             />
             <CardText expandable={true}>
               <div>
-
+                {this.getMessages(breadcrumb)}
               </div>
+              <MessageForm studyMapID={study_map._id} breadcrumbID={breadcrumb._id} userID={user._id} postMessage={ messageObj => {
+                dispatch(postMessage(messageObj))
+              }}/>
             </CardText>
           </Card>
 
@@ -87,12 +101,44 @@ function mapStateToProps(state, ownProps) {
       return study_map;
     }
   });
+  console.log(studyMap);
 
   return {
     isAuthenticated,
     user,
     study_map: studyMap
-  };
+  }
+
+  // THE FOLLOWING IS COMMENTED OUT WHILE I TRY TO FIGURE OUT HOW TO FETCH SINGLE
+  // STUDY MAPS TO TAKE WEIGHT OUT OF INITAL DB QUERY
+
+
+    // let studyMapPromise = new Promise((reject, resolve) => {
+    //   resolve(
+    //     ownProps.dispatch(getStudyMap(ownProps.params.studyMap))
+    //   )
+    // })
+    //
+    // studyMapPromise.then(res => {
+    //   console.log(res);
+    // })
+
+
+  // function *returnState() {
+  //   return {
+  //     isAuthenticated,
+  //     user,
+  //     study_map: yield
+  //   }
+  // }
+  //
+  // let stateWaiting = returnState();
+  //
+  // studyMapPromise.then(res => {
+  //   console.log(res);
+  //   stateWaiting.next(res);
+  // })
+
 }
 
 export const ConnectedSingleStudyMap = connect(mapStateToProps)(StudyMap);
