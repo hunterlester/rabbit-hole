@@ -8,6 +8,10 @@ export const LINK_POST = 'LINK_POST';
 export const LINK_POST_SUCCESS = 'LINK_POST_SUCCESS';
 export const LINK_POST_FAILURE = 'LINK_POST_FAILURE';
 
+export const BREADCRUMB_POST = 'BREADCRUMB_POST';
+export const BREADCRUMB_POST_SUCCESS = 'BREADCRUMB_POST_SUCCESS';
+export const BREADCRUMB_POST_FAILURE = 'BREADCRUMB_POST_FAILURE';
+
 export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
@@ -28,6 +32,18 @@ export function postLink(linkObj) {
       authenticated: true,
       types: [LINK_POST, LINK_POST_SUCCESS, LINK_POST_FAILURE],
       formObj: linkObj
+    }
+  }
+}
+
+export function postBreadcrumb(breadcrumbObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'breadcrumbs/studymap',
+      authenticated: true,
+      types: [BREADCRUMB_POST, BREADCRUMB_POST_SUCCESS, BREADCRUMB_POST_FAILURE],
+      formObj: breadcrumbObj
     }
   }
 }
