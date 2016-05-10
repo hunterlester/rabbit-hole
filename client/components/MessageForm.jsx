@@ -4,7 +4,7 @@ import TextField from 'material-ui/lib/text-field';
 
 export default React.createClass({
   render: function() {
-    const { userID, breadcrumbID, postMessage, studyMapID } = this.props;
+    const { userID, breadcrumbID, postMessage, studyMapID, linkID } = this.props;
     return (
       <div>
         <TextField
@@ -23,6 +23,9 @@ export default React.createClass({
               body: this.refs.body.getValue(),
               user: userID
             };
+            if(linkID) {
+              messageObj.link = linkID;
+            }
             postMessage(messageObj);
             this.refs.body.clearValue();
           }}

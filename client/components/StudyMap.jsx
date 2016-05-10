@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 import MessageForm from './MessageForm.jsx';
-import {postBreadcrumb, postLinkBreadcrumb, postMessage, getStudyMap } from '../state/api/actions';
+import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage, getStudyMap } from '../state/api/actions';
 
 
 export const StudyMap = React.createClass({
@@ -27,6 +27,9 @@ export const StudyMap = React.createClass({
             />
             <CardText expandable={true}>
               <div>
+                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={breadcrumb._id} userID={this.props.user._id} postMessage={ messageObj => {
+                  this.props.dispatch(postLinkMessage(messageObj))
+                }}/>
                 {this.getMessages(breadcrumb)}
               </div>
             </CardText>
@@ -75,7 +78,8 @@ export const StudyMap = React.createClass({
                     let breadcrumbObj = {
                       link: link._id,
                       content: this.refs.content.getValue(),
-                      user: user._id
+                      user: user._id,
+                      study_map: this.props.params.studyMap
                     };
                     dispatch(postLinkBreadcrumb(breadcrumbObj));
 
@@ -142,7 +146,6 @@ function mapStateToProps(state, ownProps) {
       return study_map;
     }
   });
-  console.log(studyMap);
 
   return {
     isAuthenticated,

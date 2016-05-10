@@ -86,13 +86,44 @@ function callApi(endpoint, authenticated, method, obj) {
         });
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
-      } else if ( endpoint == 'messages' ) {
+      } else if ( endpoint == 'messages' && !obj.link ) {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
         parsedStudyMaps.find(study_map => {
           if (JSON.parse(text).study_map == study_map._id) {
             study_map.breadcrumbs.find(breadcrumb => {
               if(JSON.parse(text).breadcrumb == breadcrumb._id) {
                 breadcrumb.messages.push(JSON.parse(text));
+              }
+            })
+          }
+        });
+        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+        localStorage.setItem('study_maps', JSONstudyMaps);
+      } else if ( endpoint == 'breadcrumbs/link') {
+        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+        parsedStudyMaps.find(study_map => {
+          if (JSON.parse(text).study_map == study_map._id) {
+            study_map.links.find(link => {
+              if(JSON.parse(text).link == link._id) {
+                link.breadcrumbs.push(JSON.parse(text));
+              }
+            })
+          }
+        });
+        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+        localStorage.setItem('study_maps', JSONstudyMaps);
+      } else if ( endpoint == 'messages' && obj.link) {
+        console.log("hits condition for link and meesge");
+        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+        parsedStudyMaps.find(study_map => {
+          if (JSON.parse(text).study_map == study_map._id) {
+            study_map.links.find(link => {
+              if(JSON.parse(text).link == link._id) {
+                link.breadcrumbs.find(breadcrumb => {
+                  if(JSON.parse(text).breadcrumb == breadcrumb._id) {
+                    breadcrumb.messages.push(JSON.parse(text));
+                  }
+                })
               }
             })
           }

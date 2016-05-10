@@ -20,6 +20,10 @@ export const MESSAGE_POST = 'MESSAGE_POST';
 export const MESSAGE_POST_SUCCESS = 'MESSAGE_POST_SUCCESS';
 export const MESSAGE_POST_FAILURE = 'MESSAGE_POST_FAILURE';
 
+export const LINK_MESSAGE_POST = 'LINK_MESSAGE_POST';
+export const LINK_MESSAGE_POST_SUCCESS = 'LINK_MESSAGE_POST_SUCCESS';
+export const LINK_MESSAGE_POST_FAILURE = 'LINK_MESSAGE_POST_FAILURE';
+
 export const STUDYMAP_GET = 'STUDYMAP_GET';
 export const STUDYMAP_GET_SUCCESS = 'STUDYMAP_GET_SUCCESS';
 export const STUDYMAP_GET_FAILURE = 'STUDYMAP_GET_FAILURE';
@@ -79,6 +83,18 @@ export function postMessage(messageObj) {
       endpoint: 'messages',
       authenticated: true,
       types: [MESSAGE_POST, MESSAGE_POST_SUCCESS, MESSAGE_POST_FAILURE],
+      formObj: messageObj
+    }
+  }
+}
+
+export function postLinkMessage(messageObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'messages',
+      authenticated: true,
+      types: [LINK_MESSAGE_POST, LINK_MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST_FAILURE],
       formObj: messageObj
     }
   }

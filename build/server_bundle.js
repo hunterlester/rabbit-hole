@@ -590,6 +590,7 @@ require("source-map-support").install();
 	
 	var MessageSchema = new _mongoose2.default.Schema({
 	  user: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' },
+	  link: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Link' },
 	  study_map: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' },
 	  breadcrumb: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'BreadCrumb' },
 	  body: String,
