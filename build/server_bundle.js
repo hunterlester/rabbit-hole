@@ -624,7 +624,23 @@ require("source-map-support").install();
 	var StudyMap = _mongoose2.default.model('StudyMap');
 	
 	_passport2.default.use(new LocalStrategy(function (username, password, done) {
-	  User.findOne({ username: username }).populate({ path: 'study_maps', populate: [{ path: 'links' }, { path: 'breadcrumbs', populate: { path: 'messages', populate: { path: 'user' } } }] }).exec(function (err, user) {
+	  User.findOne({ username: username }).populate({ path: 'study_maps', populate: [{
+	      path: 'links',
+	      populate: {
+	        path: 'breadcrumbs',
+	        populate: {
+	          path: 'messages',
+	          populate: {
+	            path: 'user'
+	          } } }
+	    }, {
+	      path: 'breadcrumbs',
+	      populate: {
+	        path: 'messages',
+	        populate: {
+	          path: 'user'
+	        } } }]
+	  }).exec(function (err, user) {
 	    if (err) {
 	      return done(err);
 	    }

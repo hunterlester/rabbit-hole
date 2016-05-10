@@ -12,6 +12,10 @@ export const BREADCRUMB_POST = 'BREADCRUMB_POST';
 export const BREADCRUMB_POST_SUCCESS = 'BREADCRUMB_POST_SUCCESS';
 export const BREADCRUMB_POST_FAILURE = 'BREADCRUMB_POST_FAILURE';
 
+export const BREADCRUMB_LINK_POST = 'BREADCRUMB_LINK_POST';
+export const BREADCRUMB_LINK_POST_SUCCESS = 'BREADCRUMB_LINK_POST_SUCCESS';
+export const BREADCRUMB_LINK_POST_FAILURE = 'BREADCRUMB_LINK_POST_FAILURE';
+
 export const MESSAGE_POST = 'MESSAGE_POST';
 export const MESSAGE_POST_SUCCESS = 'MESSAGE_POST_SUCCESS';
 export const MESSAGE_POST_FAILURE = 'MESSAGE_POST_FAILURE';
@@ -51,6 +55,18 @@ export function postBreadcrumb(breadcrumbObj) {
       endpoint: 'breadcrumbs/studymap',
       authenticated: true,
       types: [BREADCRUMB_POST, BREADCRUMB_POST_SUCCESS, BREADCRUMB_POST_FAILURE],
+      formObj: breadcrumbObj
+    }
+  }
+}
+
+export function postLinkBreadcrumb(breadcrumbObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'breadcrumbs/link',
+      authenticated: true,
+      types: [BREADCRUMB_LINK_POST, BREADCRUMB_LINK_POST_SUCCESS, BREADCRUMB_LINK_POST_FAILURE],
       formObj: breadcrumbObj
     }
   }

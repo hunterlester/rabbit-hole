@@ -8,17 +8,36 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 import MessageForm from './MessageForm.jsx';
-import {postBreadcrumb, postMessage, getStudyMap } from '../state/api/actions';
+import {postBreadcrumb, postLinkBreadcrumb, postMessage, getStudyMap } from '../state/api/actions';
 
 
 export const StudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
     return true;
   },
+  getLinkBreadcrumbs: function(link) {
+    if (link.breadcrumbs.length) {
+      return link.breadcrumbs.map(breadcrumb => {
+        return (
+          <Card key={breadcrumb._id}>
+            <CardHeader
+              title={breadcrumb.content}
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardText expandable={true}>
+              <div>
+                {this.getMessages(breadcrumb)}
+              </div>
+            </CardText>
+          </Card>
+        );
+      })
+    }
+  },
   getMessages: function(breadcrumb) {
     if(breadcrumb.messages.length) {
       return breadcrumb.messages.map(message => {
-        console.log(message);
         return (
           <div key={message._id}>{message.body} - {message.user.username}</div>
         )
@@ -41,7 +60,29 @@ export const StudyMap = React.createClass({
             />
             <CardText expandable={true}>
               <div>
+                <TextField
+                  hintText="Leave a breadcrump for this link"
+                  floatingLabelText="Breadcrumb"
+                  multiLine={true}
+                  rows={2}
+                  ref='content'
+                  fullWidth={true}
+                />
 
+                <RaisedButton
+                  label="Contribute breadcrumb"
+                  onTouchTap={() => {
+                    let breadcrumbObj = {
+                      link: link._id,
+                      content: this.refs.content.getValue(),
+                      user: user._id
+                    };
+                    dispatch(postLinkBreadcrumb(breadcrumbObj));
+
+                    this.refs.content.clearValue();
+                  }}
+                />
+                {this.getLinkBreadcrumbs(link)}
               </div>
             </CardText>
           </Card>
