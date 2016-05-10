@@ -103,11 +103,14 @@ export const StudyMap = React.createClass({
         <RaisedButton
           label="Contribute breadcrumb"
           onTouchTap={() => {
+            const content = this.refs.content.getValue();
             let breadcrumbObj = {
               study_map: study_map._id,
-              content: this.refs.content.getValue(),
+              content: content,
               user: user._id
             };
+
+            console.log(breadcrumbObj);
             dispatch(postBreadcrumb(breadcrumbObj));
 
             this.refs.content.clearValue();

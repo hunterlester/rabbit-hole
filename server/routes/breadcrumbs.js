@@ -5,6 +5,7 @@ const StudyMap = mongoose.model('StudyMap');
 const User = mongoose.model('User');
 const Breadcrumb = mongoose.model('Breadcrumb');
 const Link = mongoose.model('Link');
+const Echo = mongoose.model('Echo');
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -16,9 +17,15 @@ router.post('/studymap', auth, (req, res) => {
     StudyMap.findById(breadcrumb.study_map, (err, studymap) => {
       if (err) return res.sendStatus(404);
       studymap.breadcrumbs.push(breadcrumb._id);
-      studymap.save((err) => {
+      studymap.save((err, studymap) => {
         if (err) return res.sendStatus(500);
-        res.json(breadcrumb);
+        var echo = new Echo();
+        echo.user = breadcrumb.user;
+        echo.breadcrumb = breadcrumb._id;
+        echo.save((err, echo) => {
+          if (err) return res.status(500).json(err);
+          res.json(breadcrumb);
+        });
       });
     });
   });
@@ -33,7 +40,13 @@ router.post('/link', auth, (req, res) => {
       link.breadcrumbs.push(breadcrumb._id);
       link.save((err) => {
         if (err) return res.sendStatus(500);
-        res.json(breadcrumb);
+        var echo = new Echo();
+        echo.user = breadcrumb.user;
+        echo.breadcrumb = breadcrumb._id;
+        echo.save((err, echo) => {
+          if (err) return res.status(500).json(err);
+          res.json(breadcrumb);
+        });
       });
     });
   });

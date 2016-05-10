@@ -36,7 +36,9 @@ export default React.createClass({
       <RaisedButton
         label="Enter Link"
         onTouchTap={() => {
-          let linkObj = {};
+          let linkObj = {
+            user: this.props.userID
+          };
           let linkObjPromise = new Promise((resolve, reject) => {
             resolve(
               Object.keys(this.refs).map((key) => {

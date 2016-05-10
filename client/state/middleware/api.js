@@ -8,6 +8,11 @@ function callApi(endpoint, authenticated, method, obj) {
   function configFactory(method, token, formObject) {
     if (formObject) {
       let body = Object.keys(formObject).map(key => {
+        if(key == 'keywords') {
+          return formObject[key].map(keyword => {
+            return key + '=' + keyword.trim();
+          }).join('&')
+        }
         return key + '=' + formObject[key];
       }).join('&');
     }
@@ -113,7 +118,6 @@ function callApi(endpoint, authenticated, method, obj) {
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'messages' && obj.link) {
-        console.log("hits condition for link and meesge");
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
         parsedStudyMaps.find(study_map => {
           if (JSON.parse(text).study_map == study_map._id) {

@@ -33,14 +33,14 @@ export const StudyMaps = React.createClass({
     }
   },
   render: function() {
-    const { dispatch, isAuthenticated, errorMessage } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user } = this.props;
     return (
       <div>
         {isAuthenticated &&
           <div>
 
               <div>
-                <LinkForm studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
+                <LinkForm userID={user._id} studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
               <div>

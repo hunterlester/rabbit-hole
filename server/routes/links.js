@@ -3,6 +3,7 @@ const router = express.Router();
 import mongoose from 'mongoose';
 const StudyMap = mongoose.model('StudyMap');
 const Link = mongoose.model('Link');
+const Echo = mongoose.model('Echo');
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -16,7 +17,13 @@ router.post('/studymap', auth, (req, res) => {
       studymap.links.push(link._id);
       studymap.save((err) => {
         if (err) return res.sendStatus(500);
-        res.json(link);
+        var echo = new Echo();
+        echo.user = link.user;
+        echo.link = link._id;
+        echo.save((err, echo) => {
+          if (err) return res.status(500).json(err);
+          res.json(link);
+        });
       });
     });
   });

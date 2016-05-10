@@ -24,7 +24,7 @@ export const StudyMapForm = React.createClass({
 
         <TextField
           ref='keywords'
-          hintText="Keywords separated by comma, including subject i.e. 'rust,computer science,systems'"
+          hintText="Keywords separated by comma, including subject i.e. 'rust, computer science, systems'"
           floatingLabelText="Keywords"
           fullWidth={true}
         />
@@ -33,11 +33,11 @@ export const StudyMapForm = React.createClass({
           label="Save"
           onTouchTap={() => {
             let studyMapObj = {
-              user: this.props.user._id
+              user: this.props.user._id,
+              subject: this.refs.subject.getValue(),
+
             };
-             Object.keys(this.refs).map((key) => {
-              studyMapObj = Object.assign(studyMapObj, { [key]: this.refs[key].getValue() });
-            });
+            studyMapObj.keywords = this.refs.keywords.getValue().split(',');
             dispatch(postStudyMap(studyMapObj));
             hashHistory.push('/');
           }}

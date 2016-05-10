@@ -58,11 +58,11 @@ require("source-map-support").install();
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _http = __webpack_require__(29);
+	var _http = __webpack_require__(31);
 	
 	var _http2 = _interopRequireDefault(_http);
 	
-	var _debug = __webpack_require__(30);
+	var _debug = __webpack_require__(32);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
@@ -173,29 +173,35 @@ require("source-map-support").install();
 	
 	__webpack_require__(20);
 	
-	var _index = __webpack_require__(22);
+	__webpack_require__(21);
+	
+	var _index = __webpack_require__(23);
 	
 	var _index2 = _interopRequireDefault(_index);
 	
-	var _users = __webpack_require__(23);
+	var _users = __webpack_require__(24);
 	
 	var _users2 = _interopRequireDefault(_users);
 	
-	var _studymaps = __webpack_require__(25);
+	var _studymaps = __webpack_require__(26);
 	
 	var _studymaps2 = _interopRequireDefault(_studymaps);
 	
-	var _messages = __webpack_require__(26);
+	var _messages = __webpack_require__(27);
 	
 	var _messages2 = _interopRequireDefault(_messages);
 	
-	var _links = __webpack_require__(27);
+	var _links = __webpack_require__(28);
 	
 	var _links2 = _interopRequireDefault(_links);
 	
-	var _breadcrumbs = __webpack_require__(28);
+	var _breadcrumbs = __webpack_require__(29);
 	
 	var _breadcrumbs2 = _interopRequireDefault(_breadcrumbs);
+	
+	var _echoes = __webpack_require__(30);
+	
+	var _echoes2 = _interopRequireDefault(_echoes);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -240,6 +246,7 @@ require("source-map-support").install();
 	app.use('/messages', _messages2.default);
 	app.use('/links', _links2.default);
 	app.use('/breadcrumbs', _breadcrumbs2.default);
+	app.use('/echoes', _echoes2.default);
 	
 	// catch 404 and forward to error handler
 	app.use(function (req, res, next) {
@@ -543,6 +550,7 @@ require("source-map-support").install();
 	  date: { type: Date, default: Date.now },
 	  title: String,
 	  uri: String,
+	  user: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' },
 	  study_map: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' },
 	  breadcrumbs: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Breadcrumb' }],
 	  links: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Link' }],
@@ -592,7 +600,7 @@ require("source-map-support").install();
 	  user: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' },
 	  link: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Link' },
 	  study_map: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' },
-	  breadcrumb: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'BreadCrumb' },
+	  breadcrumb: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Breadcrumb' },
 	  body: String,
 	  upvote: Number
 	});
@@ -605,11 +613,34 @@ require("source-map-support").install();
 
 	'use strict';
 	
+	var _mongoose = __webpack_require__(7);
+	
+	var _mongoose2 = _interopRequireDefault(_mongoose);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var EchoSchema = new _mongoose2.default.Schema({
+	  date: { type: Date, default: Date.now },
+	  user: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'User' },
+	  studymap: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' },
+	  breadcrumb: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Breadcrumb' },
+	  link: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Link' },
+	  message: { type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Message' }
+	}, { strict: false });
+	
+	_mongoose2.default.model('Echo', EchoSchema);
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
 	var _passport = __webpack_require__(8);
 	
 	var _passport2 = _interopRequireDefault(_passport);
 	
-	var _passportLocal = __webpack_require__(21);
+	var _passportLocal = __webpack_require__(22);
 	
 	var _passportLocal2 = _interopRequireDefault(_passportLocal);
 	
@@ -656,13 +687,13 @@ require("source-map-support").install();
 	}));
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = require("passport-local");
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -686,7 +717,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -707,7 +738,7 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
-	var _expressJwt = __webpack_require__(24);
+	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 	
@@ -803,13 +834,13 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports) {
 
 	module.exports = require("express-jwt");
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -826,7 +857,7 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
-	var _expressJwt = __webpack_require__(24);
+	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 	
@@ -836,6 +867,7 @@ require("source-map-support").install();
 	
 	var StudyMap = _mongoose2.default.model('StudyMap');
 	var User = _mongoose2.default.model('User');
+	var Echo = _mongoose2.default.model('Echo');
 	
 	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
 	
@@ -848,7 +880,16 @@ require("source-map-support").install();
 	      user.study_maps.push(studymap._id);
 	      user.save(function (err) {
 	        if (err) return res.sendStatus(500);
-	        res.json(studymap);
+	        var echo = new Echo();
+	        console.log(studymap);
+	        echo.user = studymap.user;
+	        echo.studymap = studymap._id;
+	        console.log(echo);
+	        echo.save(function (err, echo) {
+	          console.log(echo);
+	          if (err) return res.status(500).json(err);
+	          res.json(studymap);
+	        });
 	      });
 	    });
 	  });
@@ -876,54 +917,6 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _express = __webpack_require__(3);
-	
-	var _express2 = _interopRequireDefault(_express);
-	
-	var _mongoose = __webpack_require__(7);
-	
-	var _mongoose2 = _interopRequireDefault(_mongoose);
-	
-	var _expressJwt = __webpack_require__(24);
-	
-	var _expressJwt2 = _interopRequireDefault(_expressJwt);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var router = _express2.default.Router();
-	
-	var Breadcrumb = _mongoose2.default.model('Breadcrumb');
-	var Message = _mongoose2.default.model('Message');
-	
-	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
-	
-	router.post('/', auth, function (req, res) {
-	  var message = new Message(req.body);
-	  message.save(function (err, message) {
-	    if (err) return res.sendStatus(500);
-	    Breadcrumb.findById(message.breadcrumb, function (err, breadcrumb) {
-	      if (err) return res.sendStatus(404);
-	      breadcrumb.messages.push(message._id);
-	      breadcrumb.save(function (err) {
-	        if (err) return res.sendStatus(500);
-	        res.json(message);
-	      });
-	    });
-	  });
-	});
-	
-	exports.default = router;
-
-/***/ },
 /* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -941,7 +934,62 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
-	var _expressJwt = __webpack_require__(24);
+	var _expressJwt = __webpack_require__(25);
+	
+	var _expressJwt2 = _interopRequireDefault(_expressJwt);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var router = _express2.default.Router();
+	
+	var Breadcrumb = _mongoose2.default.model('Breadcrumb');
+	var Message = _mongoose2.default.model('Message');
+	var Echo = _mongoose2.default.model('Echo');
+	
+	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
+	
+	router.post('/', auth, function (req, res) {
+	  var message = new Message(req.body);
+	  message.save(function (err, message) {
+	    if (err) return res.sendStatus(500);
+	    Breadcrumb.findById(message.breadcrumb, function (err, breadcrumb) {
+	      if (err) return res.sendStatus(404);
+	      breadcrumb.messages.push(message._id);
+	      breadcrumb.save(function (err) {
+	        if (err) return res.sendStatus(500);
+	        var echo = new Echo();
+	        echo.user = message.user;
+	        echo.message = message._id;
+	        echo.save(function (err, echo) {
+	          if (err) return res.status(500).json(err);
+	          res.json(message);
+	        });
+	      });
+	    });
+	  });
+	});
+	
+	exports.default = router;
+
+/***/ },
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _express = __webpack_require__(3);
+	
+	var _express2 = _interopRequireDefault(_express);
+	
+	var _mongoose = __webpack_require__(7);
+	
+	var _mongoose2 = _interopRequireDefault(_mongoose);
+	
+	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 	
@@ -951,6 +999,7 @@ require("source-map-support").install();
 	
 	var StudyMap = _mongoose2.default.model('StudyMap');
 	var Link = _mongoose2.default.model('Link');
+	var Echo = _mongoose2.default.model('Echo');
 	
 	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
 	
@@ -963,7 +1012,13 @@ require("source-map-support").install();
 	      studymap.links.push(link._id);
 	      studymap.save(function (err) {
 	        if (err) return res.sendStatus(500);
-	        res.json(link);
+	        var echo = new Echo();
+	        echo.user = link.user;
+	        echo.link = link._id;
+	        echo.save(function (err, echo) {
+	          if (err) return res.status(500).json(err);
+	          res.json(link);
+	        });
 	      });
 	    });
 	  });
@@ -999,7 +1054,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1016,7 +1071,7 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
-	var _expressJwt = __webpack_require__(24);
+	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 	
@@ -1028,6 +1083,7 @@ require("source-map-support").install();
 	var User = _mongoose2.default.model('User');
 	var Breadcrumb = _mongoose2.default.model('Breadcrumb');
 	var Link = _mongoose2.default.model('Link');
+	var Echo = _mongoose2.default.model('Echo');
 	
 	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
 	
@@ -1038,9 +1094,15 @@ require("source-map-support").install();
 	    StudyMap.findById(breadcrumb.study_map, function (err, studymap) {
 	      if (err) return res.sendStatus(404);
 	      studymap.breadcrumbs.push(breadcrumb._id);
-	      studymap.save(function (err) {
+	      studymap.save(function (err, studymap) {
 	        if (err) return res.sendStatus(500);
-	        res.json(breadcrumb);
+	        var echo = new Echo();
+	        echo.user = breadcrumb.user;
+	        echo.breadcrumb = breadcrumb._id;
+	        echo.save(function (err, echo) {
+	          if (err) return res.status(500).json(err);
+	          res.json(breadcrumb);
+	        });
 	      });
 	    });
 	  });
@@ -1055,7 +1117,13 @@ require("source-map-support").install();
 	      link.breadcrumbs.push(breadcrumb._id);
 	      link.save(function (err) {
 	        if (err) return res.sendStatus(500);
-	        res.json(breadcrumb);
+	        var echo = new Echo();
+	        echo.user = breadcrumb.user;
+	        echo.breadcrumb = breadcrumb._id;
+	        echo.save(function (err, echo) {
+	          if (err) return res.status(500).json(err);
+	          res.json(breadcrumb);
+	        });
 	      });
 	    });
 	  });
@@ -1079,13 +1147,52 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 29 */
+/* 30 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _express = __webpack_require__(3);
+	
+	var _express2 = _interopRequireDefault(_express);
+	
+	var _mongoose = __webpack_require__(7);
+	
+	var _mongoose2 = _interopRequireDefault(_mongoose);
+	
+	var _expressJwt = __webpack_require__(25);
+	
+	var _expressJwt2 = _interopRequireDefault(_expressJwt);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var router = _express2.default.Router();
+	
+	var Echo = _mongoose2.default.model('Echo');
+	
+	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
+	
+	router.get('/', function (req, res) {
+	  Echo.find().populate('studymap breadcrumb link message').exec(function (err, echoes) {
+	    if (err) return res.status(404).json(err);
+	    res.json(echoes);
+	  });
+	});
+	
+	exports.default = router;
+
+/***/ },
+/* 31 */
 /***/ function(module, exports) {
 
 	module.exports = require("http");
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("debug");

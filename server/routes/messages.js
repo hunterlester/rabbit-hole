@@ -3,6 +3,7 @@ const router = express.Router();
 import mongoose from 'mongoose';
 const Breadcrumb = mongoose.model('Breadcrumb');
 const Message = mongoose.model('Message');
+const Echo = mongoose.model('Echo');
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -16,7 +17,13 @@ router.post('/', auth, (req, res) => {
       breadcrumb.messages.push(message._id);
       breadcrumb.save((err) => {
         if (err) return res.sendStatus(500);
-        res.json(message);
+        var echo = new Echo();
+        echo.user = message.user;
+        echo.message = message._id;
+        echo.save((err, echo) => {
+          if (err) return res.status(500).json(err);
+          res.json(message);
+        });
       });
     });
   });
