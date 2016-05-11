@@ -12,8 +12,10 @@
   "scripts": {
     "server": "node ./build/server_bundle.js",
     "start": "babel-node ./server/index.js",
-    "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
-    "test:watch": "npm run test -- --watch"
+    "serverTest": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
+    "clientTest": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
+    "serverTest:watch": "npm run serverTest -- --watch",
+    "clientTest:watch": "npm run clientTest -- --watch"
   },
   "repository": {
     "type": "git",

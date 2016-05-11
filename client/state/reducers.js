@@ -5,6 +5,8 @@ import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from './user_reg
 import { STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE, LINK_POST, BREADCRUMB_POST, BREADCRUMB_LINK_POST, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET } from './api/actions';
 import { SET_STUDY_MAPS } from './study_map_actions';
 
+import echoes from './reducer_components/echoes';
+
 const initialAuth = Map({
   isFetching: false,
   isAuthenticated: localStorage.getItem('token') ? true: false,
@@ -197,7 +199,8 @@ function study_maps(state = initialStudyMaps, action) {
 
 const reducers = combineReducers({
   auth,
-  study_maps
+  study_maps,
+  echoes
 });
 
 export default reducers;
