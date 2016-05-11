@@ -2,12 +2,31 @@ import app from './app';
 import http from 'http';
 import debugGet from 'debug';
 const debug = debugGet('rabbit-hole:server');
+import makeStore from './state/store';
+import Server from 'socket.io';
 
-var port = normalizePort(process.env.PORT || '3000');
+let port = normalizePort(process.env.PORT || '3000');
 
 app.set('port', port);
 
+export const store = makeStore();
+
 const server = http.createServer(app);
+
+function startSocketServer(store) {
+  const io = new Server().attach(3001);
+
+  store.subscribe(
+    () => io.emit('state', store.getState().toJS())
+  )
+
+  io.on('connection', (socket) => {
+    socket.emit('state', store.getState().toJS());
+    socket.on('action', store.dispatch.bind(store));
+  })
+}
+
+startSocketServer(store);
 
 server.listen(port);
 server.on('error', onError);

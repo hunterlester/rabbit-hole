@@ -1,4 +1,6 @@
-import {fromJS} from 'immutable';
+import {fromJS, Map} from 'immutable';
+
+export const initialState = Map();
 
 export function setEchoes(state, echoes) {
   return state.set('echoes', fromJS(JSON.parse(echoes)));
