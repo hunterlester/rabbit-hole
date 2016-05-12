@@ -1,16 +1,10 @@
-import {Map, List, fromJS} from 'immutable';
+import {Map, fromJS} from 'immutable';
 
-
-const initialState = fromJS({
-  isFetching: false,
-  echoes: []
-});
-
-export default function echoes(state = List(), action) {
+export default function echoes(state = Map(), action) {
   switch (action.type) {
-    case SET_ECHOES:
+    case 'SET_ECHOES':
       return state.merge({
-        echoes: action.echoes
+        echoes: fromJS(action.state.echoes)
       })
   }
   return state;

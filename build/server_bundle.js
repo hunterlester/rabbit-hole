@@ -63,19 +63,19 @@ require("source-map-support").install();
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _http = __webpack_require__(31);
+	var _http = __webpack_require__(32);
 	
 	var _http2 = _interopRequireDefault(_http);
 	
-	var _debug = __webpack_require__(32);
+	var _debug = __webpack_require__(33);
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
-	var _store = __webpack_require__(33);
+	var _store = __webpack_require__(34);
 	
 	var _store2 = _interopRequireDefault(_store);
 	
-	var _socket = __webpack_require__(39);
+	var _socket = __webpack_require__(40);
 	
 	var _socket2 = _interopRequireDefault(_socket);
 	
@@ -125,7 +125,6 @@ require("source-map-support").install();
 	    type: 'SET_ECHOES',
 	    echoes: res
 	  });
-	  console.log(store.getState());
 	});
 	
 	server.listen(port);
@@ -239,19 +238,19 @@ require("source-map-support").install();
 	
 	var _studymaps2 = _interopRequireDefault(_studymaps);
 	
-	var _messages = __webpack_require__(27);
+	var _messages = __webpack_require__(28);
 	
 	var _messages2 = _interopRequireDefault(_messages);
 	
-	var _links = __webpack_require__(28);
+	var _links = __webpack_require__(29);
 	
 	var _links2 = _interopRequireDefault(_links);
 	
-	var _breadcrumbs = __webpack_require__(29);
+	var _breadcrumbs = __webpack_require__(30);
 	
 	var _breadcrumbs2 = _interopRequireDefault(_breadcrumbs);
 	
-	var _echoes = __webpack_require__(30);
+	var _echoes = __webpack_require__(31);
 	
 	var _echoes2 = _interopRequireDefault(_echoes);
 	
@@ -909,6 +908,10 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
+	var _index = __webpack_require__(1);
+	
+	var _action_creators = __webpack_require__(27);
+	
 	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
@@ -937,6 +940,7 @@ require("source-map-support").install();
 	        echo.studymap = studymap._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
+	          _index.store.dispatch((0, _action_creators.postEcho)(echo));
 	          res.json(studymap);
 	        });
 	      });
@@ -967,6 +971,23 @@ require("source-map-support").install();
 
 /***/ },
 /* 27 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.postEcho = postEcho;
+	function postEcho(echo) {
+	  return {
+	    type: 'POST_ECHO',
+	    echo: echo
+	  };
+	}
+
+/***/ },
+/* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1021,7 +1042,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 28 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1103,7 +1124,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 29 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1196,7 +1217,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 30 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1235,19 +1256,19 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 31 */
+/* 32 */
 /***/ function(module, exports) {
 
 	module.exports = require("http");
 
 /***/ },
-/* 32 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = require("debug");
 
 /***/ },
-/* 33 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1257,13 +1278,13 @@ require("source-map-support").install();
 	});
 	exports.default = makeStore;
 	
-	var _redux = __webpack_require__(34);
+	var _redux = __webpack_require__(35);
 	
-	var _reduxThunk = __webpack_require__(35);
+	var _reduxThunk = __webpack_require__(36);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducer = __webpack_require__(36);
+	var _reducer = __webpack_require__(37);
 	
 	var _reducer2 = _interopRequireDefault(_reducer);
 	
@@ -1274,19 +1295,19 @@ require("source-map-support").install();
 	}
 
 /***/ },
-/* 34 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux");
 
 /***/ },
-/* 35 */
+/* 36 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 36 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1296,7 +1317,7 @@ require("source-map-support").install();
 	});
 	exports.default = reducer;
 	
-	var _core = __webpack_require__(37);
+	var _core = __webpack_require__(38);
 	
 	function reducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? _core.initialState : arguments[0];
@@ -1304,7 +1325,6 @@ require("source-map-support").install();
 	
 	  switch (action.type) {
 	    case 'SET_ECHOES':
-	      console.log("reducer", (0, _core.setEchoes)(state, action.echoes));
 	      return (0, _core.setEchoes)(state, action.echoes);
 	
 	    case 'POST_ECHO':
@@ -1314,7 +1334,7 @@ require("source-map-support").install();
 	}
 
 /***/ },
-/* 37 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1326,7 +1346,7 @@ require("source-map-support").install();
 	exports.setEchoes = setEchoes;
 	exports.postEcho = postEcho;
 	
-	var _immutable = __webpack_require__(38);
+	var _immutable = __webpack_require__(39);
 	
 	var initialState = exports.initialState = (0, _immutable.Map)();
 	
@@ -1335,6 +1355,7 @@ require("source-map-support").install();
 	}
 	
 	function postEcho(state, echo) {
+	  console.log("hits postECHO core");
 	  var echoes = state.get('echoes');
 	  return state.merge({
 	    echoes: echoes.push((0, _immutable.fromJS)(echo))
@@ -1342,13 +1363,13 @@ require("source-map-support").install();
 	}
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = require("immutable");
 
 /***/ },
-/* 39 */
+/* 40 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io");

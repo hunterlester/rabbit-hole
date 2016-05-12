@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 const StudyMap = mongoose.model('StudyMap');
 const User = mongoose.model('User');
 const Echo = mongoose.model('Echo');
+import {store} from '../index';
+import {postEcho} from '../state/action_creators';
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -22,6 +24,7 @@ router.post('/', auth, (req, res) => {
         echo.studymap = studymap._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
+          store.dispatch(postEcho(echo));
           res.json(studymap);
         });
       });

@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
 import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import io from 'socket.io-client';
 import reducers from './state/reducers';
+import {setEchoes} from './state/echo_action_creators';
+import remoteActionMiddleware from './state/middleware/remote_action_middleware';
 import thunkMiddleware from 'redux-thunk';
 import api from './state/middleware/api';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -18,7 +21,14 @@ import {ConnectedSingleStudyMap} from './components/StudyMap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
-let createStoreWithMiddleware = applyMiddleware(thunkMiddleware, api)(createStore);
+const socket = io(`${location.protocol}//${location.hostname}:3001`);
+socket.on('state', state =>
+  store.dispatch(setEchoes(state))
+);
+
+let createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware, api, remoteActionMiddleware(socket)
+)(createStore);
 
 const store = createStoreWithMiddleware(reducers);
 

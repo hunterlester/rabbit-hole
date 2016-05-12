@@ -3,7 +3,7 @@ import {fromJS, Map} from 'immutable';
 export const initialState = Map();
 
 export function setEchoes(state, echoes) {
-  return state.set('echoes', fromJS((echoes)));
+  return state.set('echoes', fromJS(echoes));
 }
 
 export function postEcho(state, echo) {
