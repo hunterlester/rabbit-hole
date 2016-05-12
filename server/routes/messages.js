@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 const Breadcrumb = mongoose.model('Breadcrumb');
 const Message = mongoose.model('Message');
 const Echo = mongoose.model('Echo');
+import {store} from '../index';
+import {postEcho} from '../state/action_creators';
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -22,6 +24,9 @@ router.post('/', auth, (req, res) => {
         echo.message = message._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
+          echo.populate([{path: 'message', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+            store.dispatch(postEcho(echo));
+          });
           res.json(message);
         });
       });

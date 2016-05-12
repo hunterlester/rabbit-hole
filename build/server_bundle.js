@@ -113,7 +113,7 @@ require("source-map-support").install();
 	startSocketServer(store);
 	
 	var promise = new Promise(function (fulfill, reject) {
-	  fulfill(Echo.find().populate('studymap breadcrumb link message').exec(function (err, echoes) {
+	  fulfill(Echo.find().populate('studymap breadcrumb link message user').exec(function (err, echoes) {
 	    if (err) throw error;
 	    return echoes;
 	  }));
@@ -940,7 +940,9 @@ require("source-map-support").install();
 	        echo.studymap = studymap._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
-	          _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          echo.populate('studymap user', function (err, echo) {
+	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          });
 	          res.json(studymap);
 	        });
 	      });
@@ -1004,6 +1006,10 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
+	var _index = __webpack_require__(1);
+	
+	var _action_creators = __webpack_require__(27);
+	
 	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
@@ -1032,6 +1038,9 @@ require("source-map-support").install();
 	        echo.message = message._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
+	          echo.populate('message user', function (err, echo) {
+	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          });
 	          res.json(message);
 	        });
 	      });
@@ -1058,6 +1067,10 @@ require("source-map-support").install();
 	var _mongoose = __webpack_require__(7);
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
+	
+	var _index = __webpack_require__(1);
+	
+	var _action_creators = __webpack_require__(27);
 	
 	var _expressJwt = __webpack_require__(25);
 	
@@ -1087,6 +1100,9 @@ require("source-map-support").install();
 	        echo.link = link._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
+	          echo.populate('link user', function (err, echo) {
+	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          });
 	          res.json(link);
 	        });
 	      });
@@ -1141,6 +1157,10 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
+	var _index = __webpack_require__(1);
+	
+	var _action_creators = __webpack_require__(27);
+	
 	var _expressJwt = __webpack_require__(25);
 	
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
@@ -1171,6 +1191,9 @@ require("source-map-support").install();
 	        echo.breadcrumb = breadcrumb._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
+	          echo.populate([{ path: 'breadcrumb', populate: { path: 'study_map' } }, { path: 'user' }], function (err, echo) {
+	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          });
 	          res.json(breadcrumb);
 	        });
 	      });
@@ -1355,7 +1378,6 @@ require("source-map-support").install();
 	}
 	
 	function postEcho(state, echo) {
-	  console.log("hits postECHO core");
 	  var echoes = state.get('echoes');
 	  return state.merge({
 	    echoes: echoes.push((0, _immutable.fromJS)(echo))

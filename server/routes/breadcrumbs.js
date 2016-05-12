@@ -6,6 +6,8 @@ const User = mongoose.model('User');
 const Breadcrumb = mongoose.model('Breadcrumb');
 const Link = mongoose.model('Link');
 const Echo = mongoose.model('Echo');
+import {store} from '../index';
+import {postEcho} from '../state/action_creators';
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -24,6 +26,9 @@ router.post('/studymap', auth, (req, res) => {
         echo.breadcrumb = breadcrumb._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
+          echo.populate([{path: 'breadcrumb', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+            store.dispatch(postEcho(echo));
+          });
           res.json(breadcrumb);
         });
       });

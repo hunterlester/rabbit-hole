@@ -12,7 +12,7 @@ export const Echoes = React.createClass({
       }
     }).map(echo => {
       if(echo.studymap) {
-        echo.body = `${echo.user} is studying ${echo.studymap.subject}`;
+        echo.body = `${echo.user.username} is studying ${echo.studymap.subject}`;
         return echo;
       } else if (echo.breadcrumb) {
         echo.body = `Breadcrumb: ${echo.breadcrumb.content}`;

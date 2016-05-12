@@ -24,7 +24,9 @@ router.post('/', auth, (req, res) => {
         echo.studymap = studymap._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
-          store.dispatch(postEcho(echo));
+          echo.populate('studymap user', (err, echo) => {
+            store.dispatch(postEcho(echo));
+          });
           res.json(studymap);
         });
       });

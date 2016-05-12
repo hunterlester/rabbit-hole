@@ -32,7 +32,7 @@ startSocketServer(store);
 
 let promise = new Promise((fulfill, reject) => {
   fulfill(
-    Echo.find().populate('studymap breadcrumb link message').exec((err, echoes) => {
+    Echo.find().populate('studymap breadcrumb link message user').exec((err, echoes) => {
       if (err) throw error
       return echoes;
     })
