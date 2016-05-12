@@ -1038,7 +1038,7 @@ require("source-map-support").install();
 	        echo.message = message._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
-	          echo.populate('message user', function (err, echo) {
+	          echo.populate([{ path: 'message', populate: { path: 'study_map' } }, { path: 'user' }], function (err, echo) {
 	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
 	          });
 	          res.json(message);
@@ -1100,7 +1100,7 @@ require("source-map-support").install();
 	        echo.link = link._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
-	          echo.populate('link user', function (err, echo) {
+	          echo.populate([{ path: 'link', populate: { path: 'study_map' } }, { path: 'user' }], function (err, echo) {
 	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
 	          });
 	          res.json(link);
@@ -1215,6 +1215,9 @@ require("source-map-support").install();
 	        echo.breadcrumb = breadcrumb._id;
 	        echo.save(function (err, echo) {
 	          if (err) return res.status(500).json(err);
+	          echo.populate([{ path: 'breadcrumb', populate: { path: 'study_map' } }, { path: 'user' }], function (err, echo) {
+	            _index.store.dispatch((0, _action_creators.postEcho)(echo));
+	          });
 	          res.json(breadcrumb);
 	        });
 	      });
