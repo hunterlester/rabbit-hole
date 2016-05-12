@@ -54,6 +54,11 @@ require("source-map-support").install();
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.store = undefined;
+	
 	var _app = __webpack_require__(2);
 	
 	var _app2 = _interopRequireDefault(_app);
@@ -66,15 +71,62 @@ require("source-map-support").install();
 	
 	var _debug2 = _interopRequireDefault(_debug);
 	
+	var _store = __webpack_require__(33);
+	
+	var _store2 = _interopRequireDefault(_store);
+	
+	var _socket = __webpack_require__(39);
+	
+	var _socket2 = _interopRequireDefault(_socket);
+	
+	var _mongoose = __webpack_require__(7);
+	
+	var _mongoose2 = _interopRequireDefault(_mongoose);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var debug = (0, _debug2.default)('rabbit-hole:server');
+	
+	var Echo = _mongoose2.default.model('Echo');
 	
 	var port = normalizePort(process.env.PORT || '3000');
 	
 	_app2.default.set('port', port);
 	
+	var store = exports.store = (0, _store2.default)();
+	
 	var server = _http2.default.createServer(_app2.default);
+	
+	function startSocketServer(store) {
+	  var io = new _socket2.default().attach(3001);
+	
+	  store.subscribe(function () {
+	    return io.emit('state', store.getState().toJS());
+	  });
+	
+	  io.on('connection', function (socket) {
+	    socket.emit('state', store.getState().toJS());
+	    socket.on('action', store.dispatch.bind(store));
+	  });
+	}
+	
+	startSocketServer(store);
+	
+	var promise = new Promise(function (fulfill, reject) {
+	  fulfill(Echo.find().populate('studymap breadcrumb link message').exec(function (err, echoes) {
+	    if (err) throw error;
+	    return echoes;
+	  }));
+	});
+	
+	promise.then(function (res) {
+	
+	  store.dispatch({
+	    type: 'SET_ECHOES',
+	    echoes: res
+	  });
+	  console.log(store.getState());
+	});
 	
 	server.listen(port);
 	server.on('error', onError);
@@ -881,12 +933,9 @@ require("source-map-support").install();
 	      user.save(function (err) {
 	        if (err) return res.sendStatus(500);
 	        var echo = new Echo();
-	        console.log(studymap);
 	        echo.user = studymap.user;
 	        echo.studymap = studymap._id;
-	        console.log(echo);
 	        echo.save(function (err, echo) {
-	          console.log(echo);
 	          if (err) return res.status(500).json(err);
 	          res.json(studymap);
 	        });
@@ -1196,6 +1245,113 @@ require("source-map-support").install();
 /***/ function(module, exports) {
 
 	module.exports = require("debug");
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = makeStore;
+	
+	var _redux = __webpack_require__(34);
+	
+	var _reduxThunk = __webpack_require__(35);
+	
+	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+	
+	var _reducer = __webpack_require__(36);
+	
+	var _reducer2 = _interopRequireDefault(_reducer);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function makeStore() {
+	  return (0, _redux.createStore)(_reducer2.default);
+	}
+
+/***/ },
+/* 34 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux");
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	module.exports = require("redux-thunk");
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = reducer;
+	
+	var _core = __webpack_require__(37);
+	
+	function reducer() {
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? _core.initialState : arguments[0];
+	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'SET_ECHOES':
+	      console.log("reducer", (0, _core.setEchoes)(state, action.echoes));
+	      return (0, _core.setEchoes)(state, action.echoes);
+	
+	    case 'POST_ECHO':
+	      return (0, _core.postEcho)(state, action.echo);
+	  }
+	  return state;
+	}
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.initialState = undefined;
+	exports.setEchoes = setEchoes;
+	exports.postEcho = postEcho;
+	
+	var _immutable = __webpack_require__(38);
+	
+	var initialState = exports.initialState = (0, _immutable.Map)();
+	
+	function setEchoes(state, echoes) {
+	  return state.set('echoes', (0, _immutable.fromJS)(echoes));
+	}
+	
+	function postEcho(state, echo) {
+	  var echoes = state.get('echoes');
+	  return state.merge({
+	    echoes: echoes.push((0, _immutable.fromJS)(echo))
+	  });
+	}
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	module.exports = require("immutable");
+
+/***/ },
+/* 39 */
+/***/ function(module, exports) {
+
+	module.exports = require("socket.io");
 
 /***/ }
 /******/ ]);

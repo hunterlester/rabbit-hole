@@ -4,6 +4,8 @@ import debugGet from 'debug';
 const debug = debugGet('rabbit-hole:server');
 import makeStore from './state/store';
 import Server from 'socket.io';
+import mongoose from 'mongoose';
+const Echo = mongoose.model('Echo');
 
 let port = normalizePort(process.env.PORT || '3000');
 
@@ -27,6 +29,24 @@ function startSocketServer(store) {
 }
 
 startSocketServer(store);
+
+let promise = new Promise((fulfill, reject) => {
+  fulfill(
+    Echo.find().populate('studymap breadcrumb link message').exec((err, echoes) => {
+      if (err) throw error
+      return echoes;
+    })
+  );
+});
+
+promise.then((res) => {
+
+  store.dispatch({
+    type: 'SET_ECHOES',
+    echoes: res
+  });
+})
+
 
 server.listen(port);
 server.on('error', onError);

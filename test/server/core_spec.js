@@ -8,9 +8,9 @@ describe('application logic', () => {
   describe('setEchoes', () => {
     it('adds fetched echoes to the state', () => {});
 
-    it('converts to immutable from JSON data', () => {
+    it('converts to immutable from JS', () => {
       const state = Map();
-      const echoes = JSON.stringify([{echo: 'echo1'}, {echo: 'echo2'}]);
+      const echoes = [{echo: 'echo1'}, {echo: 'echo2'}];
       const nextState = setEchoes(state, echoes);
       expect(nextState).to.equal(fromJS({
         echoes: [{echo: 'echo1'}, {echo: 'echo2'}]
@@ -21,11 +21,11 @@ describe('application logic', () => {
   describe('postEcho', () => {
     it('adds a newly created echo to the echoes feed', () => {});
 
-    it('converts to immutable from JSON data', () => {
+    it('converts to immutable from JS', () => {
       const state = fromJS({
         echoes: [{echo: 'echo1'}, {echo: 'echo2'}]
       });
-      const echo = JSON.stringify({echo: 'echo3'});
+      const echo = {echo: 'echo3'};
       const nextState = postEcho(state, echo);
 
       expect(nextState).to.equal(fromJS({
