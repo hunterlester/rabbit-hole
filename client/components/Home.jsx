@@ -4,11 +4,17 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import Login from './Login';
 
-import AppBar from 'material-ui/lib/app-bar';
-import IconMenu from 'material-ui/lib/menus/icon-menu';
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
-import MenuItem from 'material-ui/lib/menus/menu-item';
+import Toolbar from 'material-ui/lib/toolbar/toolbar';
+import ToolbarGroup from 'material-ui/lib/toolbar/toolbar-group';
+import ToolbarTitle from 'material-ui/lib/toolbar/toolbar-title';
 import IconButton from 'material-ui/lib/icon-button';
+import IconMenu from 'material-ui/lib/menus/icon-menu';
+import MenuItem from 'material-ui/lib/menus/menu-item';
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import FlatButton from 'material-ui/lib/flat-button';
+import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
+
+
 
 import { loginUser } from '../state/user_login/login_actions_core';
 
@@ -24,28 +30,32 @@ export const Home = React.createClass({
 
         {isAuthenticated &&
           <div>
-            <AppBar
-              title='Rabbit Hole'
-              onTitleTouchTap={() => {
-                hashHistory.push('/');
-              }}
-              onLeftIconButtonTouchTap={() => {
-                hashHistory.push('/echoes')
-              }}
-              iconElementRight={
+            <Toolbar>
+              <ToolbarGroup firstChild={true} float="left">
+                <ToolbarTitle text="Rabbit Hole" />
+              </ToolbarGroup>
+              <ToolbarGroup lastChild={false} float='right'>
                 <IconMenu
                   iconButtonElement={
-                    <IconButton><MoreVertIcon /></IconButton>
+                    <IconButton touch={true}>
+                      <MoreVertIcon />
+                    </IconButton>
                   }
-                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
                   <MenuItem primaryText="Settings" />
-                  <MenuItem primaryText="Help" />
-                  <MenuItem primaryText="Sign out" />
+                  <MenuItem primaryText="Profile" />
+                  <MenuItem primaryText="Logout" />
                 </IconMenu>
-              }
-            />
+                <FlatButton label="Study Maps" onTouchTap={() => {
+                  hashHistory.push('/')
+                }} />
+                <ToolbarSeparator />
+                <FlatButton label="Activity Echoes" onTouchTap={() => {
+                  hashHistory.push('/echoes')
+                }} />
+
+              </ToolbarGroup>
+            </Toolbar>
             {this.props.children}
           </div>
         }
