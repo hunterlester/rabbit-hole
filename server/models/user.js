@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
   hash: String,
   breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumbs'}],
   study_maps: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],
-  points: Number
+  points: {type: Number, default: 1}
 }, {strict: false});
 
 UserSchema.methods.validPassword = function (password) {

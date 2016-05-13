@@ -37,13 +37,13 @@ export const StudyMaps = React.createClass({
     return (
       <div>
         {isAuthenticated &&
-          <div>
+          <div className="row">
 
-              <div>
+              <div className="col-sm-4 col-sm-push-8">
                 <LinkForm userID={user._id} studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
-              <div>
+              <div className="col-sm-8 col-sm-pull-4">
                 <h3>
                   Subjects
                   <CreateNewFolder onClick={() => {

@@ -13,14 +13,15 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/lib/flat-button';
 import ToolbarSeparator from 'material-ui/lib/toolbar/toolbar-separator';
+import Badge from 'material-ui/lib/badge';
+import NotificationsIcon from 'material-ui/lib/svg-icons/social/notifications';
 
 
-
-import { loginUser } from '../state/user_login/login_actions_core';
+import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 
 export const Home = React.createClass({
   render: function () {
-    const { dispatch, isAuthenticated, errorMessage } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user } = this.props;
     return (
       <div>
 
@@ -33,6 +34,23 @@ export const Home = React.createClass({
             <Toolbar>
               <ToolbarGroup firstChild={true} float="left">
                 <ToolbarTitle text="Rabbit Hole" />
+
+                <IconMenu
+                  iconButtonElement={
+                    <IconButton touch={true}>
+                      <Badge primary={true} badgeContent={0}>
+                      </Badge>
+                    </IconButton>
+                  }
+                >
+                  <MenuItem primaryText="notification 1" />
+                  <MenuItem primaryText="notification 2" />
+                  <MenuItem primaryText="notification 3" />
+                </IconMenu>
+
+                <FlatButton label={`${user.displayName} - Points: ${user.points}`} />
+
+
               </ToolbarGroup>
               <ToolbarGroup lastChild={false} float='right'>
                 <IconMenu
@@ -44,7 +62,9 @@ export const Home = React.createClass({
                 >
                   <MenuItem primaryText="Settings" />
                   <MenuItem primaryText="Profile" />
-                  <MenuItem primaryText="Logout" />
+                  <MenuItem primaryText="Logout" onTouchTap={() => {
+                    dispatch(logoutUser());
+                  }}/>
                 </IconMenu>
                 <FlatButton label="Study Maps" onTouchTap={() => {
                   hashHistory.push('/')
@@ -56,7 +76,9 @@ export const Home = React.createClass({
 
               </ToolbarGroup>
             </Toolbar>
-            {this.props.children}
+            <div className="container">
+              {this.props.children}
+            </div>
           </div>
         }
       </div>

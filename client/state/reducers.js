@@ -11,9 +11,11 @@ const initialAuth = Map({
   isFetching: false,
   isAuthenticated: localStorage.getItem('token') ? true: false,
   user: {
-    username: localStorage.getItem('username') || null,
-    _id: localStorage.getItem('_id') || null,
-    token: localStorage.getItem('token') || null
+    username: localStorage.getItem('username') || undefined,
+    _id: localStorage.getItem('_id') || undefined,
+    token: localStorage.getItem('token') || undefined,
+    displayName: localStorage.getItem('displayName') || undefined,
+    points: localStorage.getItem('points') || undefined
   }
 });
 
@@ -51,7 +53,9 @@ function auth(state = initialAuth, action) {
         user: {
           username: action.user.username,
           _id: action.user._id,
-          token: action.user.token
+          token: action.user.token,
+          displayName: action.user.displayName,
+          points: action.user.points
         }
       });
     case LOGIN_FAILURE:

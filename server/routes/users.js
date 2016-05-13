@@ -23,8 +23,7 @@ router.post('/register', (req, res, next) => {
 
   user.username = req.body.username;
   user.setPassword(req.body.password);
-  user.given_name = req.body.given_name;
-  user.surname = req.body.surname;
+  user.displayName = req.body.displayName;
 
   user.save((err, user) => {
     if (err) {
@@ -34,7 +33,9 @@ router.post('/register', (req, res, next) => {
       username: user.username,
       _id: user._id,
       token: user.generateJWT(),
-      study_maps: user.study_maps
+      study_maps: user.study_maps,
+      displayName: user.displayName,
+      points: user.points
     })
   });
 });
@@ -53,7 +54,9 @@ router.post('/login', (req, res, next) => {
         username: user.username,
         _id: user._id,
         token: user.generateJWT(),
-        study_maps: user.study_maps
+        study_maps: user.study_maps,
+        displayName: user.displayName,
+        points: user.points
       });
     } else {
       return res. status(401).json(info);

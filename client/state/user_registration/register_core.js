@@ -2,10 +2,15 @@ import {hashHistory} from 'react-router';
 import {requestRegister, registerError, receiveRegister} from './actions';
 
 export function registerUser(creds) {
+
+  let body = Object.keys(creds).map(key => {
+    return key + '=' + creds[key];
+  }).join('&');
+
   let config = {
     method: 'POST',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-    body: `username=${creds.username}&password=${creds.password}`
+    body: body
   };
 
   return dispatch => {

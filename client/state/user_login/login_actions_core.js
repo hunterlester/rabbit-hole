@@ -1,5 +1,6 @@
 import {requestLogin, loginError, receiveLogin, requestLogout, receiveLogout} from './login_action_factories';
 import { setStudyMaps } from '../study_map_actions';
+import {hashHistory} from 'react-router';
 
 export function loginUser(creds) {
   let config = {
@@ -21,8 +22,10 @@ export function loginUser(creds) {
         } else {
           localStorage.setItem('token', user.token);
           localStorage.setItem('username', user.username);
+          localStorage.setItem('displayName', user.displayName);
           localStorage.setItem('_id', user._id);
           localStorage.setItem('study_maps', JSON.stringify(user.study_maps));
+          localStorage.setItem('points', user.points);
           dispatch(receiveLogin(user));
           dispatch(setStudyMaps(user.study_maps));
         }
@@ -34,6 +37,12 @@ export function logoutUser() {
   return dispatch => {
     dispatch(requestLogout())
     localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    localStorage.removeItem('_id')
+    localStorage.removeItem('study_maps')
+    localStorage.removeItem('displayName')
+    localStorage.removeItem('points');
     dispatch(receiveLogout())
+    hashHistory.push('/');
   }
 }

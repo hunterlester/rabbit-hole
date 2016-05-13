@@ -10,6 +10,12 @@ export const Register = React.createClass({
 
     return (
       <div>
+
+      <TextField hintText="Display Name"
+                 fullWidth={true}
+                 ref='displayName'
+                 floatingLabelText="Display Name" />
+
         <TextField fullWidth={true}
                    floatingLabelText='Email'
                    hintText='Email'
@@ -31,7 +37,7 @@ export const Register = React.createClass({
                        onTouchTap={() => {
 
                         if (this.refs.password.getValue() !== this.refs.password2.getValue()) {
-                          this.refs.password2.setErrorText("Passwords not match");
+                          this.refs.password2.setErrorText("Passwords not matched");
                         } else {
                           let registerObj = {};
 

@@ -522,7 +522,7 @@ require("source-map-support").install();
 	  hash: String,
 	  breadcrumbs: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'Breadcrumbs' }],
 	  study_maps: [{ type: _mongoose2.default.Schema.Types.ObjectId, ref: 'StudyMap' }],
-	  points: Number
+	  points: { type: Number, default: 1 }
 	}, { strict: false });
 	
 	UserSchema.methods.validPassword = function (password) {
@@ -817,8 +817,7 @@ require("source-map-support").install();
 	
 	  user.username = req.body.username;
 	  user.setPassword(req.body.password);
-	  user.given_name = req.body.given_name;
-	  user.surname = req.body.surname;
+	  user.displayName = req.body.displayName;
 	
 	  user.save(function (err, user) {
 	    if (err) {
@@ -828,7 +827,9 @@ require("source-map-support").install();
 	      username: user.username,
 	      _id: user._id,
 	      token: user.generateJWT(),
-	      study_maps: user.study_maps
+	      study_maps: user.study_maps,
+	      displayName: user.displayName,
+	      points: user.points
 	    });
 	  });
 	});
@@ -848,7 +849,9 @@ require("source-map-support").install();
 	        username: user.username,
 	        _id: user._id,
 	        token: user.generateJWT(),
-	        study_maps: user.study_maps
+	        study_maps: user.study_maps,
+	        displayName: user.displayName,
+	        points: user.points
 	      });
 	    } else {
 	      return res.status(401).json(info);
