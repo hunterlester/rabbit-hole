@@ -6,6 +6,7 @@ import { STUDY_MAPS_POST, STUDY_MAPS_SUCCESS, STUDY_MAPS_FAILURE, LINK_POST, BRE
 import { SET_STUDY_MAPS } from './study_map_actions';
 
 import echoes from './reducer_components/echoes';
+import profile from './reducer_components/profile';
 
 const initialAuth = Map({
   isFetching: false,
@@ -204,7 +205,8 @@ function study_maps(state = initialStudyMaps, action) {
 const reducers = combineReducers({
   auth,
   study_maps,
-  echoes
+  echoes,
+  profile
 });
 
 export default reducers;

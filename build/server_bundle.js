@@ -860,7 +860,23 @@ require("source-map-support").install();
 	});
 	
 	router.param('userId', function (req, res, next, userId) {
-	  User.findById(userId).populate('study_maps').exec(function (err, user) {
+	  User.findById(userId).populate({ path: 'study_maps', populate: [{
+	      path: 'links',
+	      populate: {
+	        path: 'breadcrumbs',
+	        populate: {
+	          path: 'messages',
+	          populate: {
+	            path: 'user'
+	          } } }
+	    }, {
+	      path: 'breadcrumbs',
+	      populate: {
+	        path: 'messages',
+	        populate: {
+	          path: 'user'
+	        } } }]
+	  }).exec(function (err, user) {
 	    if (err) return res.sendStatus(404);
 	    req.user = user;
 	    next();

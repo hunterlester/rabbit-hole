@@ -18,6 +18,7 @@ import NotificationsIcon from 'material-ui/lib/svg-icons/social/notifications';
 
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
+import {getProfile} from '../state/profile_actions/core';
 
 export const Home = React.createClass({
   render: function () {
@@ -48,7 +49,11 @@ export const Home = React.createClass({
                   <MenuItem primaryText="notification 3" />
                 </IconMenu>
 
-                <FlatButton label={`${user.displayName} - Points: ${user.points}`} />
+                <FlatButton
+                  label={`${user.displayName} - Points: ${user.points}`}
+                  onTouchTap={() => {
+                    dispatch(getProfile(user._id))
+                  }} />
 
 
               </ToolbarGroup>

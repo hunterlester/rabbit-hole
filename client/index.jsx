@@ -18,6 +18,7 @@ import {ConnectedStudyMapForm} from './components/StudyMapForm';
 import {ConnectedEchoes} from './components/Echoes';
 import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
+import {ConnectedProfile} from './components/Profile';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
@@ -38,6 +39,7 @@ const routes = <Route component={App}>
     <Route path="/echoes" component={ConnectedEchoes} />
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
     <Route path="/studymaps/:studyMap" component={ConnectedSingleStudyMap} />
+    <Route path="/profile/:userID" component={ConnectedProfile} />
   </Route>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;

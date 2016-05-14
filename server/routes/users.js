@@ -65,7 +65,28 @@ router.post('/login', (req, res, next) => {
 });
 
 router.param('userId', (req, res, next, userId) => {
-  User.findById(userId).populate('study_maps').exec((err, user) => {
+  User.findById(userId).populate(
+    {path: 'study_maps', populate: [
+      {
+        path: 'links',
+        populate: {
+          path: 'breadcrumbs',
+          populate: {
+            path: 'messages',
+            populate: {
+              path:
+                'user'
+              }}}
+      },
+      {
+        path: 'breadcrumbs',
+        populate: {
+          path: 'messages',
+          populate: {
+            path: 'user'
+          }}}]
+    }
+  ).exec((err, user) => {
     if (err) return res.sendStatus(404);
     req.user = user;
     next();
