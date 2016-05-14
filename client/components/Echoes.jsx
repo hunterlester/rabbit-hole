@@ -3,14 +3,13 @@ import {connect} from 'react-redux';
 import Card from 'material-ui/lib/card/card';
 import CardHeader from 'material-ui/lib/card/card-header';
 import CardText from 'material-ui/lib/card/card-text';
+import FlatButton from 'material-ui/lib/flat-button';
+
+import {getProfile} from '../state/profile_actions/core';
 
 export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
-    return echoes.filter(echo => {
-      if(echo.breadcrumb || echo.link || echo.message || echo.studymap) {
-        return echo;
-      }
-    }).map(echo => {
+    return echoes.map(echo => {
       if(echo.studymap) {
         echo.body = `${echo.user.username} is studying ${echo.studymap.subject}`;
         return echo;
@@ -44,9 +43,8 @@ export const Echoes = React.createClass({
                showExpandableButton={true}
              />
              <CardText expandable={true}>
-               <div>
-
-               </div>
+              <FlatButton label="Go to Profile" onTouchTap={() => {
+                this.props.dispatch(getProfile(echo.user._id))              }}/>
              </CardText>
            </Card>
          );
