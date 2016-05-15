@@ -1,5 +1,6 @@
 import {hashHistory} from 'react-router';
 import {requestRegister, registerError, receiveRegister} from './actions';
+import fetch from 'isomorphic-fetch'
 
 export function registerUser(creds) {
 

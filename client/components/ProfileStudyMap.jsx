@@ -8,10 +8,16 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 import MessageForm from './MessageForm.jsx';
-import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage, getStudyMap } from '../state/api/actions';
+import {
+  postBreadcrumb,
+  postLinkBreadcrumb,
+  postMessage,
+  postLinkMessage,
+  getStudyMap
+} from '../state/api/actions';
 
 
-export const StudyMap = React.createClass({
+export const ProfileStudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
     return true;
   },
@@ -27,7 +33,12 @@ export const StudyMap = React.createClass({
             />
             <CardText expandable={true}>
               <div>
-                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={breadcrumb._id} userID={this.props.user._id} postMessage={ messageObj => {
+                <MessageForm
+                  linkID={link._id}
+                  studyMapID={this.props.study_map._id}
+                  breadcrumbID={breadcrumb._id}
+                  userID={this.props.user._id}
+                  postMessage={ messageObj => {
                   this.props.dispatch(postLinkMessage(messageObj))
                 }}/>
                 {this.getMessages(breadcrumb)}
@@ -48,9 +59,10 @@ export const StudyMap = React.createClass({
     }
   },
   render: function() {
-    const { isAuthenticated, user, study_map, dispatch} = this.props;
+    const { isAuthenticated, user, study_map, dispatch, profile} = this.props;
     return (
       <div>
+        <h3>{profile.displayName}'s study map:</h3>
         <h3>
           {study_map.subject}
         </h3>
@@ -110,6 +122,7 @@ export const StudyMap = React.createClass({
               user: user._id
             };
 
+            console.log(breadcrumbObj);
             dispatch(postBreadcrumb(breadcrumbObj));
 
             this.refs.content.clearValue();
@@ -128,7 +141,11 @@ export const StudyMap = React.createClass({
               <div>
                 {this.getMessages(breadcrumb)}
               </div>
-              <MessageForm studyMapID={study_map._id} breadcrumbID={breadcrumb._id} userID={user._id} postMessage={ messageObj => {
+              <MessageForm
+                studyMapID={study_map._id}
+                breadcrumbID={breadcrumb._id}
+                userID={user._id}
+                postMessage={ messageObj => {
                 dispatch(postMessage(messageObj))
               }}/>
             </CardText>
@@ -143,7 +160,7 @@ export const StudyMap = React.createClass({
 function mapStateToProps(state, ownProps) {
   const { isAuthenticated, user } = state.auth.toJS();
 
-  let studyMap = state.study_maps.toJS().study_maps.find(study_map => {
+  let studyMap = state.profile.toJS().study_maps.find(study_map => {
     if (study_map._id == ownProps.params.studyMap) {
       return study_map;
     }
@@ -152,9 +169,10 @@ function mapStateToProps(state, ownProps) {
   return {
     isAuthenticated,
     user,
-    study_map: studyMap
+    study_map: studyMap,
+    profile: state.profile.toJS()
   }
 
 }
 
-export const ConnectedSingleStudyMap = connect(mapStateToProps)(StudyMap);
+export const ConnectedProfileStudyMap = connect(mapStateToProps)(ProfileStudyMap);

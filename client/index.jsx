@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Router, Route, hashHistory} from 'react-router';
@@ -19,6 +20,7 @@ import {ConnectedEchoes} from './components/Echoes';
 import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
 import {ConnectedProfile} from './components/Profile';
+import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
@@ -40,6 +42,7 @@ const routes = <Route component={App}>
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
     <Route path="/studymaps/:studyMap" component={ConnectedSingleStudyMap} />
     <Route path="/profile/:userID" component={ConnectedProfile} />
+    <Route path="/profile/study_map/:studyMap" component={ConnectedProfileStudyMap} />
   </Route>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;

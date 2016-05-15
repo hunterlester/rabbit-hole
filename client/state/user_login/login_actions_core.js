@@ -1,6 +1,8 @@
 import {requestLogin, loginError, receiveLogin, requestLogout, receiveLogout} from './login_action_factories';
 import { setStudyMaps } from '../study_map_actions';
 import {hashHistory} from 'react-router';
+import fetch from 'isomorphic-fetch'
+
 
 export function loginUser(creds) {
   let config = {

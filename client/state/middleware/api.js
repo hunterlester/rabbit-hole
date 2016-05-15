@@ -1,3 +1,4 @@
+import fetch from 'isomorphic-fetch'
 const BASE_URL = `${location.protocol}//${location.hostname}:${location.port}/`;
 
 function callApi(endpoint, authenticated, method, obj) {
