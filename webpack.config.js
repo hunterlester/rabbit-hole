@@ -52,8 +52,7 @@ module.exports = [
     devtool: 'eval',
     // cheap-module-source-map
     entry: [
-      // 'webpack-dev-server/client?http://localhost:8080',
-      // 'webpack/hot/only-dev-server',
+      'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
     target: 'web',
@@ -85,11 +84,8 @@ module.exports = [
       publicPath: '/',
       filename: 'webpack_bundle.js'
     },
-    devServer: {
-      contentBase: './dev_entry',
-      hot: true
-    },
     plugins: [
+      new webpack.optimize.OccurenceOrderPlugin(),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {

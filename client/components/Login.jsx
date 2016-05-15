@@ -27,7 +27,7 @@ export default React.createClass({
               <Divider inset={true} />
               <ListItem primaryText="Quickly add links" />
               <Divider inset={true} />
-              <ListItem primaryText="Pose questions" />
+              <ListItem primaryText="Pose questions and record thoughts" />
               <Divider inset={true} />
               <ListItem primaryText="Record thoughts" />
               <Divider inset={true} />
