@@ -19,7 +19,7 @@ export default React.createClass({
       <div className='container'>
         <div className='row'>
           <div className='col-sm-8'>
-            <h3>Welcome to Rabbit Hole.</h3>
+            <h3>Welcome to Rabbit Hole!</h3>
             <h3>Organize your studies and get help from community.</h3>
             <h4>Here's how it works:</h4>
             <List>
@@ -28,8 +28,6 @@ export default React.createClass({
               <ListItem primaryText="Quickly add links" />
               <Divider inset={true} />
               <ListItem primaryText="Pose questions and record thoughts" />
-              <Divider inset={true} />
-              <ListItem primaryText="Record thoughts" />
               <Divider inset={true} />
               <ListItem primaryText="Your activities are echoed on community feed" />
               <Divider inset={true} />

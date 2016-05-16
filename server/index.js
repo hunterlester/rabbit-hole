@@ -6,18 +6,10 @@ import makeStore from './state/store';
 import Server from 'socket.io';
 import mongoose from 'mongoose';
 const Echo = mongoose.model('Echo');
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../webpack.config';
 
 let port = normalizePort(process.env.PORT || '3000');
 
 app.set('port', port);
-
-let compiler = webpack(config[1]);
-app.use(webpackDevMiddleware(compiler, { noInfo: false, publicPath: config[1].output.publicPath}))
-app.use(webpackHotMiddleware(compiler))
 
 export const store = makeStore();
 

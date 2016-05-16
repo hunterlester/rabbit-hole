@@ -35,14 +35,6 @@ let createStoreWithMiddleware = applyMiddleware(
 
 const store = createStoreWithMiddleware(reducers);
 
-if (module.hot) {
-   // Enable Webpack hot module replacement for reducers
-   module.hot.accept('../reducers', () => {
-     const nextReducer = require('./state/reducers').default
-     store.replaceReducer(nextReducer)
-   })
- }
-
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>
     <Route path="/" component={ConnectedStudyMaps} />

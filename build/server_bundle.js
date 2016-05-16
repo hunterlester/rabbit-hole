@@ -83,37 +83,15 @@ require("source-map-support").install();
 	
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 	
-	var _webpack = __webpack_require__(41);
-	
-	var _webpack2 = _interopRequireDefault(_webpack);
-	
-	var _webpackDevMiddleware = __webpack_require__(42);
-	
-	var _webpackDevMiddleware2 = _interopRequireDefault(_webpackDevMiddleware);
-	
-	var _webpackHotMiddleware = __webpack_require__(43);
-	
-	var _webpackHotMiddleware2 = _interopRequireDefault(_webpackHotMiddleware);
-	
-	var _webpack3 = __webpack_require__(44);
-	
-	var _webpack4 = _interopRequireDefault(_webpack3);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var debug = (0, _debug2.default)('rabbit-hole:server');
 	
 	var Echo = _mongoose2.default.model('Echo');
 	
-	console.log(_webpack4.default[1]);
-	
 	var port = normalizePort(process.env.PORT || '3000');
 	
 	_app2.default.set('port', port);
-	
-	var compiler = (0, _webpack2.default)(_webpack4.default[1]);
-	_app2.default.use((0, _webpackDevMiddleware2.default)(compiler, { noInfo: true, publicPath: _webpack4.default.output.publicPath }));
-	_app2.default.use((0, _webpackHotMiddleware2.default)(compiler));
 	
 	var store = exports.store = (0, _store2.default)();
 	
@@ -1439,104 +1417,6 @@ require("source-map-support").install();
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io");
-
-/***/ },
-/* 41 */
-/***/ function(module, exports) {
-
-	module.exports = require("webpack");
-
-/***/ },
-/* 42 */
-/***/ function(module, exports) {
-
-	module.exports = require("webpack-dev-middleware");
-
-/***/ },
-/* 43 */
-/***/ function(module, exports) {
-
-	module.exports = require("webpack-hot-middleware");
-
-/***/ },
-/* 44 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
-	
-	var _ref;
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var webpack = __webpack_require__(41);
-	var path = __webpack_require__(4);
-	var fs = __webpack_require__(12);
-	
-	var nodeModules = {};
-	fs.readdirSync('node_modules').filter(function (x) {
-	  return ['.bin'].indexOf(x) === -1;
-	}).forEach(function (mod) {
-	  nodeModules[mod] = 'commonjs ' + mod;
-	});
-	
-	module.exports = [{
-	  devtool: 'sourcemap',
-	  target: 'node',
-	  node: {
-	    __dirname: true
-	  },
-	  entry: ['./server/index.js'],
-	  query: {
-	    cacheDirectory: true,
-	    presets: ['es2015']
-	  },
-	  module: {
-	    loaders: [{
-	      test: /\.js$/,
-	      loader: 'babel',
-	      exclude: /node_modules/
-	    }]
-	  },
-	  resolve: {
-	    extensions: ['', '.js']
-	  },
-	  output: {
-	    path: __dirname + "/build",
-	    publicPath: '/',
-	    filename: 'server_bundle.js'
-	  },
-	  externals: nodeModules,
-	  plugins: [new webpack.BannerPlugin('require("source-map-support").install();', { raw: true, entryOnly: false })]
-	}, (_ref = {
-	  target: 'web',
-	  devtool: 'eval',
-	  // cheap-module-source-map
-	  entry: ['webpack-hot-middleware/client', './client/index.jsx']
-	}, _defineProperty(_ref, 'target', 'web'), _defineProperty(_ref, 'module', {
-	  loaders: [{
-	    test: /\.jsx?$/,
-	    exclude: /node_modules/,
-	    loader: 'react-hot!babel'
-	  }, {
-	    test: /\.css$/,
-	    loader: 'style!css!autoprefixer'
-	  }, { test: /\.(woff|woff2)$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" }, { test: /\.ttf$/, loader: "file-loader" }, { test: /\.eot$/, loader: "file-loader" }, { test: /\.svg$/, loader: "file-loader" }]
-	}), _defineProperty(_ref, 'resolve', {
-	  alias: {
-	    'react': path.join(__dirname, 'node_modules', 'react')
-	  },
-	  extensions: ['', '.js', '.jsx']
-	}), _defineProperty(_ref, 'output', {
-	  path: __dirname + '/server/public',
-	  publicPath: '/',
-	  filename: 'webpack_bundle.js'
-	}), _defineProperty(_ref, 'plugins', [new webpack.optimize.OccurenceOrderPlugin(), new webpack.HotModuleReplacementPlugin(), new webpack.DefinePlugin({
-	  'process.env': {
-	    'NODE_ENV': JSON.stringify('development')
-	    //change to 'production' in production
-	  }
-	})]), _ref)];
-	/* WEBPACK VAR INJECTION */}.call(exports, ""))
 
 /***/ }
 /******/ ]);

@@ -49,10 +49,9 @@ module.exports = [
   },
   {
     target: 'web',
-    devtool: 'eval',
+    devtool: 'cheap-module-eval-source-map',
     // cheap-module-source-map
     entry: [
-      'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
     target: 'web',
@@ -80,13 +79,11 @@ module.exports = [
       extensions: ['', '.js', '.jsx']
     },
     output: {
-      path: __dirname + '/server/public',
+      path: __dirname + '/server/public/',
       publicPath: '/',
       filename: 'webpack_bundle.js'
     },
     plugins: [
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('development')
