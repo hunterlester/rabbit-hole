@@ -1,7 +1,20 @@
 import {requestLogin, loginError, receiveLogin, requestLogout, receiveLogout} from './login_action_factories';
 import { setStudyMaps } from '../study_map_actions';
 import {hashHistory} from 'react-router';
-import fetch from 'isomorphic-fetch'
+import { fromJS } from 'immutable';
+import fetch from 'isomorphic-fetch';
+
+export const initialAuth = fromJS({
+  isFetching: false,
+  isAuthenticated: localStorage.getItem('token') ? true: false,
+  user: {
+    username: localStorage.getItem('username') || undefined,
+    _id: localStorage.getItem('_id') || undefined,
+    token: localStorage.getItem('token') || undefined,
+    displayName: localStorage.getItem('displayName') || undefined,
+    points: localStorage.getItem('points') || undefined
+  }
+});
 
 
 export function loginUser(creds) {

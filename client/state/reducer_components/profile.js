@@ -1,6 +1,7 @@
 import {Map, fromJS} from 'immutable';
+import {initialState} from '../profile_actions/core';
 
-export default function profile(state = Map(), action) {
+export default function profile(state = initialState, action) {
   switch (action.type) {
     case 'RECEIVE_PROFILE':
       return state.merge({

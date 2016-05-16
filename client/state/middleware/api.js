@@ -1,5 +1,13 @@
 import fetch from 'isomorphic-fetch'
+import { fromJS } from 'immutable';
 const BASE_URL = `${location.protocol}//${location.hostname}:${location.port}/`;
+
+const parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+
+export const initialStudyMaps = fromJS({
+  isFetching: false,
+  study_maps: parsedStudyMaps || [],
+});
 
 function callApi(endpoint, authenticated, method, obj) {
   let token = localStorage.getItem('token') || null;
