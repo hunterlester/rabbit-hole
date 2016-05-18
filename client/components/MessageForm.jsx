@@ -17,10 +17,11 @@ export default React.createClass({
         <RaisedButton
           label="Reply"
           onTouchTap={() => {
+            let body = this.refs.body.getValue();
             let messageObj = {
               study_map: studyMapID,
               breadcrumb: breadcrumbID,
-              body: this.refs.body.getValue(),
+              body: body,
               user: userID
             };
             if(linkID) {

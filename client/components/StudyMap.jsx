@@ -16,21 +16,21 @@ export const StudyMap = React.createClass({
     return true;
   },
   getLinkBreadcrumbs: function(link) {
-    if (link.breadcrumbs.length) {
-      return link.breadcrumbs.map(breadcrumb => {
+    if (link.breadcrumbs) {
+      return Object.keys(link.breadcrumbs).map(key => {
         return (
-          <Card key={breadcrumb._id}>
+          <Card key={link.breadcrumbs[key]._id}>
             <CardHeader
-              title={breadcrumb.content}
+              title={link.breadcrumbs[key].content}
               actAsExpander={true}
               showExpandableButton={true}
             />
             <CardText expandable={true}>
               <div>
-                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={breadcrumb._id} userID={this.props.user._id} postMessage={ messageObj => {
+                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={link.breadcrumbs[key]._id} userID={this.props.user._id} postMessage={ messageObj => {
                   this.props.dispatch(postLinkMessage(messageObj))
                 }}/>
-                {this.getMessages(breadcrumb)}
+                {this.getMessages(link.breadcrumbs[key])}
               </div>
             </CardText>
           </Card>
@@ -39,10 +39,10 @@ export const StudyMap = React.createClass({
     }
   },
   getMessages: function(breadcrumb) {
-    if(breadcrumb.messages.length) {
-      return breadcrumb.messages.map(message => {
+    if(breadcrumb.messages) {
+      return Object.keys(breadcrumb.messages).map(key => {
         return (
-          <div key={message._id}>{message.body} - {message.user.username}</div>
+          <div key={breadcrumb.messages[key]._id}>{breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
         )
       })
     }
@@ -54,10 +54,10 @@ export const StudyMap = React.createClass({
         <h3>
           {study_map.subject}
         </h3>
-        {study_map.links.map(link =>
-          <Card key={link._id}>
+        {Object.keys(study_map.links).map(key =>
+          <Card key={study_map.links[key]._id}>
             <CardHeader
-              title={<a href={link.uri} target="_blank">{link.title}</a>}
+              title={<a href={study_map.links[key].uri} target="_blank">{study_map.links[key].title}</a>}
               actAsExpander={true}
               showExpandableButton={true}
             />
@@ -75,9 +75,10 @@ export const StudyMap = React.createClass({
                 <RaisedButton
                   label="Contribute breadcrumb"
                   onTouchTap={() => {
+                    let content = this.refs.content.getValue();
                     let breadcrumbObj = {
-                      link: link._id,
-                      content: this.refs.content.getValue(),
+                      link: study_map.links[key]._id,
+                      content: content,
                       user: user._id,
                       study_map: this.props.params.studyMap
                     };
@@ -86,7 +87,7 @@ export const StudyMap = React.createClass({
                     this.refs.content.clearValue();
                   }}
                 />
-                {this.getLinkBreadcrumbs(link)}
+                {this.getLinkBreadcrumbs(study_map.links[key])}
               </div>
             </CardText>
           </Card>
@@ -117,18 +118,18 @@ export const StudyMap = React.createClass({
         />
 
         <h3>Breadcrumbs</h3>
-        {study_map.breadcrumbs.map(breadcrumb =>
-          <Card key={breadcrumb._id}>
+        {Object.keys(study_map.breadcrumbs).map(key =>
+          <Card key={study_map.breadcrumbs[key]._id}>
             <CardHeader
-              title={breadcrumb.content}
+              title={study_map.breadcrumbs[key].content}
               actAsExpander={true}
               showExpandableButton={true}
             />
             <CardText expandable={true}>
               <div>
-                {this.getMessages(breadcrumb)}
+                {this.getMessages(study_map.breadcrumbs[key])}
               </div>
-              <MessageForm studyMapID={study_map._id} breadcrumbID={breadcrumb._id} userID={user._id} postMessage={ messageObj => {
+              <MessageForm studyMapID={study_map._id} breadcrumbID={study_map.breadcrumbs[key]._id} userID={user._id} postMessage={ messageObj => {
                 dispatch(postMessage(messageObj))
               }}/>
             </CardText>
@@ -143,11 +144,7 @@ export const StudyMap = React.createClass({
 function mapStateToProps(state, ownProps) {
   const { isAuthenticated, user } = state.auth.toJS();
 
-  let studyMap = state.study_maps.toJS().study_maps.find(study_map => {
-    if (study_map._id == ownProps.params.studyMap) {
-      return study_map;
-    }
-  });
+  let studyMap = state.study_maps.toJS().study_maps[ownProps.params.studyMap];
 
   return {
     isAuthenticated,
