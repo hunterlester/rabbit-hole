@@ -3,6 +3,7 @@ import { setStudyMaps } from '../study_map_actions';
 import {hashHistory} from 'react-router';
 import { fromJS } from 'immutable';
 import fetch from 'isomorphic-fetch';
+import cleanest from 'cleanest';
 
 export const initialAuth = fromJS({
   isFetching: false,
@@ -35,6 +36,7 @@ export function loginUser(creds) {
           dispatch(loginError(user.message));
           return Promise.reject(user);
         } else {
+          console.log(cleanest(user));
           localStorage.setItem('token', user.token);
           localStorage.setItem('username', user.username);
           localStorage.setItem('displayName', user.displayName);

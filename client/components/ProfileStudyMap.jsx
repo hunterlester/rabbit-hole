@@ -25,7 +25,7 @@ export const ProfileStudyMap = React.createClass({
     if (link.breadcrumbs.length) {
       return link.breadcrumbs.map(breadcrumb => {
         return (
-          <Card key={breadcrumb._id}>
+          <Card ref={breadcrumb._id} key={breadcrumb._id}>
             <CardHeader
               title={breadcrumb.content}
               actAsExpander={true}
@@ -58,6 +58,16 @@ export const ProfileStudyMap = React.createClass({
       })
     }
   },
+  componentDidMount: function() {
+    if(this.props.params.link) {
+      this.refs[this.props.params.link].setState({expanded: true})
+      console.log(this.refs);
+      Object.keys(this.refs).map(key => {
+        console.log(key, this.refs[key]);
+      })
+
+    }
+  },
   render: function() {
     const { isAuthenticated, user, study_map, dispatch, profile} = this.props;
     return (
@@ -67,7 +77,7 @@ export const ProfileStudyMap = React.createClass({
           {study_map.subject}
         </h3>
         {study_map.links.map(link =>
-          <Card key={link._id}>
+          <Card ref={link._id} key={link._id}>
             <CardHeader
               title={<a href={link.uri} target="_blank">{link.title}</a>}
               actAsExpander={true}
@@ -122,7 +132,6 @@ export const ProfileStudyMap = React.createClass({
               user: user._id
             };
 
-            console.log(breadcrumbObj);
             dispatch(postBreadcrumb(breadcrumbObj));
 
             this.refs.content.clearValue();
@@ -131,7 +140,7 @@ export const ProfileStudyMap = React.createClass({
 
         <h3>Breadcrumbs</h3>
         {study_map.breadcrumbs.map(breadcrumb =>
-          <Card key={breadcrumb._id}>
+          <Card ref={breadcrumb._id} id={breadcrumb._id} key={breadcrumb._id}>
             <CardHeader
               title={breadcrumb.content}
               actAsExpander={true}

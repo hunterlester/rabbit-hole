@@ -1,8 +1,7 @@
 import React from 'react';
+import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/lib/card';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
@@ -20,6 +19,7 @@ export const Echoes = React.createClass({
     return echoes.map(echo => {
       if(echo.studymap) {
         echo.body = `Studying ${echo.studymap.subject}`;
+
         echo.quickreply = <div>
           <TextField
             hintText="Quickly leave helpful breadcrumb"
@@ -48,6 +48,9 @@ export const Echoes = React.createClass({
         </div>;
         return echo;
       } else if (echo.breadcrumb) {
+        echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
+          hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
+        }} />
         echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
         return echo;
       } else if (echo.message) {
@@ -82,6 +85,9 @@ export const Echoes = React.createClass({
              <CardText expandable={true}>
               {echo.quickreply}
              </CardText>
+             <CardActions expandable={true}>
+              {echo.action}
+            </CardActions>
            </Card>
          );
        })}

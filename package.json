@@ -31,6 +31,7 @@
     "babel-polyfill": "^6.8.0",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
+    "cleanest": "^1.0.2",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",

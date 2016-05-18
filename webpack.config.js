@@ -13,7 +13,7 @@ fs.readdirSync('node_modules')
 
 module.exports = [
   {
-    devtool: 'sourcemap',
+    devtool: 'eval',
     target: 'node',
     node: {
       __dirname: true
@@ -49,11 +49,13 @@ module.exports = [
   },
   {
     target: 'web',
-    devtool: 'cheap-module-eval-source-map',
-    // cheap-module-source-map
+    devtool: 'eval',
     entry: [
       './client/index.jsx'
     ],
+    query: {
+      cacheDirectory: true,
+    },
     target: 'web',
     module: {
       loaders: [
