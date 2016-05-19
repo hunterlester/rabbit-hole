@@ -47,7 +47,7 @@ export const Echoes = React.createClass({
           />
         </div>;
         return echoes[key];
-      } else if (echoes[key].breadcrumb) {
+      } else if (echoes[key].breadcrumb && echoes[key].breadcrumb.link) {
         echoes[key].action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
           hashHistory.push(`/profile/study_map/${echoes[key].breadcrumb.study_map}/${echoes[key].breadcrumb.link}/${echoes[key].breadcrumb._id}`)
         }} />

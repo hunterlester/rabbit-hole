@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { fromJS } from 'immutable';
+import cleanest from 'cleanest';
 const BASE_URL = `${location.protocol}//${location.hostname}:${location.port}/`;
 
 const parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
@@ -72,11 +73,14 @@ function callApi(endpoint, authenticated, method, obj) {
 
   return fetch(BASE_URL + endpoint, config)
     .then(response =>
-      response.text().then(text => ({ text, response }))
-    ).then(({ text, response }) => {
+      response.json().then(json => ({ json, response }))
+    ).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(text)
+        return Promise.reject(json)
       }
+      console.log(json);
+      let cleaned_json = cleanest(json);
+
       if(endpoint == 'studymaps') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
         parsedStudyMaps.push(JSON.parse(text));
@@ -145,7 +149,7 @@ function callApi(endpoint, authenticated, method, obj) {
         localStorage.setItem('study_maps', JSONstudyMaps);
       }
 
-      return text;
+      return cleaned_json;
     }).catch(err => console.log(err))
 }
 
