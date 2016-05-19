@@ -8,8 +8,11 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import Paper from 'material-ui/lib/paper';
 
 import MessageForm from './MessageForm.jsx';
-import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage, getStudyMap } from '../state/api/actions';
+import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
 
+function compare(a , b) {
+  return Date.parse(a.date) - Date.parse(b.date);
+}
 
 export const StudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -35,7 +38,7 @@ export const StudyMap = React.createClass({
             </CardText>
           </Card>
         );
-      })
+      }).sort(compare).reverse();
     }
   },
   getMessages: function(breadcrumb) {
@@ -44,7 +47,7 @@ export const StudyMap = React.createClass({
         return (
           <div key={breadcrumb.messages[key]._id}>{breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
         )
-      })
+      }).sort(compare).reverse();
     }
   },
   render: function() {
@@ -91,20 +94,20 @@ export const StudyMap = React.createClass({
               </div>
             </CardText>
           </Card>
-        )}
+        ).sort(compare).reverse()}
         <TextField
           hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
           floatingLabelText="Breadcrumbs"
           multiLine={true}
           rows={2}
-          ref='content'
+          ref='breadcrumb'
           fullWidth={true}
         />
 
         <RaisedButton
           label="Contribute breadcrumb"
           onTouchTap={() => {
-            const content = this.refs.content.getValue();
+            let content = this.refs.breadcrumb.getValue();
             let breadcrumbObj = {
               study_map: study_map._id,
               content: content,
@@ -113,7 +116,7 @@ export const StudyMap = React.createClass({
 
             dispatch(postBreadcrumb(breadcrumbObj));
 
-            this.refs.content.clearValue();
+            this.refs.breadcrumb.clearValue();
           }}
         />
 
@@ -135,7 +138,7 @@ export const StudyMap = React.createClass({
             </CardText>
           </Card>
 
-        )}
+        ).sort(compare).reverse()}
       </div>
     );
   }

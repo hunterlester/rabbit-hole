@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/lib/card';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
+import moment from 'moment';
 
 import {getProfile} from '../state/profile_actions/core';
 import {
@@ -13,14 +14,18 @@ import {
   postMessage,
   postLinkMessage } from '../state/api/actions';
 
+function compare(a , b) {
+  return Date.parse(a.date) - Date.parse(b.date);
+}
+
 
 export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
-    return Object.keys(echoes).map(key => {
-      if(echoes[key].studymap) {
-        echoes[key].body = `Studying ${echoes[key].studymap.subject}`;
+    return Object.values(echoes).map(echo => {
+      if(echo.studymap) {
+        echo.body = `Studying ${echo.studymap.subject}`;
 
-        echoes[key].quickreply = <div>
+        echo.quickreply = <div>
           <TextField
             hintText="Quickly leave helpful breadcrumb"
             floatingLabelText="Breadcrumb"
@@ -35,7 +40,7 @@ export const Echoes = React.createClass({
             onTouchTap={() => {
               const content = this.refs.content.getValue();
               let breadcrumbObj = {
-                study_map: echoes[key].studymap._id,
+                study_map: echo.studymap._id,
                 content: content,
                 user: this.props.user._id
               };
@@ -46,23 +51,23 @@ export const Echoes = React.createClass({
             }}
           />
         </div>;
-        return echoes[key];
-      } else if (echoes[key].breadcrumb && echoes[key].breadcrumb.link) {
-        echoes[key].action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
-          hashHistory.push(`/profile/study_map/${echoes[key].breadcrumb.study_map}/${echoes[key].breadcrumb.link}/${echoes[key].breadcrumb._id}`)
+        return echo;
+      } else if (echo.breadcrumb && echo.breadcrumb.link) {
+        echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
+          hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
         }} />
-        echoes[key].body = `left breadcrumb: ${echoes[key].breadcrumb.content}`;
-        return echoes[key];
-      } else if (echoes[key].message) {
-        echoes[key].body = `replied: ${echoes[key].message.body}`;
-        return echoes[key];
-      } else if (echoes[key].link) {
-        echoes[key].body = `link added: ${echoes[key].link.uri} - ${echoes[key].link.title}`
-        return echoes[key];
+        echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
+        return echo;
+      } else if (echo.message) {
+        echo.body = `replied: ${echo.message.body}`;
+        return echo;
+      } else if (echo.link) {
+        echo.body = `link added: ${echo.link.uri} - ${echo.link.title}`
+        return echo;
       } else {
-        return echoes[key];
+        return echo;
       }
-    }).reverse();
+    }).sort(compare).reverse();
   },
  render: function() {
    const {echoes} = this.props;
@@ -76,9 +81,7 @@ export const Echoes = React.createClass({
            <Card key={echo._id}>
              <CardHeader
                title={echo.body}
-               subtitle={<FlatButton label={echo.user.displayName} onTouchTap={() => {
-                 this.props.dispatch(getProfile(echo.user._id))
-               }}/>}
+               subtitle={moment(`${echo.date}`, "YYYYMMDD").fromNow()}
                actAsExpander={true}
                showExpandableButton={true}
              />
@@ -88,6 +91,11 @@ export const Echoes = React.createClass({
              <CardActions expandable={true}>
               {echo.action}
             </CardActions>
+            <CardActions expandable={true}>
+             {<FlatButton label={echo.user.displayName} onTouchTap={() => {
+               this.props.dispatch(getProfile(echo.user._id))
+             }}/>}
+           </CardActions>
            </Card>
          );
        })}

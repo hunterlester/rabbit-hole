@@ -7,7 +7,7 @@ const parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
 
 export const initialStudyMaps = fromJS({
   isFetching: false,
-  study_maps: parsedStudyMaps || [],
+  study_maps: parsedStudyMaps || {},
 });
 
 function callApi(endpoint, authenticated, method, obj) {
@@ -78,73 +78,47 @@ function callApi(endpoint, authenticated, method, obj) {
       if (!response.ok) {
         return Promise.reject(json)
       }
-      console.log(json);
+
       let cleaned_json = cleanest(json);
 
       if(endpoint == 'studymaps') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.push(JSON.parse(text));
+        parsedStudyMaps[cleaned_json._id] = cleaned_json;
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'links/studymap') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.find(study_map => {
-          if (JSON.parse(text).study_map == study_map._id) {
-            study_map.links.push(JSON.parse(text));
-          }
-        });
+        parsedStudyMaps[cleaned_json.study_map].links[cleaned_json._id] = cleaned_json;
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'breadcrumbs/studymap') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.find(study_map => {
-          if (JSON.parse(text).study_map == study_map._id) {
-            study_map.breadcrumbs.push(JSON.parse(text));
-          }
-        });
+        parsedStudyMaps[cleaned_json.study_map].breadcrumbs[cleaned_json._id] = cleaned_json;
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'messages' && !obj.link ) {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.find(study_map => {
-          if (JSON.parse(text).study_map == study_map._id) {
-            study_map.breadcrumbs.find(breadcrumb => {
-              if(JSON.parse(text).breadcrumb == breadcrumb._id) {
-                breadcrumb.messages.push(JSON.parse(text));
-              }
-            })
-          }
-        });
+        parsedStudyMaps[cleaned_json.study_map]
+          .breadcrumbs[cleaned_json.breadcrumb]
+          .messages[cleaned_json._id] = cleaned_json;
+
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'breadcrumbs/link') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.find(study_map => {
-          if (JSON.parse(text).study_map == study_map._id) {
-            study_map.links.find(link => {
-              if(JSON.parse(text).link == link._id) {
-                link.breadcrumbs.push(JSON.parse(text));
-              }
-            })
-          }
-        });
+        parsedStudyMaps[cleaned_json.study_map]
+          .links[cleaned_json.link]
+          .breadcrumbs[cleaned_json._id] = cleaned_json;
+
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       } else if ( endpoint == 'messages' && obj.link) {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps.find(study_map => {
-          if (JSON.parse(text).study_map == study_map._id) {
-            study_map.links.find(link => {
-              if(JSON.parse(text).link == link._id) {
-                link.breadcrumbs.find(breadcrumb => {
-                  if(JSON.parse(text).breadcrumb == breadcrumb._id) {
-                    breadcrumb.messages.push(JSON.parse(text));
-                  }
-                })
-              }
-            })
-          }
-        });
+        parsedStudyMaps[cleaned_json.study_map]
+          .links[cleaned_json.link]
+          .breadcrumbs[cleaned_json.breadcrumb]
+          .messages[cleaned_json._id] = cleaned_json;
+
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       }

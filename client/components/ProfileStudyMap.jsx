@@ -12,10 +12,12 @@ import {
   postBreadcrumb,
   postLinkBreadcrumb,
   postMessage,
-  postLinkMessage,
-  getStudyMap
+  postLinkMessage
 } from '../state/api/actions';
 
+function compare(a , b) {
+  return Date.parse(a.date) - Date.parse(b.date);
+}
 
 export const ProfileStudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -46,7 +48,7 @@ export const ProfileStudyMap = React.createClass({
             </CardText>
           </Card>
         );
-      })
+      }).sort(compare).reverse();
     }
   },
   getMessages: function(breadcrumb) {
@@ -55,7 +57,7 @@ export const ProfileStudyMap = React.createClass({
         return (
           <div key={breadcrumb.messages[key]._id}>{breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
         )
-      })
+      }).sort(compare).reverse();
     }
   },
   componentDidMount: function() {
@@ -113,20 +115,20 @@ export const ProfileStudyMap = React.createClass({
               </div>
             </CardText>
           </Card>
-        )}
+        ).sort(compare).reverse()}
         <TextField
           hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
           floatingLabelText="Breadcrumbs"
           multiLine={true}
           rows={2}
-          ref='content'
+          ref='breadcrumb'
           fullWidth={true}
         />
 
         <RaisedButton
           label="Contribute breadcrumb"
           onTouchTap={() => {
-            const content = this.refs.content.getValue();
+            const content = this.refs.breadcrumb.getValue();
             let breadcrumbObj = {
               study_map: study_map._id,
               content: content,
@@ -135,7 +137,7 @@ export const ProfileStudyMap = React.createClass({
 
             dispatch(postBreadcrumb(breadcrumbObj));
 
-            this.refs.content.clearValue();
+            this.refs.breadcrumb.clearValue();
           }}
         />
 
@@ -164,7 +166,7 @@ export const ProfileStudyMap = React.createClass({
             </CardText>
           </Card>
 
-        )}
+        ).sort(compare).reverse()}
       </div>
     );
   }

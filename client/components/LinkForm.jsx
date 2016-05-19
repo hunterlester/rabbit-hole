@@ -43,9 +43,9 @@ export default React.createClass({
             resolve(
               Object.keys(this.refs).map((key) => {
                 if(key === 'study_map') {
-                  Object.keys(this.props.studyMaps).map(key => {
-                    if(this.props.studyMaps[key].subject === this.refs[key].getValue()) {
-                      linkObj = Object.assign(linkObj, { [key]: this.props.studyMaps[key]._id});
+                  Object.values(this.props.studyMaps).map(study_map => {
+                    if(study_map.subject == this.refs[key].getValue()) {
+                      linkObj = Object.assign(linkObj, { [key]: study_map._id});
                     }
                   });
                 } else {
