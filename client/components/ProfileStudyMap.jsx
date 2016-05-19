@@ -23,11 +23,15 @@ export const ProfileStudyMap = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
     return true;
   },
-  getLinkBreadcrumbs: function(link) {
+  getLinkBreadcrumbs: function(link, params) {
     if (link.breadcrumbs) {
       return Object.keys(link.breadcrumbs).map(key => {
         return (
-          <Card ref={link.breadcrumbs[key]._id} key={link.breadcrumbs[key]._id}>
+          <Card ref={function(input) {
+            if(params.breadcrumb && input) {
+              input.setState({expanded: true});
+            }
+          }} key={link.breadcrumbs[key]._id}>
             <CardHeader
               title={link.breadcrumbs[key].content}
               actAsExpander={true}
@@ -60,18 +64,16 @@ export const ProfileStudyMap = React.createClass({
       }).sort(compare).reverse();
     }
   },
-  componentDidMount: function() {
-    if(this.props.params.link) {
-      this.refs[this.props.params.link].setState({expanded: true})
-      console.log(this.refs);
-      Object.keys(this.refs).map(key => {
-        console.log(key, this.refs[key]);
-      })
+  // componentDidMount: function() {
+  //   if(this.props.params.link) {
+  //     this.refs[this.props.params.link].setState({expanded: true})
+  //   }
+  // },
+  componentWillUnmount: function() {
 
-    }
   },
   render: function() {
-    const { isAuthenticated, user, study_map, dispatch, profile} = this.props;
+    const { isAuthenticated, user, study_map, dispatch, profile, params} = this.props;
     return (
       <div>
         <h3>{profile.displayName}'s study map:</h3>
@@ -79,7 +81,11 @@ export const ProfileStudyMap = React.createClass({
           {study_map.subject}
         </h3>
         {Object.keys(study_map.links).map(key =>
-          <Card ref={study_map.links[key]._id} key={study_map.links[key]._id}>
+          <Card ref={function(input) {
+            if(params.link && input) {
+              input.setState({expanded: true});
+            }
+          }} key={study_map.links[key]._id}>
             <CardHeader
               title={<a href={study_map.links[key].uri} target="_blank">{study_map.links[key].title}</a>}
               actAsExpander={true}
@@ -111,7 +117,7 @@ export const ProfileStudyMap = React.createClass({
                     this.refs.content.clearValue();
                   }}
                 />
-                {this.getLinkBreadcrumbs(study_map.links[key])}
+                {this.getLinkBreadcrumbs(study_map.links[key], params)}
               </div>
             </CardText>
           </Card>
@@ -143,7 +149,11 @@ export const ProfileStudyMap = React.createClass({
 
         <h3>Breadcrumbs</h3>
         {Object.keys(study_map.breadcrumbs).map(key =>
-          <Card ref={study_map.breadcrumbs[key]._id}
+          <Card ref={function(input) {
+            if(params.breadcrumb && input && !params.link) {
+              input.setState({expanded: true});
+            }
+          }}
                 id={study_map.breadcrumbs[key]._id}
                 key={study_map.breadcrumbs[key]._id}>
 

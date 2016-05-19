@@ -24,7 +24,22 @@ router.post('/', auth, (req, res) => {
         echo.message = message._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
-          echo.populate([{path: 'message', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+          echo.populate([
+            {
+              path: 'message',
+              populate: [
+              {
+                path: 'study_map'
+              },
+              {
+                path: 'breadcrumb'
+              }
+            ]
+            },
+            {
+              path: 'user'
+            }
+          ], (err, echo) => {
             store.dispatch(postEcho(echo));
           });
           res.json(message);

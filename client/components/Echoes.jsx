@@ -6,6 +6,8 @@ import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
 import moment from 'moment';
+import MessageForm from './MessageForm';
+
 
 import {getProfile} from '../state/profile_actions/core';
 import {
@@ -53,16 +55,36 @@ export const Echoes = React.createClass({
         </div>;
         return echo;
       } else if (echo.breadcrumb && echo.breadcrumb.link) {
+        echo.quickreply = <MessageForm
+          linkID={echo.breadcrumb.link}
+          studyMapID={echo.breadcrumb.study_map}
+          breadcrumbID={echo.breadcrumb._id}
+          userID={this.props.user._id}
+          postMessage={ messageObj => {
+          this.props.dispatch(postLinkMessage(messageObj))
+        }}/>
         echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
           hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
         }} />
         echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
         return echo;
-      } else if (echo.message) {
-        echo.body = `replied: ${echo.message.body}`;
+      } else if (echo.message && echo.message.link) {
+        echo.body = <div>
+          <div>replied: {echo.message.body}</div>
+          <div>regarding: {echo.message.breadcrumb.content} </div>
+        </div>;
+        echo.quickreply = <MessageForm
+          linkID={echo.message.link}
+          studyMapID={echo.message.study_map._id}
+          breadcrumbID={echo.message.breadcrumb._id}
+          userID={this.props.user._id}
+          postMessage={ messageObj => {
+          this.props.dispatch(postLinkMessage(messageObj))
+        }}/>
         return echo;
       } else if (echo.link) {
-        echo.body = `link added: ${echo.link.uri} - ${echo.link.title}`
+        echo.body = `link added: ${echo.link.title}`
+        echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
         return echo;
       } else {
         return echo;
@@ -86,6 +108,7 @@ export const Echoes = React.createClass({
                showExpandableButton={true}
              />
              <CardText expandable={true}>
+              {echo.linkuri}
               {echo.quickreply}
              </CardText>
              <CardActions expandable={true}>
