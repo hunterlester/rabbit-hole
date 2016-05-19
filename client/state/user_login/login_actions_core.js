@@ -36,15 +36,15 @@ export function loginUser(creds) {
           dispatch(loginError(user.message));
           return Promise.reject(user);
         } else {
-          console.log(cleanest(user));
-          localStorage.setItem('token', user.token);
-          localStorage.setItem('username', user.username);
-          localStorage.setItem('displayName', user.displayName);
-          localStorage.setItem('_id', user._id);
-          localStorage.setItem('study_maps', JSON.stringify(user.study_maps));
-          localStorage.setItem('points', user.points);
-          dispatch(receiveLogin(user));
-          dispatch(setStudyMaps(user.study_maps));
+          let cleaned_user = cleanest(user);
+          localStorage.setItem('token', cleaned_user.token);
+          localStorage.setItem('username', cleaned_user.username);
+          localStorage.setItem('displayName', cleaned_user.displayName);
+          localStorage.setItem('_id', cleaned_user._id);
+          localStorage.setItem('study_maps', JSON.stringify(cleaned_user.study_maps));
+          localStorage.setItem('points', cleaned_user.points);
+          dispatch(receiveLogin(cleaned_user));
+          dispatch(setStudyMaps(cleaned_user.study_maps));
         }
       }).catch(err => console.log("Error: ", err))
   }

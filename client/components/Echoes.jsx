@@ -5,6 +5,7 @@ import {Card, CardActions, CardHeader, CardText} from 'material-ui/lib/card';
 import FlatButton from 'material-ui/lib/flat-button';
 import RaisedButton from 'material-ui/lib/raised-button';
 import TextField from 'material-ui/lib/text-field';
+import moment from 'moment';
 
 import {getProfile} from '../state/profile_actions/core';
 import {
@@ -13,10 +14,14 @@ import {
   postMessage,
   postLinkMessage } from '../state/api/actions';
 
+function compare(a , b) {
+  return Date.parse(a.date) - Date.parse(b.date);
+}
+
 
 export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
-    return echoes.map(echo => {
+    return Object.values(echoes).map(echo => {
       if(echo.studymap) {
         echo.body = `Studying ${echo.studymap.subject}`;
 
@@ -47,7 +52,7 @@ export const Echoes = React.createClass({
           />
         </div>;
         return echo;
-      } else if (echo.breadcrumb) {
+      } else if (echo.breadcrumb && echo.breadcrumb.link) {
         echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
           hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
         }} />
@@ -62,7 +67,7 @@ export const Echoes = React.createClass({
       } else {
         return echo;
       }
-    }).reverse();
+    }).sort(compare).reverse();
   },
  render: function() {
    const {echoes} = this.props;
@@ -76,9 +81,7 @@ export const Echoes = React.createClass({
            <Card key={echo._id}>
              <CardHeader
                title={echo.body}
-               subtitle={<FlatButton label={echo.user.displayName} onTouchTap={() => {
-                 this.props.dispatch(getProfile(echo.user._id))
-               }}/>}
+               subtitle={moment(`${echo.date}`, "YYYYMMDD").fromNow()}
                actAsExpander={true}
                showExpandableButton={true}
              />
@@ -88,6 +91,11 @@ export const Echoes = React.createClass({
              <CardActions expandable={true}>
               {echo.action}
             </CardActions>
+            <CardActions expandable={true}>
+             {<FlatButton label={echo.user.displayName} onTouchTap={() => {
+               this.props.dispatch(getProfile(echo.user._id))
+             }}/>}
+           </CardActions>
            </Card>
          );
        })}

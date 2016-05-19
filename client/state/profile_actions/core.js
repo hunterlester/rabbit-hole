@@ -2,6 +2,7 @@ import {receiveProfile} from './action_creators';
 import {hashHistory} from 'react-router';
 import {Map, fromJS} from 'immutable';
 import fetch from 'isomorphic-fetch';
+import cleanest from 'cleanest';
 
 export const initialState = fromJS({
   displayName: localStorage.getItem('profile_displayName'),
@@ -30,14 +31,15 @@ export function getProfile(userID) {
         if (!response.ok) {
           return Promise.reject(user);
         } else {
-          localStorage.setItem('userObj', JSON.stringify(user));
-          localStorage.setItem('profile_displayName', user.displayName);
-          localStorage.setItem('profile_id', user._id);
-          localStorage.setItem('profile_study_maps', JSON.stringify(user.study_maps));
-          localStorage.setItem('profile_points', user.points);
+          let cleaned_user = cleanest(user);
+          localStorage.setItem('userObj', JSON.stringify(cleaned_user));
+          localStorage.setItem('profile_displayName', cleaned_user.displayName);
+          localStorage.setItem('profile_id', cleaned_user._id);
+          localStorage.setItem('profile_study_maps', JSON.stringify(cleaned_user.study_maps));
+          localStorage.setItem('profile_points', cleaned_user.points);
 
-          dispatch(receiveProfile(user));
-          hashHistory.push(`/profile/${user._id}`);
+          dispatch(receiveProfile(cleaned_user));
+          hashHistory.push(`/profile/${cleaned_user._id}`);
         }
       }).catch(err => console.log("Error: ", err))
   }

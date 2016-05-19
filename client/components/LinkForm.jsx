@@ -27,8 +27,8 @@ export default React.createClass({
         hintText="Start typing subject"
         floatingLabelText="Subject"
         filter={AutoComplete.caseInsensitiveFilter}
-        dataSource={this.props.studyMaps.map(study_map => {
-          return study_map.subject;
+        dataSource={Object.keys(this.props.studyMaps).map(key => {
+          return this.props.studyMaps[key].subject;
         })}
         fullWidth={true}
       />
@@ -43,8 +43,8 @@ export default React.createClass({
             resolve(
               Object.keys(this.refs).map((key) => {
                 if(key === 'study_map') {
-                  this.props.studyMaps.map(study_map => {
-                    if(study_map.subject === this.refs[key].getValue()) {
+                  Object.values(this.props.studyMaps).map(study_map => {
+                    if(study_map.subject == this.refs[key].getValue()) {
                       linkObj = Object.assign(linkObj, { [key]: study_map._id});
                     }
                   });

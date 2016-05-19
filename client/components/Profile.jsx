@@ -9,14 +9,14 @@ import RaisedButton from 'material-ui/lib/raised-button';
 
 export const Profile = React.createClass({
   getLinks: function(study_map) {
-    if(study_map.links.length) {
-      return study_map.links.map(link => {
+    if(study_map.links) {
+      return Object.keys(study_map.links).map(key => {
         return (
-          <div key={link._id}>
-            <a href={link.uri} target="_blank">
-              <h5>{link.title}</h5>
+          <div key={study_map.links[key]._id}>
+            <a href={study_map.links[key].uri} target="_blank">
+              <h5>{study_map.links[key].title}</h5>
             </a>
-            <h6>{link.uri}</h6>
+            <h6>{study_map.links[key].uri}</h6>
           </div>
         );
       });
@@ -24,20 +24,20 @@ export const Profile = React.createClass({
   },
   getStudyMaps: function(studymaps) {
     if(studymaps) {
-      return studymaps.map(studymap => {
+      return Object.keys(studymaps).map(key => {
         return (
-          <Card key={studymap._id}>
+          <Card key={studymaps[key]._id}>
             <CardHeader
-              title={studymap.subject}
+              title={studymaps[key].subject}
               actAsExpander={true}
               showExpandableButton={true}
             />
             <CardText expandable={true}>
               <RaisedButton label="Open" className='pull-xs-right' onTouchTap={() => {
-                hashHistory.push(`/profile/study_map/${studymap._id}`)
+                hashHistory.push(`/profile/study_map/${studymaps[key]._id}`)
               }}/>
               <div>
-                {this.getLinks(studymap)}
+                {this.getLinks(studymaps[key])}
               </div>
             </CardText>
           </Card>

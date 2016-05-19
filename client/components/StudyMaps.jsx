@@ -19,28 +19,28 @@ export const StudyMaps = React.createClass({
     return this.props.study_maps || [];
   },
   getLinks: function(study_map) {
-    if(study_map.links.length) {
-      return study_map.links.map(link => {
+    if(study_map.links) {
+      return Object.keys(study_map.links).map(key => {
         return (
-          <div key={link._id}>
-            <a href={link.uri} target="_blank">
-              <h5>{link.title}</h5>
+          <div key={study_map.links[key]._id}>
+            <a href={study_map.links[key].uri} target="_blank">
+              <h5>{study_map.links[key].title}</h5>
             </a>
-            <h6>{link.uri}</h6>
+            <h6>{study_map.links[key].uri}</h6>
           </div>
         );
       });
     }
   },
   render: function() {
-    const { dispatch, isAuthenticated, errorMessage, user } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user, study_maps } = this.props;
     return (
       <div>
         {isAuthenticated &&
           <div className="row">
 
               <div className="col-sm-4 col-sm-push-8">
-                <LinkForm userID={user._id} studyMaps={this.props.study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
+                <LinkForm userID={user._id} studyMaps={study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
               <div className="col-sm-8 col-sm-pull-4">
@@ -51,19 +51,19 @@ export const StudyMaps = React.createClass({
                   }}/>
                 </h3>
 
-                {this.getStudyMaps().map(study_map =>
-                  <Card key={study_map._id}>
+                {Object.keys(study_maps).map(key =>
+                  <Card key={study_maps[key]._id}>
                     <CardHeader
-                      title={study_map.subject}
+                      title={study_maps[key].subject}
                       actAsExpander={true}
                       showExpandableButton={true}
                     />
                     <CardText expandable={true}>
                       <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
-                        hashHistory.push(`/studymaps/${study_map._id}`)
+                        hashHistory.push(`/studymaps/${study_maps[key]._id}`)
                       }}/>
                       <div>
-                        {this.getLinks(study_map)}
+                        {this.getLinks(study_maps[key])}
                       </div>
                     </CardText>
                   </Card>

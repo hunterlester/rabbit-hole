@@ -24,10 +24,6 @@ export const LINK_MESSAGE_POST = 'LINK_MESSAGE_POST';
 export const LINK_MESSAGE_POST_SUCCESS = 'LINK_MESSAGE_POST_SUCCESS';
 export const LINK_MESSAGE_POST_FAILURE = 'LINK_MESSAGE_POST_FAILURE';
 
-export const STUDYMAP_GET = 'STUDYMAP_GET';
-export const STUDYMAP_GET_SUCCESS = 'STUDYMAP_GET_SUCCESS';
-export const STUDYMAP_GET_FAILURE = 'STUDYMAP_GET_FAILURE';
-
 export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
@@ -96,17 +92,6 @@ export function postLinkMessage(messageObj) {
       authenticated: true,
       types: [LINK_MESSAGE_POST, LINK_MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST_FAILURE],
       formObj: messageObj
-    }
-  }
-}
-
-export function getStudyMap(studyMapID) {
-  return {
-    [CALL_API]: {
-      method: 'GET',
-      endpoint: `studymaps/${studyMapID}`,
-      authenticated: true,
-      types: [STUDYMAP_GET, STUDYMAP_GET_SUCCESS, STUDYMAP_GET_FAILURE]
     }
   }
 }

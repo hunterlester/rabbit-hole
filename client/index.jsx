@@ -21,12 +21,13 @@ import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
 import {ConnectedProfile} from './components/Profile';
 import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
+import cleanest from 'cleanest';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
 socket.on('state', state =>
-  store.dispatch(setEchoes(state))
+  store.dispatch(setEchoes(cleanest(state)))
 );
 
 let createStoreWithMiddleware = applyMiddleware(
