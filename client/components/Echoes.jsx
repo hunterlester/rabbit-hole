@@ -16,11 +16,11 @@ import {
 
 export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
-    return echoes.map(echo => {
-      if(echo.studymap) {
-        echo.body = `Studying ${echo.studymap.subject}`;
+    return Object.keys(echoes).map(key => {
+      if(echoes[key].studymap) {
+        echoes[key].body = `Studying ${echoes[key].studymap.subject}`;
 
-        echo.quickreply = <div>
+        echoes[key].quickreply = <div>
           <TextField
             hintText="Quickly leave helpful breadcrumb"
             floatingLabelText="Breadcrumb"
@@ -35,7 +35,7 @@ export const Echoes = React.createClass({
             onTouchTap={() => {
               const content = this.refs.content.getValue();
               let breadcrumbObj = {
-                study_map: echo.studymap._id,
+                study_map: echoes[key].studymap._id,
                 content: content,
                 user: this.props.user._id
               };
@@ -46,21 +46,21 @@ export const Echoes = React.createClass({
             }}
           />
         </div>;
-        return echo;
-      } else if (echo.breadcrumb) {
-        echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
-          hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
+        return echoes[key];
+      } else if (echoes[key].breadcrumb) {
+        echoes[key].action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
+          hashHistory.push(`/profile/study_map/${echoes[key].breadcrumb.study_map}/${echoes[key].breadcrumb.link}/${echoes[key].breadcrumb._id}`)
         }} />
-        echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
-        return echo;
-      } else if (echo.message) {
-        echo.body = `replied: ${echo.message.body}`;
-        return echo;
-      } else if (echo.link) {
-        echo.body = `link added: ${echo.link.uri} - ${echo.link.title}`
-        return echo;
+        echoes[key].body = `left breadcrumb: ${echoes[key].breadcrumb.content}`;
+        return echoes[key];
+      } else if (echoes[key].message) {
+        echoes[key].body = `replied: ${echoes[key].message.body}`;
+        return echoes[key];
+      } else if (echoes[key].link) {
+        echoes[key].body = `link added: ${echoes[key].link.uri} - ${echoes[key].link.title}`
+        return echoes[key];
       } else {
-        return echo;
+        return echoes[key];
       }
     }).reverse();
   },
