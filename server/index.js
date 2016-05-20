@@ -35,13 +35,23 @@ let promise = new Promise((fulfill, reject) => {
     Echo.find().populate(
       [
         {path: 'studymap'},
-        {path: 'breadcrumb'},
+        {
+          path: 'breadcrumb',
+          populate: [
+            {
+              path: 'study_map'
+            }
+          ]
+        },
         {path: 'link'},
         {
           path: 'message',
           populate: [
             {
               path: 'breadcrumb'
+            },
+            {
+              path: 'study_map'
             }
           ]
         },

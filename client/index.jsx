@@ -43,7 +43,10 @@ const routes = <Route component={App}>
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
     <Route path="/studymaps/:studyMap" component={ConnectedSingleStudyMap} />
     <Route path="/profile/:userID" component={ConnectedProfile} />
+    <Route path="/profile/link/:studyMap/:link/:breadcrumb/:message" component={ConnectedProfileStudyMap} />
+    <Route path="/profile/study_map/:studyMap/:breadcrumb/:message" component={ConnectedProfileStudyMap} />
     <Route path="/profile/study_map/:studyMap/:link/:breadcrumb" component={ConnectedProfileStudyMap} />
+    <Route path="/profile/link/:studyMap/:link" component={ConnectedProfileStudyMap} />
     <Route path="/profile/study_map/:studyMap/:breadcrumb" component={ConnectedProfileStudyMap} />
     <Route path="/profile/study_map/:studyMap" component={ConnectedProfileStudyMap} />
   </Route>

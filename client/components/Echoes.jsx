@@ -63,15 +63,36 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
-        echo.action = <FlatButton label='Go to breadcrumb' onTouchTap={() => {
-          hashHistory.push(`/profile/study_map/${echo.breadcrumb.study_map}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`)
+        echo.action = <FlatButton label='go to breadcrumb' onTouchTap={() => {
+          this.props.dispatch(getProfile(
+            echo.breadcrumb.study_map.user,
+            `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`
+          ))
         }} />
         echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
+        echo.subtitle = `regarding: ${echo.breadcrumb.study_map.subject}`
+        return echo;
+      } else if (echo.breadcrumb && !echo.breadcrumb.link) {
+        echo.quickreply = <MessageForm
+          studyMapID={echo.breadcrumb.study_map._id}
+          breadcrumbID={echo.breadcrumb._id}
+          userID={this.props.user._id}
+          postMessage={ messageObj => {
+          this.props.dispatch(postLinkMessage(messageObj))
+        }}/>
+        echo.action = <FlatButton label='go to breadcrumb' onTouchTap={() => {
+          this.props.dispatch(getProfile(
+            echo.breadcrumb.study_map.user,
+            `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb._id}`
+          ))
+        }} />
+        echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
+        echo.subtitle = `regarding: ${echo.breadcrumb.study_map.subject}`
         return echo;
       } else if (echo.message && echo.message.link) {
+        echo.subtitle = `regarding: ${echo.message.breadcrumb.content}`
         echo.body = <div>
           <div>replied: {echo.message.body}</div>
-          <div>regarding: {echo.message.breadcrumb.content} </div>
         </div>;
         echo.quickreply = <MessageForm
           linkID={echo.message.link}
@@ -81,10 +102,44 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
+        echo.action = <FlatButton label='go to message' onTouchTap={() => {
+          this.props.dispatch(getProfile(
+            echo.message.study_map.user,
+            `/profile/link/${echo.message.study_map._id}/${echo.message.link}/${echo.message.breadcrumb._id}/${echo.message._id}`
+          ))
+
+        }} />
+
+        return echo;
+      } else if (echo.message && !echo.message.link) {
+        echo.subtitle = `regarding: ${echo.message.breadcrumb.content}`
+        echo.body = <div>
+          <div>replied: {echo.message.body}</div>
+        </div>;
+        echo.quickreply = <MessageForm
+          studyMapID={echo.message.study_map._id}
+          breadcrumbID={echo.message.breadcrumb._id}
+          userID={this.props.user._id}
+          postMessage={ messageObj => {
+          this.props.dispatch(postLinkMessage(messageObj))
+        }}/>
+        echo.action = <FlatButton label='go to message' onTouchTap={() => {
+          this.props.dispatch(getProfile(
+            echo.message.study_map.user,
+            `/profile/study_map/${echo.message.study_map._id}/${echo.message.breadcrumb._id}/${echo.message._id}`
+          ))
+        }} />
+
         return echo;
       } else if (echo.link) {
         echo.body = `link added: ${echo.link.title}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
+        echo.action = <FlatButton label='go to link post' onTouchTap={() => {
+          this.props.dispatch(getProfile(
+            echo.user._id,
+            `/profile/link/${echo.link.study_map}/${echo.link._id}`
+          ))
+        }} />
         return echo;
       } else {
         return echo;
@@ -103,11 +158,12 @@ export const Echoes = React.createClass({
            <Card key={echo._id}>
              <CardHeader
                title={echo.body}
-               subtitle={moment(`${echo.date}`, "YYYYMMDD").fromNow()}
+               subtitle={echo.subtitle}
                actAsExpander={true}
                showExpandableButton={true}
              />
              <CardText expandable={true}>
+              {moment(`${echo.date}`, "YYYYMMDD").fromNow()}
               {echo.linkuri}
               {echo.quickreply}
              </CardText>

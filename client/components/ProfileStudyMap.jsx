@@ -64,14 +64,6 @@ export const ProfileStudyMap = React.createClass({
       }).sort(compare).reverse();
     }
   },
-  // componentDidMount: function() {
-  //   if(this.props.params.link) {
-  //     this.refs[this.props.params.link].setState({expanded: true})
-  //   }
-  // },
-  componentWillUnmount: function() {
-
-  },
   render: function() {
     const { isAuthenticated, user, study_map, dispatch, profile, params} = this.props;
     return (

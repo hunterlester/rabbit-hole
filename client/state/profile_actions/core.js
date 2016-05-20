@@ -11,7 +11,7 @@ export const initialState = fromJS({
   points: localStorage.getItem('profile_points')
 });
 
-export function getProfile(userID) {
+export function getProfile(userID, uri) {
   let token = localStorage.getItem('token') || null;
 
   let config = {
@@ -39,7 +39,12 @@ export function getProfile(userID) {
           localStorage.setItem('profile_points', cleaned_user.points);
 
           dispatch(receiveProfile(cleaned_user));
-          hashHistory.push(`/profile/${cleaned_user._id}`);
+
+          if(uri) {
+            hashHistory.push(uri);
+          } else {
+            hashHistory.push(`/profile/${cleaned_user._id}`);
+          }
         }
       }).catch(err => console.log("Error: ", err))
   }
