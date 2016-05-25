@@ -8,6 +8,16 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import 'dotenv/config';
 
+var webpack = require('webpack');
+var webpackConfig = require('../webpack.config')[1];
+var compiler = webpack(webpackConfig);
+
+app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+}));
+
+app.use(require("webpack-hot-middleware")(compiler));
+
 
 // mlab uri
 mongoose.connect(process.env.MONGO_URI);
