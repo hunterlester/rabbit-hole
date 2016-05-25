@@ -26,8 +26,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
-socket.on('state', state =>
+socket.on('state', state => {
+  localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
   store.dispatch(setEchoes(cleanest(state)))
+}
 );
 
 let createStoreWithMiddleware = applyMiddleware(

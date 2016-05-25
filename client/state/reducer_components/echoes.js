@@ -1,6 +1,10 @@
 import {Map, fromJS} from 'immutable';
 
-export default function echoes(state = Map(), action) {
+let initialEchoes = fromJS({
+  echoes: JSON.parse(localStorage.getItem('echoes'))
+})
+
+export default function echoes(state = initialEchoes, action) {
   switch (action.type) {
     case 'SET_ECHOES':
       return state.merge({
