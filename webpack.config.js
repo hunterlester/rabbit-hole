@@ -51,6 +51,7 @@ module.exports = [
     target: 'web',
     devtool: 'eval',
     entry: [
+      'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
     query: {
@@ -86,6 +87,9 @@ module.exports = [
       filename: 'webpack_bundle.js'
     },
     plugins: [
+      new webpack.optimize.OccurenceOrderPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
           'NODE_ENV': JSON.stringify('development')
