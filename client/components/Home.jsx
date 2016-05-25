@@ -32,55 +32,59 @@ export const Home = React.createClass({
 
         {isAuthenticated &&
           <div>
-            <Toolbar>
-              <ToolbarGroup firstChild={true} float="left">
-                <ToolbarTitle text="Rabbit Hole" />
+            <div className='container-fluid'>
+              <div className="row">
+                <Toolbar>
+                  <ToolbarGroup firstChild={false} >
+                    <ToolbarTitle text="Rabbit Hole" />
 
-                <IconMenu
-                  iconButtonElement={
-                    <IconButton touch={true}>
-                      <Badge primary={true} badgeContent={0}>
-                      </Badge>
-                    </IconButton>
-                  }
-                >
-                  <MenuItem primaryText="notification 1" />
-                  <MenuItem primaryText="notification 2" />
-                  <MenuItem primaryText="notification 3" />
-                </IconMenu>
+                    <IconMenu
+                      iconButtonElement={
+                        <IconButton touch={true}>
+                          <Badge primary={true} badgeContent={0}>
+                          </Badge>
+                        </IconButton>
+                      }
+                    >
+                      <MenuItem primaryText="notification 1" />
+                      <MenuItem primaryText="notification 2" />
+                      <MenuItem primaryText="notification 3" />
+                    </IconMenu>
 
-                <FlatButton
-                  label={`${user.displayName} - Points: ${user.points}`}
-                  onTouchTap={() => {
-                    dispatch(getProfile(user._id))
-                  }} />
+                    <FlatButton
+                      label={`${user.displayName} - Points: ${user.points}`}
+                      onTouchTap={() => {
+                        dispatch(getProfile(user._id))
+                      }} />
 
 
-              </ToolbarGroup>
-              <ToolbarGroup lastChild={false} float='right'>
-                <IconMenu
-                  iconButtonElement={
-                    <IconButton touch={true}>
-                      <MoreVertIcon />
-                    </IconButton>
-                  }
-                >
-                  <MenuItem primaryText="Settings" />
-                  <MenuItem primaryText="Profile" />
-                  <MenuItem primaryText="Logout" onTouchTap={() => {
-                    dispatch(logoutUser());
-                  }}/>
-                </IconMenu>
-                <FlatButton label="Study Maps" onTouchTap={() => {
-                  hashHistory.push('/')
-                }} />
-                <ToolbarSeparator />
-                <FlatButton label="Activity Echoes" onTouchTap={() => {
-                  hashHistory.push('/echoes')
-                }} />
+                  </ToolbarGroup>
+                  <ToolbarGroup lastChild={true} float='right'>
+                    <IconMenu
+                      iconButtonElement={
+                        <IconButton touch={true}>
+                          <MoreVertIcon />
+                        </IconButton>
+                      }
+                    >
+                      <MenuItem primaryText="Settings" />
+                      <MenuItem primaryText="Profile" />
+                      <MenuItem primaryText="Logout" onTouchTap={() => {
+                        dispatch(logoutUser());
+                      }}/>
+                    </IconMenu>
+                    <FlatButton label="Study Maps" onTouchTap={() => {
+                      hashHistory.push('/')
+                    }} />
+                    <ToolbarSeparator />
+                    <FlatButton label="Activity Echoes" onTouchTap={() => {
+                      hashHistory.push('/echoes')
+                    }} />
 
-              </ToolbarGroup>
-            </Toolbar>
+                  </ToolbarGroup>
+                </Toolbar>
+                </div>
+            </div>
             <div className="container">
               {this.props.children}
             </div>

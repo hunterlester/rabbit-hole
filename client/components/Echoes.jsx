@@ -34,8 +34,7 @@ export const Echoes = React.createClass({
             multiLine={true}
             rows={2}
             ref='content'
-            fullWidth={true}
-          />
+            fullWidth={true}/>
 
           <RaisedButton
             label="Contribute breadcrumb"
@@ -160,8 +159,8 @@ export const Echoes = React.createClass({
                title={echo.body}
                subtitle={echo.subtitle}
                actAsExpander={true}
-               showExpandableButton={true}
-             />
+               showExpandableButton={true}/>
+               
              <CardText expandable={true}>
               {moment(`${echo.date}`, "YYYYMMDD").fromNow()}
               {echo.linkuri}

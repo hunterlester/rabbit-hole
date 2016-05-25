@@ -81,6 +81,42 @@ function callApi(endpoint, authenticated, method, obj) {
 
       let cleaned_json = cleanest(json);
 
+      let localStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+
+      if(json.study_map && json.study_map in localStudyMaps ) {
+        if ( endpoint == 'breadcrumbs/studymap') {
+         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+         parsedStudyMaps[cleaned_json.study_map].breadcrumbs[cleaned_json._id] = cleaned_json;
+         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+         localStorage.setItem('study_maps', JSONstudyMaps);
+       } else if ( endpoint == 'messages' && !obj.link ) {
+         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+         parsedStudyMaps[cleaned_json.study_map]
+           .breadcrumbs[cleaned_json.breadcrumb]
+           .messages[cleaned_json._id] = cleaned_json;
+
+         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+         localStorage.setItem('study_maps', JSONstudyMaps);
+       } else if ( endpoint == 'breadcrumbs/link') {
+         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+         parsedStudyMaps[cleaned_json.study_map]
+           .links[cleaned_json.link]
+           .breadcrumbs[cleaned_json._id] = cleaned_json;
+
+         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+         localStorage.setItem('study_maps', JSONstudyMaps);
+       } else if ( endpoint == 'messages' && obj.link) {
+         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+         parsedStudyMaps[cleaned_json.study_map]
+           .links[cleaned_json.link]
+           .breadcrumbs[cleaned_json.breadcrumb]
+           .messages[cleaned_json._id] = cleaned_json;
+
+         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+         localStorage.setItem('study_maps', JSONstudyMaps);
+       }
+      }
+
       if(endpoint == 'studymaps') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
         parsedStudyMaps[cleaned_json._id] = cleaned_json;
@@ -89,36 +125,6 @@ function callApi(endpoint, authenticated, method, obj) {
       } else if ( endpoint == 'links/studymap') {
         let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
         parsedStudyMaps[cleaned_json.study_map].links[cleaned_json._id] = cleaned_json;
-        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
-        localStorage.setItem('study_maps', JSONstudyMaps);
-      } else if ( endpoint == 'breadcrumbs/studymap') {
-        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps[cleaned_json.study_map].breadcrumbs[cleaned_json._id] = cleaned_json;
-        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
-        localStorage.setItem('study_maps', JSONstudyMaps);
-      } else if ( endpoint == 'messages' && !obj.link ) {
-        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps[cleaned_json.study_map]
-          .breadcrumbs[cleaned_json.breadcrumb]
-          .messages[cleaned_json._id] = cleaned_json;
-
-        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
-        localStorage.setItem('study_maps', JSONstudyMaps);
-      } else if ( endpoint == 'breadcrumbs/link') {
-        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps[cleaned_json.study_map]
-          .links[cleaned_json.link]
-          .breadcrumbs[cleaned_json._id] = cleaned_json;
-
-        let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
-        localStorage.setItem('study_maps', JSONstudyMaps);
-      } else if ( endpoint == 'messages' && obj.link) {
-        let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-        parsedStudyMaps[cleaned_json.study_map]
-          .links[cleaned_json.link]
-          .breadcrumbs[cleaned_json.breadcrumb]
-          .messages[cleaned_json._id] = cleaned_json;
-
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
       }

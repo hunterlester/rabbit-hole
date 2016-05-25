@@ -11,8 +11,7 @@ export default React.createClass({
           ref='body'
           hintText='Reply to breadcrumb'
           floatingLabelText="Reply"
-          fullWidth={true}
-        />
+          fullWidth={true}/>
 
         <RaisedButton
           label="Reply"
