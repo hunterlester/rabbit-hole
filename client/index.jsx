@@ -25,18 +25,18 @@ import cleanest from 'cleanest';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
 
-const socket = io(`${location.protocol}//${location.hostname}:3001`);
-socket.on('state', state => {
-  localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
-  store.dispatch(setEchoes(cleanest(state)))
-}
-);
-
 let createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware, api, remoteActionMiddleware(socket)
 )(createStore);
 
 const store = createStoreWithMiddleware(reducers);
+
+const socket = io(`${location.protocol}//${location.hostname}:3001`);
+  socket.on('state', state => {
+    localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
+    store.dispatch(setEchoes(cleanest(state)))
+  }
+);
 
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>

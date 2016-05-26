@@ -43,7 +43,14 @@ let promise = new Promise((fulfill, reject) => {
             }
           ]
         },
-        {path: 'link'},
+        {
+          path: 'link',
+          populate: [
+            {
+              path: 'study_map'
+            }
+          ]
+        },
         {
           path: 'message',
           populate: [

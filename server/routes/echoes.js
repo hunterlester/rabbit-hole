@@ -7,7 +7,36 @@ import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
 
 router.get('/', (req, res) => {
-  Echo.find().populate('studymap breadcrumb link message').exec((err, echoes) => {
+  Echo.find().populate([
+    {path: 'studymap'},
+    {
+      path: 'breadcrumb',
+      populate: [
+        {
+          path: 'study_map'
+        }
+      ]
+    },
+    {
+      path: 'link',
+      populate: [
+        {
+          path: 'study_map'
+        }
+      ]
+    },
+    {
+      path: 'message',
+      populate: [
+        {
+          path: 'breadcrumb'
+        },
+        {
+          path: 'study_map'
+        }
+      ]
+    },
+    {path: 'user'}]).exec((err, echoes) => {
     if (err) return res.status(404).json(err);
     res.json(echoes);
   });
