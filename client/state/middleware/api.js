@@ -20,7 +20,7 @@ function callApi(endpoint, authenticated, method, obj) {
       let body = Object.keys(formObject).map(key => {
         if(key == 'keywords') {
           return formObject[key].map(keyword => {
-            return key + '=' + keyword.trim();
+            return key + '=' + keyword.toLowerCase().trim();
           }).join('&')
         }
         return key + '=' + formObject[key];
