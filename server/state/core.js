@@ -12,3 +12,14 @@ export function postEcho(state, echo) {
     echoes: echoes.push(fromJS(echo))
   })
 }
+
+export function setSubjects(state, subjects) {
+  return state.set('subjects', fromJS(subjects));
+}
+
+export function postSubject(state, subject) {
+  const subjects = state.get('subjects');
+  return state.merge({
+    subjects: subjects.push(fromJS(subject))
+  })
+}

@@ -4,7 +4,6 @@ import mongoose from 'mongoose';
 const StudyMap = mongoose.model('StudyMap');
 const User = mongoose.model('User');
 const Echo = mongoose.model('Echo');
-const Subject = mongoose.model('Subject');
 import {store} from '../index';
 import {postEcho} from '../state/action_creators';
 
@@ -12,11 +11,6 @@ import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
 
 router.post('/', auth, (req, res) => {
-  req.body.keywords.map(function(word) {
-    let subject = new Subject();
-    subject.keyword = word;
-    subject.save();
-  })
   const studymap = new StudyMap(req.body);
   studymap.save((err, studymap) => {
     if (err) return res.sendStatus(500);

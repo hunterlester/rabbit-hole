@@ -6,6 +6,7 @@ import makeStore from './state/store';
 import Server from 'socket.io';
 import mongoose from 'mongoose';
 const Echo = mongoose.model('Echo');
+const Subject = mongoose.model('Subject');
 
 let port = normalizePort(process.env.PORT || '3000');
 
@@ -30,7 +31,16 @@ function startSocketServer(store) {
 
 startSocketServer(store);
 
-let promise = new Promise((fulfill, reject) => {
+let subjectPromise = new Promise((fulfill, reject) => {
+  fulfill(
+    Subject.find((err, subjects) => {
+      if (err) throw error
+      return subjects;
+    })
+  );
+})
+
+let echoPromise = new Promise((fulfill, reject) => {
   fulfill(
     Echo.find().populate(
       [
@@ -63,19 +73,25 @@ let promise = new Promise((fulfill, reject) => {
           ]
         },
         {path: 'user'}]).exec((err, echoes) => {
-      if (err) throw error
+      if (err) throw error;
       return echoes;
     })
   );
 });
 
-promise.then((res) => {
-
+echoPromise.then((res) => {
   store.dispatch({
     type: 'SET_ECHOES',
     echoes: res
   });
-})
+});
+
+subjectPromise.then(res => {
+  store.dispatch({
+    type: 'SET_SUBJECTS',
+    subjects: res
+  });
+});
 
 
 server.listen(port);
