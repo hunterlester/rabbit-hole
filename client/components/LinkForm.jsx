@@ -1,7 +1,7 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 // import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({

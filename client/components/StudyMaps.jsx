@@ -2,12 +2,9 @@ import React from 'react';
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import LinkForm from './LinkForm';
-
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import RaisedButton from 'material-ui/lib/raised-button';
-import CreateNewFolder from 'material-ui/lib/svg-icons/file/create-new-folder';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder';
 
 import { postLink } from '../state/api/actions';
 

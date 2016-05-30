@@ -4,8 +4,9 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {postStudyMap} from '../state/api/actions';
 
-import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 
 export const StudyMapForm = React.createClass({
   // mixins: [PureRenderMixin],
@@ -20,6 +21,12 @@ export const StudyMapForm = React.createClass({
           hintText='What are you studying? i.e. "Rust"'
           floatingLabelText="Subject"
           fullWidth={true}
+        />
+
+        <AutoComplete
+          floatingLabelText="Choose keyword"
+          filter={AutoComplete.caseInsensitiveFilter}
+          dataSource={colors}
         />
 
         <TextField

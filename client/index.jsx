@@ -22,6 +22,8 @@ import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
 import {ConnectedProfile} from './components/Profile';
 import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
 import 'bootstrap/dist/css/bootstrap.css';
 import './styles.css';
@@ -59,9 +61,13 @@ const routes = <Route component={App}>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;
 
+const muiTheme = getMuiTheme();
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hashHistory}>{routes}</Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Router history={hashHistory}>{routes}</Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('app')
 );

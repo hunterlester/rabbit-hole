@@ -1,10 +1,10 @@
 import React from 'react';
 import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
-import {Card, CardActions, CardHeader, CardText} from 'material-ui/lib/card';
-import FlatButton from 'material-ui/lib/flat-button';
-import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
+import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 import moment from 'moment';
 import MessageForm from './MessageForm';
 
@@ -160,7 +160,7 @@ export const Echoes = React.createClass({
                subtitle={echo.subtitle}
                actAsExpander={true}
                showExpandableButton={true}/>
-               
+
              <CardText expandable={true}>
               {moment(`${echo.date}`, "YYYYMMDD").fromNow()}
               {echo.linkuri}

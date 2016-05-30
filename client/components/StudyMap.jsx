@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 
 import MessageForm from './MessageForm.jsx';
 import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
