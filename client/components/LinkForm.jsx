@@ -60,8 +60,10 @@ export default React.createClass({
           });
 
           Object.keys(this.refs).map(key => {
-            if(this.refs[key].clearValue) {
-              this.refs[key].clearValue();
+            if(this.refs[key].input && this.refs[key].input.value) {
+              this.refs[key].input.value = '';
+            } else if(this.refs[key].state.searchText) {
+              this.refs[key].state.searchText = '';
             }
           });
         }}

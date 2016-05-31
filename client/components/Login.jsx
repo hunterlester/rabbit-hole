@@ -56,7 +56,7 @@ export default React.createClass({
                             let loginObj = {};
 
                             Object.keys(this.refs).map((key) => {
-                              loginObj = Object.assign(loginObj, {[key]: this.refs[key].getValue()});
+                              loginObj = Object.assign(loginObj, {[key]: this.refs[key].input.value});
                             });
 
                             this.props.onLoginClick(loginObj);
