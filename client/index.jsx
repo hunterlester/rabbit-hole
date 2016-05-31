@@ -40,7 +40,6 @@ const socket = io(`${location.protocol}//${location.hostname}:3001`);
     localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
     store.dispatch(setEchoes(cleanest(state)))
     store.dispatch(setSubjects(cleanest(state)))
-    console.log(store.getState());
   }
 );
 

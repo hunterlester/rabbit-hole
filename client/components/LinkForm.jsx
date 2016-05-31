@@ -44,15 +44,15 @@ export default React.createClass({
               Object.keys(this.refs).map((key) => {
                 if(key === 'study_map') {
                   Object.values(this.props.studyMaps).map(study_map => {
-                    if(study_map.subject == this.refs[key].getValue()) {
+                    if(study_map.subject == this.refs[key].state.searchText) {
                       linkObj = Object.assign(linkObj, { [key]: study_map._id});
                     }
                   });
                 } else {
-                  linkObj = Object.assign(linkObj, { [key]: this.refs[key].getValue() });
+                  linkObj = Object.assign(linkObj, { [key]: this.refs[key].input.value });
                 }
              })
-            )
+           );
           });
 
           linkObjPromise.then(res => {

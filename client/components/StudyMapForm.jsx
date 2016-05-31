@@ -24,9 +24,13 @@ export const StudyMapForm = React.createClass({
         />
 
         <AutoComplete
-          floatingLabelText="Choose keyword"
+          ref='keyword'
+          floatingLabelText="Add keyword"
+          hintText="Keyords help community find you"
           filter={AutoComplete.caseInsensitiveFilter}
-          dataSource={colors}
+          dataSource={Object.values(this.props.subjects.subjects).map(obj => {
+            return Object.assign({}, {text: obj.keyword, value: obj.keyword})
+          })}
         />
 
         <TextField
@@ -41,12 +45,14 @@ export const StudyMapForm = React.createClass({
           onTouchTap={() => {
             let studyMapObj = {
               user: this.props.user._id,
-              subject: this.refs.subject.getValue(),
+              subject: this.refs.subject.input.value,
 
             };
-            studyMapObj.keywords = this.refs.keywords.getValue().split(',');
-            dispatch(postStudyMap(studyMapObj));
-            hashHistory.push('/');
+            console.log(studyMapObj);
+            console.log(this.refs.keyword.state.searchText);
+            // studyMapObj.keywords = this.refs.keywords.getValue().split(',');
+            // dispatch(postStudyMap(studyMapObj));
+            // hashHistory.push('/');
           }}
         />
       </div>
@@ -56,9 +62,11 @@ export const StudyMapForm = React.createClass({
 
 function mapStateToProps(state) {
   const { user, isAuthenticated } = state.auth.toJS();
+  const subjects = state.subjects.toJS();
   return {
     state,
-    user
+    user,
+    subjects
   };
 };
 
