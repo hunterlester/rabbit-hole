@@ -25,7 +25,8 @@ import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'react-select/dist/react-select.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
 
 let createStoreWithMiddleware = applyMiddleware(

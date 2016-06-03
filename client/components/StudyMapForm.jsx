@@ -2,59 +2,103 @@ import React from 'react';
 import {hashHistory} from 'react-router';
 // import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
-import {postStudyMap} from '../state/api/actions';
+import {postStudyMap, postSubject} from '../state/api/actions';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import AutoComplete from 'material-ui/AutoComplete';
+import Select from 'react-select';
+import Paper from 'material-ui/Paper';
+
 
 export const StudyMapForm = React.createClass({
-  // mixins: [PureRenderMixin],
+  getInitialState () {
+    return {
+      value: [],
+      createNewSubject: false
+    }
+  },
+  handleInput: function(input) {
+    let bool = Object.values(this.props.subjects).some(obj => obj.keyword == input);
+    if(bool) {
+      this.setState({createNewSubject: false});
+    } else {
+      this.setState({createNewSubject: true});
+    }
+  },
+  handleSelectChange(value) {
+    this.setState({value});
+  },
   render: function() {
     const { dispatch } = this.props;
+
+    let keywords = Object.values(this.props.subjects).map(obj => {
+      return Object.assign({}, {value: obj._id, label: obj.keyword});
+    });
+
+    const style = {
+      padding: 20,
+      textAlign: 'center',
+      margin: 20
+    };
 
     return (
       <div>
         <h3>Create New Subject</h3>
-        <TextField
-          ref='subject'
-          hintText='What are you studying? i.e. "Rust"'
-          floatingLabelText="Subject"
-          fullWidth={true}
-        />
+        <form id="subjectForm">
+          <TextField
+            ref='subject'
+            hintText='What are you studying? i.e. "Rust"'
+            floatingLabelText="Subject"
+            fullWidth={true}
+          />
 
-        <AutoComplete
-          ref='keyword'
-          floatingLabelText="Add keyword"
-          hintText="Keyords help community find you"
-          filter={AutoComplete.caseInsensitiveFilter}
-          dataSource={Object.values(this.props.subjects.subjects).map(obj => {
-            return Object.assign({}, {text: obj.keyword, value: obj.keyword})
-          })}
-        />
+          <Select
+            ref='keywords'
+            value={this.state.value}
+            options={keywords}
+            multi={true}
+            placeholder="Choose keywords to help community find you"
+            onChange={this.handleSelectChange}
+            noResultsText={false}
+            onInputChange={this.handleInput}
+          />
+          {
+            this.state.createNewSubject &&
+            <Paper style={style} zDepth={5}>
+              No results found.
+              <TextField
+                ref='newSubject'
+                floatingLabelText="Contribute New Keyword"
+                fullWidth={true}
+              />
+              <RaisedButton
+                label="Save"
+                onTouchTap={() => {
+                  let subjectObj = {
+                    keyword: this.refs.newSubject.input.value
+                  };
+                  dispatch(postSubject(subjectObj));
+                  this.setState({createNewSubject: false})
+                }}
+              />
+            </Paper>
+          }
 
-        <TextField
-          ref='keywords'
-          hintText="Keywords separated by comma, including subject i.e. 'rust, computer science, systems'"
-          floatingLabelText="Keywords"
-          fullWidth={true}
-        />
 
-        <RaisedButton
-          label="Save"
-          onTouchTap={() => {
-            let studyMapObj = {
-              user: this.props.user._id,
-              subject: this.refs.subject.input.value,
+          <RaisedButton
+            label="Save"
+            onTouchTap={() => {
+              let studyMapObj = {
+                user: this.props.user._id,
+                subject: this.refs.subject.input.value,
 
-            };
-            console.log(studyMapObj);
-            console.log(this.refs.keyword.state.searchText);
-            // studyMapObj.keywords = this.refs.keywords.getValue().split(',');
-            // dispatch(postStudyMap(studyMapObj));
-            // hashHistory.push('/');
-          }}
-        />
+              };
+              studyMapObj.keywords = this.state.value.map(obj => obj.value);
+              dispatch(postStudyMap(studyMapObj));
+              hashHistory.push('/');
+            }}
+          />
+        </form>
       </div>
     );
   }
@@ -62,7 +106,8 @@ export const StudyMapForm = React.createClass({
 
 function mapStateToProps(state) {
   const { user, isAuthenticated } = state.auth.toJS();
-  const subjects = state.subjects.toJS();
+  const subjects = state.subjects.toJS().subjects;
+  console.log(subjects);
   return {
     state,
     user,

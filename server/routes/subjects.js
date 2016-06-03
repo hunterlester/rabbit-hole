@@ -8,6 +8,14 @@ router.get('/', (req, res) => {
     if (err) return res.sendStatus(404);
     res.json(subjects);
   })
-})
+});
+
+router.post('/', (req, res) => {
+  var subject = new Subject(req.body);
+  subject.save((err, subject) => {
+    if(err) return res.sendStatus(500);
+    res.json(subject);
+  })
+});
 
 export default router;

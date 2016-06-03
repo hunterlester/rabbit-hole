@@ -24,6 +24,10 @@ export const LINK_MESSAGE_POST = 'LINK_MESSAGE_POST';
 export const LINK_MESSAGE_POST_SUCCESS = 'LINK_MESSAGE_POST_SUCCESS';
 export const LINK_MESSAGE_POST_FAILURE = 'LINK_MESSAGE_POST_FAILURE';
 
+export const SUBJECT_POST = 'SUBJECT_POST';
+export const SUBJECT_POST_SUCCESS = 'SUBJECT_POST_SUCCESS';
+export const SUBJECT_POST_FAILURE = 'SUBJECT_POST_FAILURE';
+
 export function postStudyMap(study_map) {
   return {
     [CALL_API]: {
@@ -92,6 +96,18 @@ export function postLinkMessage(messageObj) {
       authenticated: true,
       types: [LINK_MESSAGE_POST, LINK_MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST_FAILURE],
       formObj: messageObj
+    }
+  }
+}
+
+export function postSubject(subjectObj) {
+  return {
+    [CALL_API]: {
+      method: 'POST',
+      endpoint: 'subjects',
+      authenticated: true,
+      types: [SUBJECT_POST, SUBJECT_POST_SUCCESS, SUBJECT_POST_FAILURE],
+      formObj: subjectObj
     }
   }
 }
