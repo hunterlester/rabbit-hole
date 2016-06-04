@@ -107,7 +107,6 @@ export const StudyMapForm = React.createClass({
 function mapStateToProps(state) {
   const { user, isAuthenticated } = state.auth.toJS();
   const subjects = state.subjects.toJS().subjects;
-  console.log(subjects);
   return {
     state,
     user,
