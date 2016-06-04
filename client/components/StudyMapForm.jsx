@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {postStudyMap, postSubject} from '../state/api/actions';
 
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Select from 'react-select';
 import Paper from 'material-ui/Paper';
@@ -14,11 +15,16 @@ export const StudyMapForm = React.createClass({
   getInitialState () {
     return {
       value: [],
-      createNewSubject: false
+      createNewSubject: false,
+      input: null
     }
   },
   handleInput: function(input) {
-    let bool = Object.values(this.props.subjects).some(obj => obj.keyword == input);
+    this.setState({input});
+    let bool = Object.values(this.props.subjects).some(obj => {
+      let pattern = new RegExp(input);
+      return pattern.test(obj.keyword);
+    });
     if(bool) {
       this.setState({createNewSubject: false});
     } else {
@@ -30,6 +36,10 @@ export const StudyMapForm = React.createClass({
   },
   render: function() {
     const { dispatch } = this.props;
+
+    let selectStyle = {
+      margin: 20
+    };
 
     let keywords = Object.values(this.props.subjects).map(obj => {
       return Object.assign({}, {value: obj._id, label: obj.keyword});
@@ -43,33 +53,23 @@ export const StudyMapForm = React.createClass({
 
     return (
       <div>
-        <h3>Create New Subject</h3>
         <form id="subjectForm">
           <TextField
             ref='subject'
-            hintText='What are you studying? i.e. "Rust"'
-            floatingLabelText="Subject"
+            hintText='Type in whatever is most helpful to you'
+            floatingLabelText="What are you studying?"
             fullWidth={true}
           />
 
-          <Select
-            ref='keywords'
-            value={this.state.value}
-            options={keywords}
-            multi={true}
-            placeholder="Choose keywords to help community find you"
-            onChange={this.handleSelectChange}
-            noResultsText={false}
-            onInputChange={this.handleInput}
-          />
           {
             this.state.createNewSubject &&
             <Paper style={style} zDepth={5}>
               No results found.
               <TextField
                 ref='newSubject'
-                floatingLabelText="Contribute New Keyword"
+                floatingLabelText="Contribute a new keyword"
                 fullWidth={true}
+                value={this.state.input}
               />
               <RaisedButton
                 label="Save"
@@ -84,6 +84,17 @@ export const StudyMapForm = React.createClass({
             </Paper>
           }
 
+          <Select
+            style={selectStyle}
+            ref='keywords'
+            value={this.state.value}
+            options={keywords}
+            multi={true}
+            placeholder="Start typing or choose keywords to help community find you"
+            onChange={this.handleSelectChange}
+            noResultsText={false}
+            onInputChange={this.handleInput}
+          />
 
           <RaisedButton
             label="Save"
@@ -91,7 +102,6 @@ export const StudyMapForm = React.createClass({
               let studyMapObj = {
                 user: this.props.user._id,
                 subject: this.refs.subject.input.value,
-
               };
               studyMapObj.keywords = this.state.value.map(obj => obj.value);
               dispatch(postStudyMap(studyMapObj));
