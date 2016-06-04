@@ -44,12 +44,24 @@ let echoPromise = new Promise((fulfill, reject) => {
   fulfill(
     Echo.find().populate(
       [
-        {path: 'studymap'},
+        {
+          path: 'studymap',
+          populate: [
+            {
+              path: 'keywords'
+            }
+          ]
+        },
         {
           path: 'breadcrumb',
           populate: [
             {
-              path: 'study_map'
+              path: 'study_map',
+              populate: [
+                {
+                  path: 'keywords'
+                }
+              ]
             }
           ]
         },
@@ -57,7 +69,12 @@ let echoPromise = new Promise((fulfill, reject) => {
           path: 'link',
           populate: [
             {
-              path: 'study_map'
+              path: 'study_map',
+              populate: [
+                {
+                  path: 'keywords'
+                }
+              ]
             }
           ]
         },
@@ -68,7 +85,12 @@ let echoPromise = new Promise((fulfill, reject) => {
               path: 'breadcrumb'
             },
             {
-              path: 'study_map'
+              path: 'study_map',
+              populate: [
+                {
+                  path: 'keywords'
+                }
+              ]
             }
           ]
         },

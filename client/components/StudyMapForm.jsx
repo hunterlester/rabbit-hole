@@ -34,6 +34,21 @@ export const StudyMapForm = React.createClass({
   handleSelectChange(value) {
     this.setState({value});
   },
+  componentWillReceiveProps: function(nextProps) {
+    if(Object.keys(this.props.subjects).length != Object.keys(nextProps.subjects).length) {
+      Object.keys(nextProps.subjects).map(key1 => {
+        if(Object.keys(this.props.subjects).some(key2 => {
+          return key2 == key1;
+        })) {
+          return;
+        } else {
+          let value = this.state.value;
+          value.push({value: nextProps.subjects[key1]._id, label: nextProps.subjects[key1].keyword});
+          this.setState({value})
+        }
+      })
+    }
+  },
   render: function() {
     const { dispatch } = this.props;
 
@@ -70,6 +85,9 @@ export const StudyMapForm = React.createClass({
                 floatingLabelText="Contribute a new keyword"
                 fullWidth={true}
                 value={this.state.input}
+                onChange={() => {
+                  this.setState({input: this.refs.newSubject.input.value})
+                }}
               />
               <RaisedButton
                 label="Save"
@@ -78,6 +96,12 @@ export const StudyMapForm = React.createClass({
                     keyword: this.refs.newSubject.input.value
                   };
                   dispatch(postSubject(subjectObj));
+                  this.setState({createNewSubject: false})
+                }}
+              />
+              <FlatButton
+                label="Cancel"
+                onTouchTap={() => {
                   this.setState({createNewSubject: false})
                 }}
               />
