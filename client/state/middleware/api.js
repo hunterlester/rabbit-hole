@@ -156,7 +156,8 @@ export default store => next => action => {
       next({
         response,
         authenticated,
-        type: requestType
+        type: requestType,
+        meta: {remote: true}
       }),
     error => next({
       error: error.message || 'There was an error.',
