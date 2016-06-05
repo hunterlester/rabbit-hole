@@ -38,6 +38,7 @@ import './models/link';
 import './models/breadcrumb';
 import './models/message';
 import './models/echo';
+import './models/subject';
 
 // PASSPORT CONFIGURATION
 //
@@ -54,6 +55,7 @@ import messages from './routes/messages';
 import links from './routes/links';
 import breadcrumbs from './routes/breadcrumbs';
 import echoes from './routes/echoes';
+import subjects from './routes/subjects';
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -70,6 +72,7 @@ app.use('/messages', messages);
 app.use('/links', links);
 app.use('/breadcrumbs', breadcrumbs);
 app.use('/echoes', echoes);
+app.use('/subjects', subjects);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

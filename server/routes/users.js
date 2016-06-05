@@ -66,26 +66,46 @@ router.post('/login', (req, res, next) => {
 
 router.param('userId', (req, res, next, userId) => {
   User.findById(userId).populate(
-    {path: 'study_maps', populate: [
+    {
+      path: 'study_maps',
+      populate: [
+      {
+        path: 'keywords',
+        model: 'Subject'
+      },
       {
         path: 'links',
-        populate: {
-          path: 'breadcrumbs',
-          populate: {
-            path: 'messages',
-            populate: {
-              path:
-                'user'
-              }}}
+        populate: [
+          {
+            path: 'breadcrumbs',
+            populate: [
+              {
+                path: 'messages',
+                populate: [
+                  {
+                    path: 'user'
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
         path: 'breadcrumbs',
-        populate: {
-          path: 'messages',
-          populate: {
-            path: 'user'
-          }}}]
-    }
+        populate: [
+          {
+            path: 'messages',
+            populate: [
+              {
+                path: 'user'
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
   ).exec((err, user) => {
     if (err) return res.sendStatus(404);
     req.user = user;

@@ -1,11 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Card from 'material-ui/lib/card/card';
-import CardHeader from 'material-ui/lib/card/card-header';
-import CardText from 'material-ui/lib/card/card-text';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
-import Paper from 'material-ui/lib/paper';
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
 
 import MessageForm from './MessageForm.jsx';
 import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
@@ -69,8 +68,6 @@ export const StudyMap = React.createClass({
                 <TextField
                   hintText="Leave a breadcrump for this link"
                   floatingLabelText="Breadcrumb"
-                  multiLine={true}
-                  rows={2}
                   ref='content'
                   fullWidth={true}
                 />
@@ -78,16 +75,16 @@ export const StudyMap = React.createClass({
                 <RaisedButton
                   label="Contribute breadcrumb"
                   onTouchTap={() => {
-                    let content = this.refs.content.getValue();
+                    let content = this.refs.content.input.value;
                     let breadcrumbObj = {
                       link: study_map.links[key]._id,
                       content: content,
                       user: user._id,
                       study_map: this.props.params.studyMap
                     };
+                    
                     dispatch(postLinkBreadcrumb(breadcrumbObj));
-
-                    this.refs.content.clearValue();
+                    this.refs.content.input.value = '';
                   }}
                 />
                 {this.getLinkBreadcrumbs(study_map.links[key])}
@@ -98,8 +95,6 @@ export const StudyMap = React.createClass({
         <TextField
           hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
           floatingLabelText="Breadcrumbs"
-          multiLine={true}
-          rows={2}
           ref='breadcrumb'
           fullWidth={true}
         />
@@ -107,7 +102,7 @@ export const StudyMap = React.createClass({
         <RaisedButton
           label="Contribute breadcrumb"
           onTouchTap={() => {
-            let content = this.refs.breadcrumb.getValue();
+            let content = this.refs.breadcrumb.input.value;
             let breadcrumbObj = {
               study_map: study_map._id,
               content: content,
@@ -115,8 +110,7 @@ export const StudyMap = React.createClass({
             };
 
             dispatch(postBreadcrumb(breadcrumbObj));
-
-            this.refs.breadcrumb.clearValue();
+            this.refs.breadcrumb.input.value = '';
           }}
         />
 

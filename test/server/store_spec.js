@@ -9,7 +9,7 @@ describe('server store', () => {
     const store = makeStore();
     expect(store.getState()).to.equal(Map());
 
-    const echoes = JSON.stringify([{echo: 'echo1'}, {echo: 'echo2'}]);
+    const echoes = [{echo: 'echo1'}, {echo: 'echo2'}];
     store.dispatch({
       type: 'SET_ECHOES',
       echoes: echoes

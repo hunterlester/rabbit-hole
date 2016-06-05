@@ -7,6 +7,7 @@ import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import reducers from './state/reducers';
 import {setEchoes} from './state/echo_action_creators';
+import { setSubjects } from './state/subject_actions.js';
 import remoteActionMiddleware from './state/middleware/remote_action_middleware';
 import thunkMiddleware from 'redux-thunk';
 import api from './state/middleware/api';
@@ -21,9 +22,22 @@ import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
 import {ConnectedProfile} from './components/Profile';
 import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
-import 'bootstrap/dist/css/bootstrap.css';
+import 'react-select/dist/react-select.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+
+const socket = io(`${location.protocol}//${location.hostname}:3001`);
+
+socket.on('state', state => {
+  localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
+  localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
+  store.dispatch(setEchoes(cleanest(state)))
+  store.dispatch(setSubjects(cleanest(state)))
+}
+);
 
 let createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware, api, remoteActionMiddleware(socket)
@@ -31,12 +45,7 @@ let createStoreWithMiddleware = applyMiddleware(
 
 const store = createStoreWithMiddleware(reducers);
 
-const socket = io(`${location.protocol}//${location.hostname}:3001`);
-  socket.on('state', state => {
-    localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
-    store.dispatch(setEchoes(cleanest(state)))
-  }
-);
+
 
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>
@@ -55,9 +64,13 @@ const routes = <Route component={App}>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;
 
+const muiTheme = getMuiTheme();
+
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hashHistory}>{routes}</Router>
-  </Provider>,
+  <MuiThemeProvider muiTheme={muiTheme}>
+    <Provider store={store}>
+      <Router history={hashHistory}>{routes}</Router>
+    </Provider>
+  </MuiThemeProvider>,
   document.getElementById('app')
 );

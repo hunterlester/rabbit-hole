@@ -20,7 +20,7 @@ function callApi(endpoint, authenticated, method, obj) {
       let body = Object.keys(formObject).map(key => {
         if(key == 'keywords') {
           return formObject[key].map(keyword => {
-            return key + '=' + keyword.trim();
+            return key + '=' + keyword;
           }).join('&')
         }
         return key + '=' + formObject[key];
@@ -127,6 +127,11 @@ function callApi(endpoint, authenticated, method, obj) {
         parsedStudyMaps[cleaned_json.study_map].links[cleaned_json._id] = cleaned_json;
         let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
         localStorage.setItem('study_maps', JSONstudyMaps);
+      } else if ( endpoint == 'subjects' ) {
+        let parsedSubjects = JSON.parse(localStorage.getItem('subjects'));
+        parsedSubjects[cleaned_json._id] = cleaned_json;
+        let JSONsubjects = JSON.stringify(parsedSubjects);
+        localStorage.setItem('subjects', JSONsubjects);
       }
 
       return cleaned_json;
@@ -151,7 +156,8 @@ export default store => next => action => {
       next({
         response,
         authenticated,
-        type: requestType
+        type: requestType,
+        meta: {remote: true}
       }),
     error => next({
       error: error.message || 'There was an error.',

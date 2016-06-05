@@ -10,6 +10,9 @@ passport.use(new LocalStrategy(
     User.findOne({username: username}).populate(
       {path: 'study_maps', populate: [
         {
+          path: 'keywords'
+        },
+        {
           path: 'links',
           populate: {
             path: 'breadcrumbs',

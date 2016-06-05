@@ -27,7 +27,24 @@ router.post('/studymap', auth, (req, res) => {
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
           echo.populate([
-            {path: 'breadcrumb', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+            {
+              path: 'breadcrumb',
+              populate: [
+                {
+                  path: 'study_map',
+                  populate: [
+                    {
+                      path: 'keywords',
+                      model: 'Subject'
+                    }
+                  ]
+                }
+              ]
+          },
+          {
+            path: 'user'
+          }
+        ], (err, echo) => {
             store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);
@@ -51,7 +68,22 @@ router.post('/link', auth, (req, res) => {
         echo.breadcrumb = breadcrumb._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
-          echo.populate([{path: 'breadcrumb', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+          echo.populate([
+            {
+              path: 'breadcrumb',
+              populate: [
+                {
+                  path: 'study_map',
+                  populate: [
+                    {
+                      path: 'keywords',
+                      model: 'Subject'
+                    }
+                  ]
+                }
+              ]
+            },
+            {path: 'user'}], (err, echo) => {
             store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);

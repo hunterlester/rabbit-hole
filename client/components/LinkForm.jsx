@@ -1,7 +1,7 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
-import TextField from 'material-ui/lib/text-field';
-import AutoComplete from 'material-ui/lib/auto-complete';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import AutoComplete from 'material-ui/AutoComplete';
 // import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 export default React.createClass({
@@ -44,15 +44,15 @@ export default React.createClass({
               Object.keys(this.refs).map((key) => {
                 if(key === 'study_map') {
                   Object.values(this.props.studyMaps).map(study_map => {
-                    if(study_map.subject == this.refs[key].getValue()) {
+                    if(study_map.subject == this.refs[key].state.searchText) {
                       linkObj = Object.assign(linkObj, { [key]: study_map._id});
                     }
                   });
                 } else {
-                  linkObj = Object.assign(linkObj, { [key]: this.refs[key].getValue() });
+                  linkObj = Object.assign(linkObj, { [key]: this.refs[key].input.value });
                 }
              })
-            )
+           );
           });
 
           linkObjPromise.then(res => {
@@ -60,8 +60,10 @@ export default React.createClass({
           });
 
           Object.keys(this.refs).map(key => {
-            if(this.refs[key].clearValue) {
-              this.refs[key].clearValue();
+            if(this.refs[key].input && this.refs[key].input.value) {
+              this.refs[key].input.value = '';
+            } else if(this.refs[key].state.searchText) {
+              this.refs[key].state.searchText = '';
             }
           });
         }}

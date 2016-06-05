@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import TextField from 'material-ui/lib/text-field';
-import RaisedButton from 'material-ui/lib/raised-button';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 import {registerUser} from '../state/user_registration/register_core';
 
 export const Register = React.createClass({

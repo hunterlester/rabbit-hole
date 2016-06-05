@@ -12,7 +12,7 @@
   "scripts": {
     "server": "node ./build/server_bundle.js",
     "start": "babel-node ./server/index.js",
-    "serverTest": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
+    "serverTest": "mocha ./test/server --compilers js:babel-core/register --require ./test/test_helper.js --recursive",
     "clientTest": "mocha --compilers js:babel-core/register --require ./test/test_helper.js \"test/**/*@(.js|.jsx)\"",
     "serverTest:watch": "npm run serverTest -- --watch",
     "clientTest:watch": "npm run clientTest -- --watch"
@@ -41,7 +41,7 @@
     "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^5.7.0",
-    "material-ui": "^0.14.4",
+    "material-ui": "^0.15.0",
     "moment": "^2.13.0",
     "mongoose": "^4.4.12",
     "nodemailer": "^2.4.1",
@@ -52,6 +52,7 @@
     "react-dom": "^15.0.1",
     "react-redux": "^4.4.5",
     "react-router": "^2.2.4",
+    "react-select": "^1.0.0-beta13",
     "react-tap-event-plugin": "^1.0.0",
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1",
