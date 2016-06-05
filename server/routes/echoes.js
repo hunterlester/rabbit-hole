@@ -12,7 +12,8 @@ router.get('/', (req, res) => {
       path: 'studymap',
       populate: [
         {
-          path: 'keywords'
+          path: 'keywords',
+          model: 'Subject'
         }
       ]
     },
@@ -23,7 +24,8 @@ router.get('/', (req, res) => {
           path: 'study_map',
           populate: [
             {
-              path: 'keywords'
+              path: 'keywords',
+              model: 'Subject'
             }
           ]
         }
@@ -36,7 +38,8 @@ router.get('/', (req, res) => {
           path: 'study_map',
           populate: [
             {
-              path: 'keywords'
+              path: 'keywords',
+              model: 'Subject'
             }
           ]
         }
@@ -52,7 +55,8 @@ router.get('/', (req, res) => {
           path: 'study_map',
           populate: [
             {
-              path: 'keywords'
+              path: 'keywords',
+              model: 'Subject'
             }
           ]
         }

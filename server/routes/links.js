@@ -32,7 +32,8 @@ router.post('/studymap', auth, (req, res) => {
                   path: 'study_map',
                   populate: [
                     {
-                      path: 'keywords'
+                      path: 'keywords',
+                      model: 'Subject'
                     }
                   ]
                 }

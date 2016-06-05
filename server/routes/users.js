@@ -70,7 +70,8 @@ router.param('userId', (req, res, next, userId) => {
       path: 'study_maps',
       populate: [
       {
-        path: 'keywords'
+        path: 'keywords',
+        model: 'Subject'
       },
       {
         path: 'links',

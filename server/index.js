@@ -48,7 +48,8 @@ let echoPromise = new Promise((fulfill, reject) => {
           path: 'studymap',
           populate: [
             {
-              path: 'keywords'
+              path: 'keywords',
+              model: 'Subject'
             }
           ]
         },
@@ -59,7 +60,8 @@ let echoPromise = new Promise((fulfill, reject) => {
               path: 'study_map',
               populate: [
                 {
-                  path: 'keywords'
+                  path: 'keywords',
+                  model: 'Subject'
                 }
               ]
             }
@@ -72,7 +74,8 @@ let echoPromise = new Promise((fulfill, reject) => {
               path: 'study_map',
               populate: [
                 {
-                  path: 'keywords'
+                  path: 'keywords',
+                  model: 'Subject'
                 }
               ]
             }
@@ -88,13 +91,17 @@ let echoPromise = new Promise((fulfill, reject) => {
               path: 'study_map',
               populate: [
                 {
-                  path: 'keywords'
+                  path: 'keywords',
+                  model: 'Subject'
                 }
               ]
             }
           ]
         },
-        {path: 'user'}]).exec((err, echoes) => {
+        {
+          path: 'user'
+        }
+      ]).exec((err, echoes) => {
       if (err) throw error;
       return echoes;
     })
