@@ -16,7 +16,7 @@ export default React.createClass({
         <RaisedButton
           label="Reply"
           onTouchTap={() => {
-            let body = this.refs.body.getValue();
+            let body = this.refs.body.input.value;
             let messageObj = {
               study_map: studyMapID,
               breadcrumb: breadcrumbID,
@@ -27,7 +27,7 @@ export default React.createClass({
               messageObj.link = linkID;
             }
             postMessage(messageObj);
-            this.refs.body.clearValue();
+            this.refs.body.input.value = '';
           }}
         />
       </div>

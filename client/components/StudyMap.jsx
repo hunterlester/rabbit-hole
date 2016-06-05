@@ -68,8 +68,6 @@ export const StudyMap = React.createClass({
                 <TextField
                   hintText="Leave a breadcrump for this link"
                   floatingLabelText="Breadcrumb"
-                  multiLine={true}
-                  rows={2}
                   ref='content'
                   fullWidth={true}
                 />
@@ -77,16 +75,16 @@ export const StudyMap = React.createClass({
                 <RaisedButton
                   label="Contribute breadcrumb"
                   onTouchTap={() => {
-                    let content = this.refs.content.getValue();
+                    let content = this.refs.content.input.value;
                     let breadcrumbObj = {
                       link: study_map.links[key]._id,
                       content: content,
                       user: user._id,
                       study_map: this.props.params.studyMap
                     };
+                    
                     dispatch(postLinkBreadcrumb(breadcrumbObj));
-
-                    this.refs.content.clearValue();
+                    this.refs.content.input.value = '';
                   }}
                 />
                 {this.getLinkBreadcrumbs(study_map.links[key])}
@@ -97,8 +95,6 @@ export const StudyMap = React.createClass({
         <TextField
           hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
           floatingLabelText="Breadcrumbs"
-          multiLine={true}
-          rows={2}
           ref='breadcrumb'
           fullWidth={true}
         />
@@ -106,7 +102,7 @@ export const StudyMap = React.createClass({
         <RaisedButton
           label="Contribute breadcrumb"
           onTouchTap={() => {
-            let content = this.refs.breadcrumb.getValue();
+            let content = this.refs.breadcrumb.input.value;
             let breadcrumbObj = {
               study_map: study_map._id,
               content: content,
@@ -114,8 +110,7 @@ export const StudyMap = React.createClass({
             };
 
             dispatch(postBreadcrumb(breadcrumbObj));
-
-            this.refs.breadcrumb.clearValue();
+            this.refs.breadcrumb.input.value = '';
           }}
         />
 
