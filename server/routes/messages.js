@@ -29,7 +29,12 @@ router.post('/', auth, (req, res) => {
               path: 'message',
               populate: [
               {
-                path: 'study_map'
+                path: 'study_map',
+                populate: [
+                  {
+                    path: 'keywords'
+                  }
+                ]
               },
               {
                 path: 'breadcrumb'

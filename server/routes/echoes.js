@@ -8,12 +8,24 @@ const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
 
 router.get('/', (req, res) => {
   Echo.find().populate([
-    {path: 'studymap'},
+    {
+      path: 'studymap',
+      populate: [
+        {
+          path: 'keywords'
+        }
+      ]
+    },
     {
       path: 'breadcrumb',
       populate: [
         {
-          path: 'study_map'
+          path: 'study_map',
+          populate: [
+            {
+              path: 'keywords'
+            }
+          ]
         }
       ]
     },
@@ -21,7 +33,12 @@ router.get('/', (req, res) => {
       path: 'link',
       populate: [
         {
-          path: 'study_map'
+          path: 'study_map',
+          populate: [
+            {
+              path: 'keywords'
+            }
+          ]
         }
       ]
     },
@@ -32,7 +49,12 @@ router.get('/', (req, res) => {
           path: 'breadcrumb'
         },
         {
-          path: 'study_map'
+          path: 'study_map',
+          populate: [
+            {
+              path: 'keywords'
+            }
+          ]
         }
       ]
     },

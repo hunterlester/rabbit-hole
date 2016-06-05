@@ -24,7 +24,21 @@ router.post('/studymap', auth, (req, res) => {
         echo.link = link._id;
         echo.save((err, echo) => {
           if (err) return res.status(500).json(err);
-          echo.populate([{path: 'link', populate: {path: 'study_map'}}, {path: 'user'}], (err, echo) => {
+          echo.populate([
+            {
+              path: 'link',
+              populate: [
+                {
+                  path: 'study_map',
+                  populate: [
+                    {
+                      path: 'keywords'
+                    }
+                  ]
+                }
+            ]
+            },
+            {path: 'user'}], (err, echo) => {
             store.dispatch(postEcho(echo));
           });
           res.json(link);
