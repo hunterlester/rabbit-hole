@@ -25,6 +25,7 @@ import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import 'react-select/dist/react-select.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
@@ -65,9 +66,10 @@ const routes = <Route component={App}>
 </Route>;
 
 const muiTheme = getMuiTheme();
+const darkMuiTheme = getMuiTheme(darkBaseTheme);
 
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={muiTheme}>
+  <MuiThemeProvider muiTheme={darkMuiTheme}>
     <Provider store={store}>
       <Router history={hashHistory}>{routes}</Router>
     </Provider>

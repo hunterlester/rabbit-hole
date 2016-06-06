@@ -7,13 +7,17 @@ import FlatButton from 'material-ui/FlatButton';
 import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { ConnectedEchoes } from './Echoes';
 
 export default React.createClass({
   render: function() {
     return (
       <div className='container'>
         <div className='row'>
-          <div className='col-sm-8'>
+          <div className='col-sm-6'>
+            <ConnectedEchoes />
+          </div>
+          <div className='col-sm-2'>
             <h3>Welcome to Rabbit Hole!</h3>
             <h3>Organize your studies and get help from community.</h3>
             <h4>Here's how it works:</h4>
