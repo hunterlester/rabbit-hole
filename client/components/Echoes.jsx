@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import moment from 'moment';
 import MessageForm from './MessageForm';
-
+import Select from 'react-select';
 
 import {getProfile} from '../state/profile_actions/core';
 import {
@@ -22,6 +22,14 @@ function compare(a , b) {
 
 
 export const Echoes = React.createClass({
+  getInitialState () {
+    return {
+      value: []
+    }
+  },
+  handleSelectChange(value) {
+    this.setState({value});
+  },
   parseEchoes: function(echoes) {
     return Object.values(echoes).map(echo => {
       if(echo.studymap) {
@@ -147,11 +155,20 @@ export const Echoes = React.createClass({
   },
  render: function() {
    const {echoes} = this.props;
+   let keywords = Object.values(this.props.subjects).map(obj => {
+     return Object.assign({}, {value: obj._id, label: obj.keyword});
+   });
    return (
      <div>
-       <h3>
-        Activity Echoes
-       </h3>
+       <Select
+         ref='filter'
+         value={this.state.value}
+         options={keywords}
+         multi={true}
+         placeholder="Follow activity for your favorite subjects"
+         onChange={this.handleSelectChange}
+         noResultsText={false}
+       />
        {this.parseEchoes(echoes).map(echo => {
          return (
            <Card key={echo._id}>
@@ -184,9 +201,11 @@ export const Echoes = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.auth.toJS();
+  const subjects = state.subjects.toJS().subjects;
   return {
     user,
     isAuthenticated,
+    subjects,
     echoes: state.echoes.toJS().echoes
   };
 }

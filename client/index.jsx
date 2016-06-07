@@ -69,7 +69,7 @@ const muiTheme = getMuiTheme();
 const darkMuiTheme = getMuiTheme(darkBaseTheme);
 
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={darkMuiTheme}>
+  <MuiThemeProvider muiTheme={muiTheme}>
     <Provider store={store}>
       <Router history={hashHistory}>{routes}</Router>
     </Provider>
