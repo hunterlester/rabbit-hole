@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   username: String,
   salt: String,
   hash: String,
-  subscribed_subjects: [],
+  subscribed_subjects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Subject'}],
   watching: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumbs'}],
   study_maps: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],

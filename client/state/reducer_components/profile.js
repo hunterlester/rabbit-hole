@@ -8,7 +8,8 @@ export default function profile(state = initialState, action) {
         displayName: fromJS(action.profile.displayName),
         _id: fromJS(action.profile._id),
         study_maps: fromJS(action.profile.study_maps),
-        points: fromJS(action.profile.points)
+        points: fromJS(action.profile.points),
+        subscribed_subjects: fromJS(action.profile.subscribed_subjects)
       })
   }
   return state;

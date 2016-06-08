@@ -8,8 +8,43 @@ export const initialState = fromJS({
   displayName: localStorage.getItem('profile_displayName'),
   _id: localStorage.getItem('profile_id'),
   study_maps: JSON.parse(localStorage.getItem('profile_study_maps')),
-  points: localStorage.getItem('profile_points')
+  points: localStorage.getItem('profile_points'),
+  subscribed_subjects: JSON.parse(localStorage.getItem('subscribed_subjects'))
 });
+
+export function subjectSubscription(userID, arrayBody) {
+  let token = localStorage.getItem('token') || null;
+
+  let body = arrayBody.map(key => {
+    return 'subscribed_subjects' + '=' + key;
+  }).join('&');
+
+  let config = {
+    method: 'PUT',
+    headers: {
+      'Content-Type':'application/x-www-form-urlencoded',
+      'Authorization': `Bearer ${token}`
+    },
+    body: body
+  };
+
+  return dispatch => {
+
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/subscribe/${userID}`, config)
+      .then(response =>
+        response.json().then(subjectsArray => ({subjectsArray, response}))
+      ).then(({subjectsArray, response}) => {
+        if (!response.ok) {
+          return Promise.reject(subjectsArray);
+        } else {
+          let cleaned_data = cleanest(subjectsArray);
+
+          localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_data));
+
+        }
+      }).catch(err => console.log("Error: ", err))
+  }
+}
 
 export function getProfile(userID, uri) {
   let token = localStorage.getItem('token') || null;
@@ -37,6 +72,7 @@ export function getProfile(userID, uri) {
           localStorage.setItem('profile_id', cleaned_user._id);
           localStorage.setItem('profile_study_maps', JSON.stringify(cleaned_user.study_maps));
           localStorage.setItem('profile_points', cleaned_user.points);
+          localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_user.subscribed_subjects));
 
           dispatch(receiveProfile(cleaned_user));
 

@@ -22,9 +22,15 @@ function compare(a , b) {
 
 export const Echoes = React.createClass({
   getInitialState () {
+    let keywords = Object.values(this.props.profile.subscribed_subjects).map(obj => {
+      return Object.assign({}, {value: obj._id, label: obj.keyword});
+    });
+    let keyList = Object.values(this.props.profile.subscribed_subjects).map(obj => {
+      return obj._id;
+    });
     return {
-      value: [],
-      keyIDs: []
+      value: keywords || [],
+      keyIDs: keyList || []
     }
   },
   handleSelectChange(value) {
@@ -151,6 +157,7 @@ export const Echoes = React.createClass({
       }
     }).filter(echo => {
       if(!this.state.value.length) {
+        console.log("testing")
         return echo;
       } else {
         if(echo.link) {
@@ -202,7 +209,7 @@ export const Echoes = React.createClass({
          multi={true}
          placeholder="Filter activity for your favorite subjects"
          onChange={this.handleSelectChange}
-         noResultsText='Subject not found. Log in to be the first to contribute.'
+         noResultsText='Subject not found. Be the first to contribute!'
        />
        {this.parseEchoes(echoes).map(echo => {
          return (
@@ -241,6 +248,7 @@ function mapStateToProps(state) {
     user,
     isAuthenticated,
     subjects,
+    profile: state.profile.toJS(),
     echoes: state.echoes.toJS().echoes
   };
 }
