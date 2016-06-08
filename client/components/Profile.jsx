@@ -7,6 +7,11 @@ import Select from 'react-select';
 import { subjectSubscription } from '../state/profile_actions/core';
 
 export const Profile = React.createClass({
+  shouldComponentUpdate: function(nextProps, nextState) {
+    console.log(this.props);
+    console.log(nextProps);
+    return true;
+  },
   getLinks: function(study_map) {
     if(study_map.links) {
       return Object.keys(study_map.links).map(key => {
@@ -45,7 +50,7 @@ export const Profile = React.createClass({
     }
   },
   getInitialState () {
-    let keywords = Object.values(this.props.profile.subscribed_subjects).map(obj => {
+    let keywords = Object.values(this.props.profile.profile_subjects).map(obj => {
       return Object.assign({}, {value: obj._id, label: obj.keyword});
     });
     return {

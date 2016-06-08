@@ -9,7 +9,7 @@ export default function profile(state = initialState, action) {
         _id: fromJS(action.profile._id),
         study_maps: fromJS(action.profile.study_maps),
         points: fromJS(action.profile.points),
-        subscribed_subjects: fromJS(action.profile.subscribed_subjects)
+        profile_subjects: fromJS(action.profile.subscribed_subjects)
       })
   }
   return state;

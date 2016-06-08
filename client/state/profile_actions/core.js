@@ -9,7 +9,7 @@ export const initialState = fromJS({
   _id: localStorage.getItem('profile_id'),
   study_maps: JSON.parse(localStorage.getItem('profile_study_maps')),
   points: localStorage.getItem('profile_points'),
-  subscribed_subjects: JSON.parse(localStorage.getItem('subscribed_subjects'))
+  profile_subjects: JSON.parse(localStorage.getItem('profile_subjects'))
 });
 
 export function subjectSubscription(userID, arrayBody) {
@@ -39,7 +39,7 @@ export function subjectSubscription(userID, arrayBody) {
         } else {
           let cleaned_data = cleanest(subjectsArray);
 
-          localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_data));
+          localStorage.setItem('profile_subjects', JSON.stringify(cleaned_data));
 
         }
       }).catch(err => console.log("Error: ", err))
@@ -72,7 +72,7 @@ export function getProfile(userID, uri) {
           localStorage.setItem('profile_id', cleaned_user._id);
           localStorage.setItem('profile_study_maps', JSON.stringify(cleaned_user.study_maps));
           localStorage.setItem('profile_points', cleaned_user.points);
-          localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_user.subscribed_subjects));
+          localStorage.setItem('profile_subjects', JSON.stringify(cleaned_user.subscribed_subjects));
 
           dispatch(receiveProfile(cleaned_user));
 

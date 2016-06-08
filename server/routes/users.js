@@ -35,7 +35,8 @@ router.post('/register', (req, res, next) => {
       token: user.generateJWT(),
       study_maps: user.study_maps,
       displayName: user.displayName,
-      points: user.points
+      points: user.points,
+      subscribed_subjects: user.subscribed_subjects
     })
   });
 });
@@ -56,7 +57,8 @@ router.post('/login', (req, res, next) => {
         token: user.generateJWT(),
         study_maps: user.study_maps,
         displayName: user.displayName,
-        points: user.points
+        points: user.points,
+        subscribed_subjects: user.subscribed_subjects
       });
     } else {
       return res. status(401).json(info);

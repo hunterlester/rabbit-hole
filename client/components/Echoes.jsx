@@ -22,12 +22,16 @@ function compare(a , b) {
 
 export const Echoes = React.createClass({
   getInitialState () {
-    let keywords = Object.values(this.props.profile.subscribed_subjects).map(obj => {
-      return Object.assign({}, {value: obj._id, label: obj.keyword});
-    });
-    let keyList = Object.values(this.props.profile.subscribed_subjects).map(obj => {
-      return obj._id;
-    });
+    let keywords, keyList;
+    if(this.props.user_subscriptions) {
+      keywords = Object.values(this.props.user_subscriptions).map(obj => {
+        return Object.assign({}, {value: obj._id, label: obj.keyword});
+      });
+      keyList = Object.values(this.props.user_subscriptions).map(obj => {
+        return obj._id;
+      });
+    }
+
     return {
       value: keywords || [],
       keyIDs: keyList || []
@@ -157,7 +161,6 @@ export const Echoes = React.createClass({
       }
     }).filter(echo => {
       if(!this.state.value.length) {
-        console.log("testing")
         return echo;
       } else {
         if(echo.link) {
@@ -248,7 +251,7 @@ function mapStateToProps(state) {
     user,
     isAuthenticated,
     subjects,
-    profile: state.profile.toJS(),
+    user_subscriptions: user.subscribed_subjects,
     echoes: state.echoes.toJS().echoes
   };
 }

@@ -38,7 +38,8 @@ export default function auth(state = initialAuth, action) {
           _id: action.user._id,
           token: action.user.token,
           displayName: action.user.displayName,
-          points: action.user.points
+          points: action.user.points,
+          subscribed_subjects: action.user.subscribed_subjects
         }
       });
     case LOGIN_FAILURE:
