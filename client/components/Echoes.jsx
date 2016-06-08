@@ -20,15 +20,16 @@ function compare(a , b) {
   return Date.parse(a.date) - Date.parse(b.date);
 }
 
-
 export const Echoes = React.createClass({
   getInitialState () {
     return {
-      value: []
+      value: [],
+      keyIDs: []
     }
   },
   handleSelectChange(value) {
     this.setState({value});
+    this.setState({keyIDs: value.map(val => val.value)});
   },
   parseEchoes: function(echoes) {
     return Object.values(echoes).map(echo => {
@@ -39,24 +40,21 @@ export const Echoes = React.createClass({
           <TextField
             hintText="Quickly leave helpful breadcrumb"
             floatingLabelText="Breadcrumb"
-            multiLine={true}
-            rows={2}
             ref='content'
             fullWidth={true}/>
 
           <RaisedButton
             label="Contribute breadcrumb"
             onTouchTap={() => {
-              const content = this.refs.content.getValue();
+              const content = this.refs.content.input.value;
               let breadcrumbObj = {
                 study_map: echo.studymap._id,
                 content: content,
                 user: this.props.user._id
               };
-
               this.props.dispatch(postBreadcrumb(breadcrumbObj));
 
-              this.refs.content.clearValue();
+              this.refs.content.input.value = '';
             }}
           />
         </div>;
@@ -64,7 +62,7 @@ export const Echoes = React.createClass({
       } else if (echo.breadcrumb && echo.breadcrumb.link) {
         echo.quickreply = <MessageForm
           linkID={echo.breadcrumb.link}
-          studyMapID={echo.breadcrumb.study_map}
+          studyMapID={echo.breadcrumb.study_map._id}
           breadcrumbID={echo.breadcrumb._id}
           userID={this.props.user._id}
           postMessage={ messageObj => {
@@ -144,20 +142,57 @@ export const Echoes = React.createClass({
         echo.action = <FlatButton label='go to link post' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.user._id,
-            `/profile/link/${echo.link.study_map}/${echo.link._id}`
+            `/profile/link/${echo.link.study_map._id}/${echo.link._id}`
           ))
         }} />
         return echo;
       } else {
         return echo;
       }
+    }).filter(echo => {
+      if(!this.state.value.length) {
+        return echo;
+      } else {
+        if(echo.link) {
+          let filterBool = Object.keys(echo.link.study_map.keywords).some(key => {
+            return this.state.keyIDs.some(id => key == id);
+          });
+          if(filterBool) {
+            return echo;
+          }
+        } else if (echo.breadcrumb) {
+          let filterBool = Object.keys(echo.breadcrumb.study_map.keywords).some(key => {
+            return this.state.keyIDs.some(id => key == id);
+          });
+          if(filterBool) {
+            return echo;
+          }
+        } else if (echo.message) {
+          let filterBool = Object.keys(echo.message.study_map.keywords).some(key => {
+            return this.state.keyIDs.some(id => key == id);
+          });
+          if(filterBool) {
+            return echo;
+          }
+        } else if (echo.studymap) {
+          let filterBool = Object.keys(echo.studymap.keywords).some(key => {
+            return this.state.keyIDs.some(id => key == id);
+          });
+          if(filterBool) {
+            return echo;
+          }
+        }
+      }
     }).sort(compare).reverse();
   },
  render: function() {
+
    const {echoes} = this.props;
+
    let keywords = Object.values(this.props.subjects).map(obj => {
      return Object.assign({}, {value: obj._id, label: obj.keyword});
    });
+
    return (
      <div>
        <Select
@@ -165,9 +200,9 @@ export const Echoes = React.createClass({
          value={this.state.value}
          options={keywords}
          multi={true}
-         placeholder="Follow activity for your favorite subjects"
+         placeholder="Filter activity for your favorite subjects"
          onChange={this.handleSelectChange}
-         noResultsText={false}
+         noResultsText='Subject not found. Log in to be the first to contribute.'
        />
        {this.parseEchoes(echoes).map(echo => {
          return (
