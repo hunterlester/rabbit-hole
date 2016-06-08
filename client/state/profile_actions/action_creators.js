@@ -4,3 +4,10 @@ export function receiveProfile(profile) {
     profile
   }
 }
+
+export function updateSubjects(subjects) {
+  return {
+    type: 'PROFILE_SUBJECT_UPDATE',
+    subjects
+  }
+}

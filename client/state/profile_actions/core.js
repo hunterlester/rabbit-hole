@@ -1,4 +1,5 @@
 import {receiveProfile} from './action_creators';
+import { updateSubscriptions } from '../user_login/login_action_factories';
 import {hashHistory} from 'react-router';
 import {Map, fromJS} from 'immutable';
 import fetch from 'isomorphic-fetch';
@@ -40,6 +41,8 @@ export function subjectSubscription(userID, arrayBody) {
           let cleaned_data = cleanest(subjectsArray);
 
           localStorage.setItem('profile_subjects', JSON.stringify(cleaned_data));
+
+          dispatch(updateSubscriptions(cleaned_data));
 
         }
       }).catch(err => console.log("Error: ", err))

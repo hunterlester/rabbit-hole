@@ -8,8 +8,8 @@ import { subjectSubscription } from '../state/profile_actions/core';
 
 export const Profile = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
-    console.log(this.props);
-    console.log(nextProps);
+    // console.log(this.props);
+    // console.log(nextProps);
     return true;
   },
   getLinks: function(study_map) {

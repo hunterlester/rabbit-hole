@@ -6,6 +6,15 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
+export const UPDATE_SUBSCRIPTIONS = 'UPDATE_SUBSCRIPTIONS';
+
+export function updateSubscriptions(subjects) {
+  return {
+    type: UPDATE_SUBSCRIPTIONS,
+    subjects
+  }
+}
+
 export function requestLogin(creds) {
   return {
     type: LOGIN_REQUEST,

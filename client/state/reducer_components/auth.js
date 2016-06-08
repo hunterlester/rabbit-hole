@@ -1,5 +1,5 @@
 import { initialAuth } from '../user_login/login_actions_core';
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from '../user_login/login_action_factories';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, UPDATE_SUBSCRIPTIONS } from '../user_login/login_action_factories';
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../user_registration/actions';
 
 export default function auth(state = initialAuth, action) {
@@ -53,6 +53,8 @@ export default function auth(state = initialAuth, action) {
         isFetching: true,
         isAuthenticated: false
       });
+    case UPDATE_SUBSCRIPTIONS:
+      return state.setIn(['user', 'subscribed_subjects'], action.subjects);
   }
   return state;
 }
