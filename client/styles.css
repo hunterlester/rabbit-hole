@@ -1,3 +1,9 @@
 * {
   font-family: 'Roboto', sans-serif;
 }
+
+.Select--multi .Select-value {
+  background-color: #FF5722;
+  color: #ffffff;
+  border: 1px solid #FF5722;
+}

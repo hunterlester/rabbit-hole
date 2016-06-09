@@ -25,9 +25,12 @@ import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import 'react-select/dist/react-select.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
+import { deepOrange500, blueGrey50 } from 'material-ui/styles/colors';
+
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
 
@@ -64,7 +67,14 @@ const routes = <Route component={App}>
   <Route path="/register" component={ConnectedRegister} />
 </Route>;
 
-const muiTheme = getMuiTheme();
+const muiTheme = getMuiTheme({
+  palette: {
+    accent1Color: deepOrange500,
+    primary3Color: deepOrange500,
+    accent2Color: blueGrey50,
+  }
+});
+const darkMuiTheme = getMuiTheme(darkBaseTheme);
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>

@@ -1,5 +1,5 @@
 import { initialAuth } from '../user_login/login_actions_core';
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS } from '../user_login/login_action_factories';
+import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, UPDATE_SUBSCRIPTIONS } from '../user_login/login_action_factories';
 import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../user_registration/actions';
 
 export default function auth(state = initialAuth, action) {
@@ -38,7 +38,8 @@ export default function auth(state = initialAuth, action) {
           _id: action.user._id,
           token: action.user.token,
           displayName: action.user.displayName,
-          points: action.user.points
+          points: action.user.points,
+          subscribed_subjects: action.user.subscribed_subjects
         }
       });
     case LOGIN_FAILURE:
@@ -49,9 +50,12 @@ export default function auth(state = initialAuth, action) {
       });
     case LOGOUT_SUCCESS:
       return state.merge({
-        isFetching: true,
-        isAuthenticated: false
+        isFetching: false,
+        isAuthenticated: false,
+        user: {}
       });
+    case UPDATE_SUBSCRIPTIONS:
+      return state.setIn(['user', 'subscribed_subjects'], action.subjects);
   }
   return state;
 }

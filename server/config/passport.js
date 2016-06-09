@@ -8,29 +8,37 @@ const StudyMap = mongoose.model('StudyMap');
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({username: username}).populate(
-      {path: 'study_maps', populate: [
+      [
         {
-          path: 'keywords'
+          path: 'subscribed_subjects'
         },
-        {
-          path: 'links',
-          populate: {
+        {path: 'study_maps', populate: [
+          {
+            path: 'keywords'
+          },
+          {
+            path: 'links',
+            populate: {
+              path: 'breadcrumbs',
+              populate: {
+                path: 'messages',
+                populate: {
+                  path:
+                    'user'
+                  }}}
+          },
+          {
             path: 'breadcrumbs',
             populate: {
               path: 'messages',
               populate: {
-                path:
-                  'user'
-                }}}
-        },
-        {
-          path: 'breadcrumbs',
-          populate: {
-            path: 'messages',
-            populate: {
-              path: 'user'
-            }}}]
-      }
+                path: 'user'
+              }
+            }
+          }
+        ]
+        }
+      ]
     ).exec(
       (err, user) => {
         if (err) {

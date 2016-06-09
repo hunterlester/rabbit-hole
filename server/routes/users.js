@@ -35,7 +35,8 @@ router.post('/register', (req, res, next) => {
       token: user.generateJWT(),
       study_maps: user.study_maps,
       displayName: user.displayName,
-      points: user.points
+      points: user.points,
+      subscribed_subjects: user.subscribed_subjects
     })
   });
 });
@@ -56,7 +57,8 @@ router.post('/login', (req, res, next) => {
         token: user.generateJWT(),
         study_maps: user.study_maps,
         displayName: user.displayName,
-        points: user.points
+        points: user.points,
+        subscribed_subjects: user.subscribed_subjects
       });
     } else {
       return res. status(401).json(info);
@@ -65,7 +67,7 @@ router.post('/login', (req, res, next) => {
 });
 
 router.param('userId', (req, res, next, userId) => {
-  User.findById(userId).populate(
+  User.findById(userId).populate([
     {
       path: 'study_maps',
       populate: [
@@ -105,8 +107,11 @@ router.param('userId', (req, res, next, userId) => {
         ]
       }
     ]
+  },
+  {
+    path: 'subscribed_subjects'
   }
-  ).exec((err, user) => {
+  ]).exec((err, user) => {
     if (err) return res.sendStatus(404);
     req.user = user;
     next();
@@ -122,6 +127,20 @@ router.put('/:userId', auth, (req, res) => {
     if (err) return res.status(400).json(err);
     res.sendStatus(200);
   })
+});
+
+router.put('/subscribe/:userId', auth, (req, res) => {
+  req.user.subscribed_subjects = req.body.subscribed_subjects;
+  req.user.save((err, user) => {
+    if (err) return res.status(400).json(err);
+    user.populate([
+      {
+        path: 'subscribed_subjects'
+      }
+    ], (err, user) => {
+      res.json(user.subscribed_subjects);
+    });
+  });
 });
 
 router.delete('/:userId', auth, (req, res) => {
