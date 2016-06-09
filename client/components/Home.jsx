@@ -11,7 +11,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import FlatButton from 'material-ui/FlatButton';
 import Badge from 'material-ui/Badge';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 import {getProfile} from '../state/profile_actions/core';
@@ -30,53 +30,49 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
-                <Toolbar>
-                  <ToolbarGroup firstChild={false} >
-                    <ToolbarTitle text="Rabbit Hole" />
+                <Toolbar >
+                  <ToolbarGroup float='right'>
+                    <ToolbarTitle style={{
+                      color: '#000000',
+                      fontSize: '18px'
+                    }} text="Rabbit-Hole-Help" />
 
-                    <IconMenu
-                      iconButtonElement={
-                        <IconButton touch={true}>
-                          <Badge primary={true} badgeContent={0}>
-                          </Badge>
-                        </IconButton>
-                      }
-                    >
-                      <MenuItem primaryText="notification 1" />
-                      <MenuItem primaryText="notification 2" />
-                      <MenuItem primaryText="notification 3" />
-                    </IconMenu>
-
-                    <FlatButton
-                      label={`${user.displayName} - Points: ${user.points}`}
-                      onTouchTap={() => {
-                        dispatch(getProfile(user._id))
+                      <FlatButton label="Study" onTouchTap={() => {
+                        hashHistory.push('/')
                       }} />
 
+                      <FlatButton label="Activity" onTouchTap={() => {
+                        hashHistory.push('/echoes')
+                      }} />
 
-                  </ToolbarGroup>
-                  <ToolbarGroup lastChild={true} float='right'>
-                    <IconMenu
-                      iconButtonElement={
-                        <IconButton touch={true}>
-                          <MoreVertIcon />
-                        </IconButton>
-                      }
-                    >
-                      <MenuItem primaryText="Settings" />
-                      <MenuItem primaryText="Profile" />
-                      <MenuItem primaryText="Logout" onTouchTap={() => {
-                        dispatch(logoutUser());
-                      }}/>
-                    </IconMenu>
-                    <FlatButton label="Study Maps" onTouchTap={() => {
-                      hashHistory.push('/')
-                    }} />
-                    <ToolbarSeparator />
-                    <FlatButton label="Activity Echoes" onTouchTap={() => {
-                      hashHistory.push('/echoes')
-                    }} />
+                      <IconMenu
+                        iconButtonElement={
+                          <IconButton touch={true}>
+                            <Badge primary={true} badgeContent={0}>
+                            </Badge>
+                          </IconButton>
+                        }
+                      >
+                        <MenuItem primaryText="notification 1" />
+                        <MenuItem primaryText="notification 2" />
+                        <MenuItem primaryText="notification 3" />
+                      </IconMenu>
 
+                      <IconMenu
+                        iconButtonElement={
+                          <IconButton touch={true}>
+                            <MoreVertIcon />
+                          </IconButton>
+                        }
+                      >
+                        <MenuItem primaryText="Settings" />
+                        <MenuItem primaryText="Profile" onTouchTap={() => {
+                          dispatch(getProfile(user._id))
+                        }} />
+                        <MenuItem primaryText="Logout" onTouchTap={() => {
+                          dispatch(logoutUser());
+                        }}/>
+                      </IconMenu>
                   </ToolbarGroup>
                 </Toolbar>
                 </div>

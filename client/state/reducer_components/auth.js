@@ -50,8 +50,9 @@ export default function auth(state = initialAuth, action) {
       });
     case LOGOUT_SUCCESS:
       return state.merge({
-        isFetching: true,
-        isAuthenticated: false
+        isFetching: false,
+        isAuthenticated: false,
+        user: {}
       });
     case UPDATE_SUBSCRIPTIONS:
       return state.setIn(['user', 'subscribed_subjects'], action.subjects);
