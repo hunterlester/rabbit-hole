@@ -27,6 +27,21 @@ const styles = {
 };
 
 export const Home = React.createClass({
+  getInitialState() {
+    return {
+      value: this.props.location.pathname
+    };
+  },
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.location.pathname
+    });
+  },
+  handleChange: function(value) {
+    this.setState({
+      value: value
+    })
+  },
   render: function () {
     const { dispatch, isAuthenticated, errorMessage, user } = this.props;
     return (
@@ -77,12 +92,12 @@ export const Home = React.createClass({
                       </IconMenu>
                   </ToolbarGroup>
                 </Toolbar>
-                <Tabs>
-                  <Tab label="Study" onActive={() => {
+                <Tabs value={this.state.value} onChange={this.handleChange}>
+                  <Tab value='/' label="Study" onActive={() => {
                     hashHistory.push('/')
                   }}>
                   </Tab>
-                  <Tab label="Activity" onActive={() => {
+                  <Tab value='/echoes' label="Activity" onActive={() => {
                     hashHistory.push('/echoes')
                   }}>
 
