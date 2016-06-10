@@ -11,8 +11,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Badge from 'material-ui/Badge';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import AppBar from 'material-ui/AppBar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 import {getProfile} from '../state/profile_actions/core';
@@ -55,49 +54,53 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
-                <Toolbar >
-                  <ToolbarGroup float='right'>
-                    <ToolbarTitle style={{
-                      color: '#263238',
-                      fontSize: '18px'
-                    }} text="Rabbit Hole Help" />
+              <AppBar
+                title="Rabbit Hole"
+                iconElementLeft={
+                  <IconMenu
+                    iconButtonElement={
+                      <IconButton touch={true}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                  >
+                    <MenuItem primaryText="Profile" onTouchTap={() => {
+                      dispatch(getProfile(user._id))
+                    }} />
+                    <MenuItem primaryText="-" />
+                    <MenuItem primaryText="Logout" onTouchTap={() => {
+                      dispatch(logoutUser());
+                    }}/>
+                  </IconMenu>
+                }
+                iconElementRight={
+                  <IconMenu
+                    iconButtonElement={
+                      <IconButton touch={true}>
+                        <Badge primary={true} badgeContent={0}>
+                        </Badge>
+                      </IconButton>
+                    }
+                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                  >
+                    <MenuItem primaryText="notification 1" />
+                    <MenuItem primaryText="notification 2" />
+                    <MenuItem primaryText="notification 3" />
+                  </IconMenu>
+                }
+                />
 
-                      <IconMenu
-                        iconButtonElement={
-                          <IconButton touch={true}>
-                            <Badge primary={true} badgeContent={0}>
-                            </Badge>
-                          </IconButton>
-                        }
-                      >
-                        <MenuItem primaryText="notification 1" />
-                        <MenuItem primaryText="notification 2" />
-                        <MenuItem primaryText="notification 3" />
-                      </IconMenu>
-
-                      <IconMenu
-                        iconButtonElement={
-                          <IconButton touch={true}>
-                            <MoreVertIcon />
-                          </IconButton>
-                        }
-                      >
-                        <MenuItem primaryText="Settings" />
-                        <MenuItem primaryText="Profile" onTouchTap={() => {
-                          dispatch(getProfile(user._id))
-                        }} />
-                        <MenuItem primaryText="Logout" onTouchTap={() => {
-                          dispatch(logoutUser());
-                        }}/>
-                      </IconMenu>
-                  </ToolbarGroup>
-                </Toolbar>
                 <Tabs value={this.state.value} onChange={this.handleChange}>
-                  <Tab value='/' label="Study" onActive={() => {
+                  <Tab style={{
+                    backgroundColor: '#607D8B'
+                  }} value='/' label="Study" onActive={() => {
                     hashHistory.push('/')
                   }}>
                   </Tab>
-                  <Tab value='/echoes' label="Activity" onActive={() => {
+                  <Tab style={{
+                    backgroundColor: '#607D8B'
+                  }} value='/echoes' label="Activity" onActive={() => {
                     hashHistory.push('/echoes')
                   }}>
 
