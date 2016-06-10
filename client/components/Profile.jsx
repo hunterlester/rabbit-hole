@@ -58,12 +58,13 @@ export const Profile = React.createClass({
     }
   },
   handleSelectChange(value) {
+    this.refs.filter.closeMenu();
     let keyArray = value.map(obj => obj.value);
     this.props.dispatch(subjectSubscription(this.props.user._id, keyArray));
     this.setState({value});
   },
   render: function() {
-    const { dispatch, isAuthenticated, user, profile } = this.props;
+    const { dispatch, isAuthenticated, user, profile, isFetching } = this.props;
     let keywords = Object.values(this.props.subjects).map(obj => {
       return Object.assign({}, {value: obj._id, label: obj.keyword});
     });
@@ -87,7 +88,7 @@ export const Profile = React.createClass({
           value={this.state.value}
           options={keywords}
           multi={true}
-          disabled={!selectIsDisabled}
+          disabled={!selectIsDisabled || isFetching}
           placeholder="Subscribe to your favorite subjects"
           onChange={this.handleSelectChange}
           noResultsText='Subject not found. Be the first to contribute!'
@@ -100,13 +101,14 @@ export const Profile = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { isAuthenticated, user } = state.auth.toJS();
+  const { isAuthenticated, user, isFetching } = state.auth.toJS();
   const subjects = state.subjects.toJS().subjects;
   return {
     isAuthenticated,
     user,
     profile: state.profile.toJS(),
-    subjects
+    subjects,
+    isFetching
   };
 }
 
