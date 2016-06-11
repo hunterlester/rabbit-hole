@@ -55,6 +55,9 @@ export const Home = React.createClass({
             <div className='container-fluid'>
               <div className="row">
               <AppBar
+                titleStyle={
+                  {fontSize: 20}
+                }
                 title="Rabbit Hole"
                 iconElementLeft={
                   <IconMenu
@@ -67,7 +70,7 @@ export const Home = React.createClass({
                     <MenuItem primaryText="Profile" onTouchTap={() => {
                       dispatch(getProfile(user._id))
                     }} />
-                    <MenuItem primaryText="-" />
+                    <MenuItem primaryText="---" />
                     <MenuItem primaryText="Logout" onTouchTap={() => {
                       dispatch(logoutUser());
                     }}/>
@@ -77,7 +80,7 @@ export const Home = React.createClass({
                   <IconMenu
                     iconButtonElement={
                       <IconButton touch={true}>
-                        <Badge primary={true} badgeContent={0}>
+                        <Badge badgeContent={0}>
                         </Badge>
                       </IconButton>
                     }
@@ -93,12 +96,14 @@ export const Home = React.createClass({
 
                 <Tabs value={this.state.value} onChange={this.handleChange}>
                   <Tab style={{
+                    fontSize: '1.2em',
                     backgroundColor: '#607D8B'
                   }} value='/' label="Study" onActive={() => {
                     hashHistory.push('/')
                   }}>
                   </Tab>
                   <Tab style={{
+                    fontSize: '1.2em',
                     backgroundColor: '#607D8B'
                   }} value='/echoes' label="Activity" onActive={() => {
                     hashHistory.push('/echoes')

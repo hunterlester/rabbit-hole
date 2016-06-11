@@ -69,7 +69,7 @@ const routes = <Route component={App}>
 
 const muiTheme = getMuiTheme({
   palette: {
-    accent1Color: deepOrange500,
+    accent1Color: darkBlack,
     primary1Color: deepOrange500,
   }
 });
