@@ -29,7 +29,7 @@ import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import 'react-select/dist/react-select.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import { deepOrange500, blueGrey50 } from 'material-ui/styles/colors';
+import { deepOrange500, darkBlack } from 'material-ui/styles/colors';
 
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
@@ -69,9 +69,8 @@ const routes = <Route component={App}>
 
 const muiTheme = getMuiTheme({
   palette: {
-    accent1Color: deepOrange500,
-    primary3Color: deepOrange500,
-    accent2Color: blueGrey50,
+    accent1Color: darkBlack,
+    primary1Color: deepOrange500,
   }
 });
 const darkMuiTheme = getMuiTheme(darkBaseTheme);

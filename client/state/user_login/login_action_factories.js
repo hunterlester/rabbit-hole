@@ -7,11 +7,20 @@ export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
 export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 export const UPDATE_SUBSCRIPTIONS = 'UPDATE_SUBSCRIPTIONS';
+export const UPDATE_SUBSCRIPTIONS_REQUEST = 'UPDATE_SUBSCRIPTIONS_REQUEST';
 
 export function updateSubscriptions(subjects) {
   return {
     type: UPDATE_SUBSCRIPTIONS,
+    isFetching: false,
     subjects
+  }
+}
+
+export function subscription_request() {
+  return {
+    type: UPDATE_SUBSCRIPTIONS_REQUEST,
+    isFetching: true
   }
 }
 

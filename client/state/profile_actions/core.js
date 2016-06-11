@@ -1,5 +1,5 @@
 import {receiveProfile} from './action_creators';
-import { updateSubscriptions } from '../user_login/login_action_factories';
+import { updateSubscriptions, subscription_request } from '../user_login/login_action_factories';
 import {hashHistory} from 'react-router';
 import {Map, fromJS} from 'immutable';
 import fetch from 'isomorphic-fetch';
@@ -15,10 +15,17 @@ export const initialState = fromJS({
 
 export function subjectSubscription(userID, arrayBody) {
   let token = localStorage.getItem('token') || null;
-
-  let body = arrayBody.map(key => {
-    return 'subscribed_subjects' + '=' + key;
-  }).join('&');
+  let body;
+  let endpoint;;
+  if(arrayBody.length) {
+    endpoint = '/users/subscribe/';
+    body = arrayBody.map(key => {
+      return 'subscribed_subjects' + '=' + key;
+    }).join('&');
+  } else {
+    endpoint = '/users/empty_subscribe/'
+    body = 'subscribed_subjects'
+  }
 
   let config = {
     method: 'PUT',
@@ -30,8 +37,8 @@ export function subjectSubscription(userID, arrayBody) {
   };
 
   return dispatch => {
-
-    return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/subscribe/${userID}`, config)
+    dispatch(subscription_request());
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}${endpoint}${userID}`, config)
       .then(response =>
         response.json().then(subjectsArray => ({subjectsArray, response}))
       ).then(({subjectsArray, response}) => {
@@ -41,6 +48,7 @@ export function subjectSubscription(userID, arrayBody) {
           let cleaned_data = cleanest(subjectsArray);
 
           localStorage.setItem('profile_subjects', JSON.stringify(cleaned_data));
+          localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_data));
 
           dispatch(updateSubscriptions(cleaned_data));
 

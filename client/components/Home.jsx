@@ -4,19 +4,43 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import Login from './Login';
 
+import {Tabs, Tab} from 'material-ui/Tabs';
+
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import FlatButton from 'material-ui/FlatButton';
 import Badge from 'material-ui/Badge';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
-import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import AppBar from 'material-ui/AppBar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 import {getProfile} from '../state/profile_actions/core';
 
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+};
+
 export const Home = React.createClass({
+  getInitialState() {
+    return {
+      value: this.props.location.pathname
+    };
+  },
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      value: nextProps.location.pathname
+    });
+  },
+  handleChange: function(value) {
+    this.setState({
+      value: value
+    })
+  },
   render: function () {
     const { dispatch, isAuthenticated, errorMessage, user } = this.props;
     return (
@@ -30,51 +54,63 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
-                <Toolbar >
-                  <ToolbarGroup float='right'>
-                    <ToolbarTitle style={{
-                      color: '#000000',
-                      fontSize: '18px'
-                    }} text="Rabbit-Hole-Help" />
+              <AppBar
+                titleStyle={
+                  {fontSize: 20}
+                }
+                title="Rabbit Hole"
+                iconElementLeft={
+                  <IconMenu
+                    iconButtonElement={
+                      <IconButton touch={true}>
+                        <MoreVertIcon />
+                      </IconButton>
+                    }
+                  >
+                    <MenuItem primaryText="Profile" onTouchTap={() => {
+                      dispatch(getProfile(user._id))
+                    }} />
+                    <MenuItem primaryText="---" />
+                    <MenuItem primaryText="Logout" onTouchTap={() => {
+                      dispatch(logoutUser());
+                    }}/>
+                  </IconMenu>
+                }
+                iconElementRight={
+                  <IconMenu
+                    iconButtonElement={
+                      <IconButton touch={true}>
+                        <Badge badgeContent={0}>
+                        </Badge>
+                      </IconButton>
+                    }
+                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                  >
+                    <MenuItem primaryText="notification 1" />
+                    <MenuItem primaryText="notification 2" />
+                    <MenuItem primaryText="notification 3" />
+                  </IconMenu>
+                }
+                />
 
-                      <FlatButton label="Study" onTouchTap={() => {
-                        hashHistory.push('/')
-                      }} />
+                <Tabs value={this.state.value} onChange={this.handleChange}>
+                  <Tab style={{
+                    fontSize: '1.2em',
+                    backgroundColor: '#607D8B'
+                  }} value='/' label="Study" onActive={() => {
+                    hashHistory.push('/')
+                  }}>
+                  </Tab>
+                  <Tab style={{
+                    fontSize: '1.2em',
+                    backgroundColor: '#607D8B'
+                  }} value='/echoes' label="Activity" onActive={() => {
+                    hashHistory.push('/echoes')
+                  }}>
 
-                      <FlatButton label="Activity" onTouchTap={() => {
-                        hashHistory.push('/echoes')
-                      }} />
-
-                      <IconMenu
-                        iconButtonElement={
-                          <IconButton touch={true}>
-                            <Badge primary={true} badgeContent={0}>
-                            </Badge>
-                          </IconButton>
-                        }
-                      >
-                        <MenuItem primaryText="notification 1" />
-                        <MenuItem primaryText="notification 2" />
-                        <MenuItem primaryText="notification 3" />
-                      </IconMenu>
-
-                      <IconMenu
-                        iconButtonElement={
-                          <IconButton touch={true}>
-                            <MoreVertIcon />
-                          </IconButton>
-                        }
-                      >
-                        <MenuItem primaryText="Settings" />
-                        <MenuItem primaryText="Profile" onTouchTap={() => {
-                          dispatch(getProfile(user._id))
-                        }} />
-                        <MenuItem primaryText="Logout" onTouchTap={() => {
-                          dispatch(logoutUser());
-                        }}/>
-                      </IconMenu>
-                  </ToolbarGroup>
-                </Toolbar>
+                  </Tab>
+                </Tabs>
                 </div>
             </div>
             <div className="container">

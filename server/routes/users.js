@@ -143,6 +143,20 @@ router.put('/subscribe/:userId', auth, (req, res) => {
   });
 });
 
+router.put('/empty_subscribe/:userId', auth, (req, res) => {
+  req.user.subscribed_subjects = [];
+  req.user.save((err, user) => {
+    if (err) return res.status(400).json(err);
+    user.populate([
+      {
+        path: 'subscribed_subjects'
+      }
+    ], (err, user) => {
+      res.json(user.subscribed_subjects);
+    });
+  });
+});
+
 router.delete('/:userId', auth, (req, res) => {
   req.user.remove((err) => {
     if (err) return res.status(400).json(err);
