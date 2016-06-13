@@ -19,6 +19,7 @@ const UserSchema = new mongoose.Schema({
   watching: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
   breadcrumbs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Breadcrumbs'}],
   study_maps: [{type: mongoose.Schema.Types.ObjectId, ref: 'StudyMap'}],
+  notifications: [{type: mongoose.Schema.Types.ObjectId, ref: 'Echo'}],
   points: {type: Number, default: 1}
 }, {strict: false});
 

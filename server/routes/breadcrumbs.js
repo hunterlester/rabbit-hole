@@ -45,6 +45,16 @@ router.post('/studymap', auth, (req, res) => {
             path: 'user'
           }
         ], (err, echo) => {
+          const echoUserID = echo.breadcrumb.study_map.user;
+            if(echoUserID.toString() != echo.user._id.toString()) {
+              User.findById(echoUserID, (err, user) => {
+                if(err) return res.sendStatus(404);
+                user.notifications.push(echo._id);
+                user.save((err, user) => {
+                  if(err) return res.sendStatus(500);
+                });
+              });
+            }
             store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);
@@ -84,7 +94,17 @@ router.post('/link', auth, (req, res) => {
               ]
             },
             {path: 'user'}], (err, echo) => {
-            store.dispatch(postEcho(echo));
+              const echoUserID = echo.breadcrumb.study_map.user;
+                if(echoUserID.toString() != echo.user._id.toString()) {
+                  User.findById(echoUserID, (err, user) => {
+                    if(err) return res.sendStatus(404);
+                    user.notifications.push(echo._id);
+                    user.save((err, user) => {
+                      if(err) return res.sendStatus(500);
+                    });
+                  });
+                }
+              store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);
         });

@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {registerUser} from '../state/user_registration/register_core';
+import {Toolbar } from 'material-ui/Toolbar';
+
 
 export const Register = React.createClass({
   render: function() {
@@ -10,48 +12,57 @@ export const Register = React.createClass({
 
     return (
       <div>
+      <Toolbar style={{backgroundColor: '#FF9800'}}>
+      </Toolbar>
+      <Toolbar style={{backgroundColor: '#FF9800'}}>
+      </Toolbar>
+      <div className='container'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <TextField hintText="Display Name"
+                       fullWidth={true}
+                       ref='displayName'
+                       floatingLabelText="Display Name" />
 
-      <TextField hintText="Display Name"
-                 fullWidth={true}
-                 ref='displayName'
-                 floatingLabelText="Display Name" />
+              <TextField fullWidth={true}
+                         floatingLabelText='Email'
+                         hintText='Email'
+                         ref='username'/>
 
-        <TextField fullWidth={true}
-                   floatingLabelText='Email'
-                   hintText='Email'
-                   ref='username'/>
+               <TextField fullWidth={true}
+                          floatingLabelText='Password'
+                          hintText='Password'
+                          type='password'
+                          ref='password'/>
 
-         <TextField fullWidth={true}
-                    floatingLabelText='Password'
-                    hintText='Password'
-                    type='password'
-                    ref='password'/>
+              <TextField fullWidth={true}
+                         floatingLabelText='Confirm Password'
+                         hintText='Confirm Password'
+                         type='password'
+                         ref='password2'/>
 
-        <TextField fullWidth={true}
-                   floatingLabelText='Confirm Password'
-                   hintText='Confirm Password'
-                   type='password'
-                   ref='password2'/>
+               <RaisedButton label="Register"
+                             onTouchTap={() => {
 
-         <RaisedButton label="Register"
-                       onTouchTap={() => {
+                              if (this.refs.password.getValue() !== this.refs.password2.getValue()) {
+                                this.refs.password2.setErrorText("Passwords not matched");
+                              } else {
+                                let registerObj = {};
 
-                        if (this.refs.password.getValue() !== this.refs.password2.getValue()) {
-                          this.refs.password2.setErrorText("Passwords not matched");
-                        } else {
-                          let registerObj = {};
+                                Object.keys(this.refs).filter((key) => {
+                                  if (key !== "password2") {
+                                    return key;
+                                  }
+                                }).map((key) => {
+                                  registerObj = Object.assign(registerObj, {[key]: this.refs[key].getValue()});
+                                });
+                                dispatch(registerUser(registerObj));
+                              }
 
-                          Object.keys(this.refs).filter((key) => {
-                            if (key !== "password2") {
-                              return key;
-                            }
-                          }).map((key) => {
-                            registerObj = Object.assign(registerObj, {[key]: this.refs[key].getValue()});
-                          });
-                          dispatch(registerUser(registerObj));
-                        }
-
-                       }}/>
+                             }}/>
+          </div>
+        </div>
+      </div>
       </div>
     );
   }

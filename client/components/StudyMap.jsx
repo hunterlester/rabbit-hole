@@ -27,7 +27,7 @@ export const StudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={link.breadcrumbs[key]._id} userID={this.props.user._id} postMessage={ messageObj => {
                   this.props.dispatch(postLinkMessage(messageObj))
@@ -63,7 +63,7 @@ export const StudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 <TextField
                   hintText="Leave a breadcrump for this link"
@@ -82,7 +82,7 @@ export const StudyMap = React.createClass({
                       user: user._id,
                       study_map: this.props.params.studyMap
                     };
-                    
+
                     dispatch(postLinkBreadcrumb(breadcrumbObj));
                     this.refs.content.input.value = '';
                   }}
@@ -122,7 +122,7 @@ export const StudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 {this.getMessages(study_map.breadcrumbs[key])}
               </div>

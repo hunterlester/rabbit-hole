@@ -41,12 +41,10 @@ export const StudyMaps = React.createClass({
               </div>
 
               <div className="col-sm-8 col-sm-pull-4">
-                <h3>
-                  Subjects
-                  <CreateNewFolder onClick={() => {
-                    hashHistory.push('/studyMapForm')
-                  }}/>
-                </h3>
+
+                <CreateNewFolder style={{margin: '3%'}} onClick={() => {
+                  hashHistory.push('/studyMapForm')
+                }}/>
 
                 {Object.keys(study_maps).map(key =>
                   <Card key={study_maps[key]._id}>

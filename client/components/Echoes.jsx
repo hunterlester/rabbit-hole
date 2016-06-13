@@ -223,15 +223,15 @@ export const Echoes = React.createClass({
                actAsExpander={true}
                showExpandableButton={true}/>
 
-             <CardText expandable={true}>
+             <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               {moment(`${echo.date}`, "YYYYMMDD").fromNow()}
               {echo.linkuri}
               {echo.quickreply}
              </CardText>
-             <CardActions expandable={true}>
+             <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               {echo.action}
             </CardActions>
-            <CardActions expandable={true}>
+            <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
              {<FlatButton label={echo.user.displayName} onTouchTap={() => {
                this.props.dispatch(getProfile(echo.user._id))
              }}/>}

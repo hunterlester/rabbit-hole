@@ -11,7 +11,7 @@ export default React.createClass({
       <TextField
         ref='uri'
         hintText='Copy & Paste link uri here'
-        floatingLabelText="URI"
+        floatingLabelText="URL"
         fullWidth={true}
       />
 
