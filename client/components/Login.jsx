@@ -30,10 +30,11 @@ export default React.createClass({
       <Tabs>
         <Tab style={{
           fontSize: '1.2em'
-        }} label="Rabbit Hole">
+        }} label="Explore">
           <div className='container'>
             <div className='row'>
               <div className='col-sm-8'>
+                <h3>Welcome to Rabbit Hole!</h3>
                 <ConnectedEchoes />
               </div>
               <div className='col-sm-4'>
@@ -42,13 +43,12 @@ export default React.createClass({
 
                     <Card>
                       <CardHeader
-                        title="ABOUT"
+                        title="How it works"
                         actAsExpander={true} />
 
-                      <CardText expandable={true}>
-                        <h4>For learners:</h4>
+                      <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
                         <List>
-                          <ListItem primaryText="Organize subjects of study" />
+                          <ListItem primaryText="Organize your subjects of study" />
                           <Divider inset={true} />
                           <ListItem primaryText="Collect resource links" />
                           <Divider inset={true} />
@@ -56,12 +56,14 @@ export default React.createClass({
                           <Divider inset={true} />
                           <ListItem primaryText="Your activities are echoed on community feed" />
                           <Divider inset={true} />
+                          <ListItem primaryText="Discover more helpful resources" />
+                          <Divider inset={true} />
                           <ListItem primaryText="Let community focus your path, so you don't become lost in information" />
                         </List>
 
-                        <h4>For experts:</h4>
+                        <h4>Give back:</h4>
                         <List>
-                          <ListItem primaryText="Help others to to discover and to focus on the right resources" />
+                          <ListItem primaryText="Help others to discover and to focus on relevant resources" />
                           <Divider inset={true} />
                           <ListItem primaryText="Provide mentorship without great time commitments" />
                           <Divider inset={true} />

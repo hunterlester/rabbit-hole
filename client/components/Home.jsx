@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {Toolbar, ToolbarGroup } from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 import {getProfile} from '../state/profile_actions/core';
@@ -70,6 +70,7 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
+                    <ToolbarTitle text="Rabbit Hole" />
                   </ToolbarGroup>
                 </Toolbar>
 

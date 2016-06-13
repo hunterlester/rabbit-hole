@@ -207,10 +207,11 @@ export const Echoes = React.createClass({
      <div>
        <Select
          ref='filter'
+         className="selectInput"
          value={this.state.value}
          options={keywords}
          multi={true}
-         placeholder="Filter activity for your favorite subjects"
+         placeholder="Start typing to find your favorite subjects"
          onChange={this.handleSelectChange}
          noResultsText='Subject not found. Be the first to contribute!'
        />
@@ -224,7 +225,9 @@ export const Echoes = React.createClass({
                showExpandableButton={true}/>
 
              <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-              {moment(`${echo.date}`, "YYYYMMDD").fromNow()}
+              <div className='pull-right'>
+                {moment(echo.date).fromNow()}
+              </div>
               {echo.linkuri}
               {echo.quickreply}
              </CardText>

@@ -36,18 +36,18 @@ export const StudyMaps = React.createClass({
         {isAuthenticated &&
           <div className="row">
 
-              <div className="col-sm-4 col-sm-push-8">
+              <div style={{borderLeft: '1px solid #E0E0E0'}} className="col-sm-4 col-sm-push-8">
                 <LinkForm userID={user._id} studyMaps={study_maps} postLink={(linkObj) => dispatch(postLink(linkObj))} />
               </div>
 
               <div className="col-sm-8 col-sm-pull-4">
 
-                <CreateNewFolder style={{margin: '3%'}} onClick={() => {
+                <CreateNewFolder className="pull-right" style={{margin: '3%'}} onClick={() => {
                   hashHistory.push('/studyMapForm')
                 }}/>
 
                 {Object.keys(study_maps).map(key =>
-                  <Card key={study_maps[key]._id}>
+                  <Card style={{clear: 'both'}} key={study_maps[key]._id}>
                     <CardHeader
                       title={study_maps[key].subject}
                       actAsExpander={true}
