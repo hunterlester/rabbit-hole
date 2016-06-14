@@ -46,15 +46,6 @@ router.post('/studymap', auth, (req, res) => {
           }
         ], (err, echo) => {
           const echoUserID = echo.breadcrumb.study_map.user;
-            if(echoUserID.toString() != echo.user._id.toString()) {
-              User.findById(echoUserID, (err, user) => {
-                if(err) return res.sendStatus(404);
-                user.notifications.push(echo._id);
-                user.save((err, user) => {
-                  if(err) return res.sendStatus(500);
-                });
-              });
-            }
             store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);
@@ -94,16 +85,6 @@ router.post('/link', auth, (req, res) => {
               ]
             },
             {path: 'user'}], (err, echo) => {
-              const echoUserID = echo.breadcrumb.study_map.user;
-                if(echoUserID.toString() != echo.user._id.toString()) {
-                  User.findById(echoUserID, (err, user) => {
-                    if(err) return res.sendStatus(404);
-                    user.notifications.push(echo._id);
-                    user.save((err, user) => {
-                      if(err) return res.sendStatus(500);
-                    });
-                  });
-                }
               store.dispatch(postEcho(echo));
           });
           res.json(breadcrumb);
@@ -114,17 +95,18 @@ router.post('/link', auth, (req, res) => {
 });
 
 router.param('breadcrumbId', (req, res, next, breadcrumbId) => {
-  StudyMap.findById(breadcrumbId, (err, breadcrumb) => {
+  Breadcrumb.findById(breadcrumbId, (err, breadcrumb) => {
     if (err) return res.sendStatus(404);
     req.breadcrumb = breadcrumb;
     next();
   });
 });
 
-router.put('/:breadcrumbId', auth, (req, res) => {
-  res.breadcrumb.update({$set: req.body}, (err) => {
+router.put('/seen/:breadcrumbId', auth, (req, res) => {
+  req.breadcrumb.seen = true;
+  req.breadcrumb.save((err, data) => {
       if (err) return res.status(400).json(err);
-      res.sendStatus(200);
+      res.json(data);
   });
 });
 

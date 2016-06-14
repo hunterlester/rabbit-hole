@@ -7,7 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 import MessageForm from './MessageForm.jsx';
-import {postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
+import {updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
 
 function compare(a , b) {
   return Date.parse(a.date) - Date.parse(b.date);
@@ -19,11 +19,24 @@ export const StudyMap = React.createClass({
   },
   getLinkBreadcrumbs: function(link) {
     if (link.breadcrumbs) {
+      let style = {};
+      let seen = 'seen';
       return Object.keys(link.breadcrumbs).map(key => {
+        if('seen' in link.breadcrumbs[key] && link.breadcrumbs[key].seen == false) {
+          style.backgroundColor = '#2196F3';
+        }
         return (
           <Card key={link.breadcrumbs[key]._id}>
             <CardHeader
               title={link.breadcrumbs[key].content}
+              subtitle={link.breadcrumbs[key].seen}
+              style={style}
+              onClick={() => {
+                if( seen in link.breadcrumbs[key] && link.breadcrumbs[key].seen == false) {
+                  let newObj = Object.assign({}, link.breadcrumbs[key], {seen: true});
+                  dispatch(updateBLinkSeen(JSON.stringify(newObj), newObj._id));
+                }
+              }}
               actAsExpander={true}
               showExpandableButton={true}
             />
@@ -115,23 +128,37 @@ export const StudyMap = React.createClass({
         />
 
         <h3>Breadcrumbs</h3>
-        {Object.keys(study_map.breadcrumbs).map(key =>
-          <Card key={study_map.breadcrumbs[key]._id}>
-            <CardHeader
-              title={study_map.breadcrumbs[key].content}
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-              <div>
-                {this.getMessages(study_map.breadcrumbs[key])}
-              </div>
-              <MessageForm studyMapID={study_map._id} breadcrumbID={study_map.breadcrumbs[key]._id} userID={user._id} postMessage={ messageObj => {
-                dispatch(postMessage(messageObj))
-              }}/>
-            </CardText>
-          </Card>
-
+        {Object.keys(study_map.breadcrumbs).map(key => {
+          let style = {};
+          let seen = 'seen';
+          if('seen' in study_map.breadcrumbs[key] && study_map.breadcrumbs[key].seen == false) {
+            style.backgroundColor = '#2196F3';
+          }
+          return (
+            <Card key={study_map.breadcrumbs[key]._id}>
+              <CardHeader
+                title={study_map.breadcrumbs[key].content}
+                actAsExpander={true}
+                showExpandableButton={true}
+                onClick={(event) => {
+                  if( seen in study_map.breadcrumbs[key] && study_map.breadcrumbs[key].seen == false) {
+                    let newObj = Object.assign({}, study_map.breadcrumbs[key], {seen: true});
+                    dispatch(updateSeen(JSON.stringify(newObj), newObj._id));
+                  }
+                }}
+                style={style}
+              />
+              <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                <div>
+                  {this.getMessages(study_map.breadcrumbs[key])}
+                </div>
+                <MessageForm studyMapID={study_map._id} breadcrumbID={study_map.breadcrumbs[key]._id} userID={user._id} postMessage={ messageObj => {
+                  dispatch(postMessage(messageObj))
+                }}/>
+              </CardText>
+            </Card>
+          );
+        }
         ).sort(compare).reverse()}
       </div>
     );

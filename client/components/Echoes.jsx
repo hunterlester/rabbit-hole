@@ -62,6 +62,9 @@ export const Echoes = React.createClass({
                 content: content,
                 user: this.props.user._id
               };
+              if(echo.studymap.user != this.props.user._id) {
+                breadcrumbObj.seen = false;
+              }
               this.props.dispatch(postBreadcrumb(breadcrumbObj));
 
               this.refs.content.input.value = '';
@@ -149,6 +152,32 @@ export const Echoes = React.createClass({
       } else if (echo.link) {
         echo.body = `link added: ${echo.link.title}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
+        echo.quickreply = <div>
+          <TextField
+            hintText="Quickly leave helpful breadcrumb"
+            floatingLabelText="Breadcrumb"
+            ref='content'
+            fullWidth={true}/>
+
+          <RaisedButton
+            label="Contribute breadcrumb"
+            onTouchTap={() => {
+              const content = this.refs.content.input.value;
+              let breadcrumbObj = {
+                study_map: echo.link.study_map._id,
+                link: echo.link._id,
+                content: content,
+                user: this.props.user._id
+              };
+              if(echo.link.study_map.user != this.props.user._id) {
+                breadcrumbObj.seen = false;
+              }
+              this.props.dispatch(postLinkBreadcrumb(breadcrumbObj));
+
+              this.refs.content.input.value = '';
+            }}
+          />
+        </div>;
         echo.action = <FlatButton label='go to link post' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.user._id,
