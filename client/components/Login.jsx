@@ -8,17 +8,80 @@ import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { ConnectedEchoes } from './Echoes';
+import {Tabs, Tab} from 'material-ui/Tabs';
+
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
+
 
 export default React.createClass({
   render: function() {
     return (
-      <div className='container'>
-        <div className='row'>
-          <div className='col-sm-8'>
-            <h3>Find your way through complex subjects</h3>
-            <ConnectedEchoes />
+      <div>
+      <Toolbar style={{backgroundColor: '#FF9800'}}>
+        <ToolbarGroup>
+          <ToolbarTitle style={{color: '#ffffff', fontSize: '18px'}} text="Community for avid learners"/>
+        </ToolbarGroup>
+      </Toolbar>
+
+      <Tabs>
+        <Tab style={{
+          fontSize: '1.2em'
+        }} label="Explore">
+          <div className='container'>
+            <div className='row'>
+              <div className='col-sm-8'>
+                <h3>Welcome to Rabbit Hole!</h3>
+                <ConnectedEchoes />
+              </div>
+              <div className='col-sm-4'>
+                <div class='row'>
+                  <div class='col-xs-12'>
+
+                    <Card>
+                      <CardHeader
+                        title="How it works"
+                        actAsExpander={true} />
+
+                      <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                        <List>
+                          <ListItem primaryText="Organize your subjects of study" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Collect resource links" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Pose questions and record thoughts" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Your activities are echoed on community feed" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Discover more helpful resources" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Let community focus your path, so you don't become lost in information" />
+                        </List>
+
+                        <h4>Give back:</h4>
+                        <List>
+                          <ListItem primaryText="Help others to discover and to focus on relevant resources" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Provide mentorship without great time commitments" />
+                          <Divider inset={true} />
+                          <ListItem primaryText="Organize your studies so that others can learn and discover from your process" />
+                        </List>
+                      </CardText>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className='col-sm-4'>
+        </Tab>
+
+        <Tab style={{
+          fontSize: '1.2em'
+        }} label="Login">
+          <div className='container'>
             <div class='row'>
               <div class="col-xs-12">
                 <TextField hintText="Email"
@@ -52,59 +115,9 @@ export default React.createClass({
 
               </div>
             </div>
-            <div class='row'>
-              <div class='col-xs-12'>
-                <h4>For learners:</h4>
-                <List>
-                  <ListItem primaryText="Organize subjects of study" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Collect resource links" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Pose questions and record thoughts" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Your activities are echoed on community feed" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Let community focus your path, so you don't waste time" />
-                </List>
-
-                <h4>For experts:</h4>
-                <List>
-                  <ListItem primaryText="Help others to focus on the right resources" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Provide mentorship without major commitments" />
-                  <Divider inset={true} />
-                  <ListItem primaryText="Organize your studies so that other can learn from your process" />
-                </List>
-
-                <Card>
-                  <CardHeader
-                    title="About"
-                    actAsExpander={true} />
-
-                  <CardText expandable={true}>
-                    <blockquote>"What exactly should I study? How do I best use my time?"</blockquote>
-
-                    <p>
-                      These are questions I'm asking myself several times a day.
-                      I'm building this app for myself and people like myself whom
-                      crave knowledge with a fire in their belly, however, that also
-                      worry about how little time on this Earth that we have to learn.
-                    </p>
-
-                    <p>
-                      I, <a href="https://github.com/hunterlester" target="_blank">Hunter Lester</a>,
-                      am a former farm, dairy, and warehouse worker, turned lover of computer science
-                      and programming.
-                    </p>
-
-                    <blockquote>So much to learn yet life is so short. Down the rabbit hole together...</blockquote>
-
-                  </CardText>
-                </Card>
-              </div>
-            </div>
           </div>
-        </div>
+        </Tab>
+      </Tabs>
       </div>
   );
   }

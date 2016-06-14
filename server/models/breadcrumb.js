@@ -7,7 +7,8 @@ const BreadcrumbSchema = new mongoose.Schema({
   content: String,
   messages: [{type: mongoose.Schema.Types.ObjectId, ref: 'Message'}],
   date: {type: Date, default: Date.now},
-  upvote: Number
+  upvote: Number,
+  seen: Boolean
 }, {strict: false});
 
 mongoose.model('Breadcrumb', BreadcrumbSchema);

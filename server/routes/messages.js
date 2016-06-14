@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 const Breadcrumb = mongoose.model('Breadcrumb');
 const Message = mongoose.model('Message');
 const Echo = mongoose.model('Echo');
+const User = mongoose.model('User');
 import {store} from '../index';
 import {postEcho} from '../state/action_creators';
 
@@ -46,6 +47,16 @@ router.post('/', auth, (req, res) => {
               path: 'user'
             }
           ], (err, echo) => {
+            const echoUserID = echo.message.study_map.user;
+              if(echoUserID.toString() != echo.user._id.toString()) {
+                User.findById(echoUserID, (err, user) => {
+                  if(err) return res.sendStatus(404);
+                  user.notifications.push(echo._id);
+                  user.save((err, user) => {
+                    if(err) return res.sendStatus(500);
+                  });
+                });
+              }
             store.dispatch(postEcho(echo));
           });
           res.json(message);

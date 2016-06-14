@@ -1,63 +1,62 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import AutoComplete from 'material-ui/AutoComplete';
-// import PureRenderMixin from 'react-addons-pure-render-mixin';
+import Select from 'react-select';
+
 
 export default React.createClass({
-  // mixins: [PureRenderMixin],
+  getInitialState() {
+    return {
+      value: ''
+    }
+  },
+  handleSelectChange(value) {
+    this.setState({value});
+  },
   render: function() {
+    let subjects = Object.values(this.props.studyMaps).map(obj => {
+      return Object.assign({}, {value: obj._id, label: obj.subject});
+    });
     return <div>
+      <Select
+        className="selectInput"
+        ref='study_map'
+        options={subjects}
+        value={this.state.value}
+        onChange={this.handleSelectChange}
+        placeholder="Choose subject"
+        noResultsText='First create new subject by clicking on black folder icon.'
+      />
+
       <TextField
         ref='uri'
-        hintText='Copy & Paste link uri here'
-        floatingLabelText="URI"
+        hintText='Copy & paste link url here'
+        floatingLabelText="URL"
         fullWidth={true}
       />
 
       <TextField
         ref='title'
-        hintText="Helpful to describe link for future reference"
+        hintText="Link title"
         floatingLabelText="Title"
         fullWidth={true}
       />
 
-      <AutoComplete
-        ref='study_map'
-        hintText="Start typing subject"
-        floatingLabelText="Subject"
-        filter={AutoComplete.caseInsensitiveFilter}
-        dataSource={Object.keys(this.props.studyMaps).map(key => {
-          return this.props.studyMaps[key].subject;
-        })}
-        fullWidth={true}
-      />
-
       <RaisedButton
-        label="Enter Link"
+        label="Add Link"
         onTouchTap={() => {
           let linkObj = {
-            user: this.props.userID
+            user: this.props.userID,
+            study_map: this.state.value.value
           };
-          let linkObjPromise = new Promise((resolve, reject) => {
-            resolve(
-              Object.keys(this.refs).map((key) => {
-                if(key === 'study_map') {
-                  Object.values(this.props.studyMaps).map(study_map => {
-                    if(study_map.subject == this.refs[key].state.searchText) {
-                      linkObj = Object.assign(linkObj, { [key]: study_map._id});
-                    }
-                  });
-                } else {
-                  linkObj = Object.assign(linkObj, { [key]: this.refs[key].input.value });
-                }
-             })
-           );
+
+          Object.keys(this.refs).map((key) => {
+            if(this.refs[key].input) {
+              linkObj = Object.assign(linkObj, { [key]: this.refs[key].input.value });
+            }
           });
 
-          linkObjPromise.then(res => {
-            this.props.postLink(linkObj);
-          });
+          this.props.postLink(linkObj);
 
           Object.keys(this.refs).map(key => {
             if(this.refs[key].input && this.refs[key].input.value) {
@@ -65,6 +64,7 @@ export default React.createClass({
             } else if(this.refs[key].state.searchText) {
               this.refs[key].state.searchText = '';
             }
+            this.setState({value: ''})
           });
         }}
       />

@@ -71,7 +71,7 @@ export const StudyMapForm = React.createClass({
         <form id="subjectForm">
           <TextField
             ref='subject'
-            hintText='Type in whatever is most helpful to you'
+            hintText='This will be the title of your subject folder'
             floatingLabelText="What are you studying?"
             fullWidth={true}
           />

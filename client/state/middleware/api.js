@@ -16,8 +16,9 @@ function callApi(endpoint, authenticated, method, obj) {
   let config = {};
 
   function configFactory(method, token, formObject) {
+    let body;
     if (formObject) {
-      let body = Object.keys(formObject).map(key => {
+      body = Object.keys(formObject).map(key => {
         if(key == 'keywords') {
           return formObject[key].map(keyword => {
             return key + '=' + keyword;
@@ -47,10 +48,6 @@ function callApi(endpoint, authenticated, method, obj) {
         };
 
       case 'PUT':
-        let body = Object.keys(formObject).map(key => {
-          return key + '=' + formObject[key];
-        }).join('&');
-
         return {
           method: 'PUT',
           headers: {

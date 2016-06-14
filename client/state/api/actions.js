@@ -12,6 +12,14 @@ export const BREADCRUMB_POST = 'BREADCRUMB_POST';
 export const BREADCRUMB_POST_SUCCESS = 'BREADCRUMB_POST_SUCCESS';
 export const BREADCRUMB_POST_FAILURE = 'BREADCRUMB_POST_FAILURE';
 
+export const SEEN_UPDATE = 'SEEN_UPDATE';
+export const SEEN_UPDATE_SUCCESS = 'SEEN_UPDATE_SUCCESS';
+export const SEEN_UPDATE_FAILURE = 'SEEN_UPDATE_FAILURE';
+
+export const BLINKSEEN_UPDATE = 'SEEN_UPDATE';
+export const BLINKSEEN_UPDATE_SUCCESS = 'SEEN_UPDATE_SUCCESS';
+export const BLINKSEEN_UPDATE_FAILURE = 'SEEN_UPDATE_FAILURE';
+
 export const BREADCRUMB_LINK_POST = 'BREADCRUMB_LINK_POST';
 export const BREADCRUMB_LINK_POST_SUCCESS = 'BREADCRUMB_LINK_POST_SUCCESS';
 export const BREADCRUMB_LINK_POST_FAILURE = 'BREADCRUMB_LINK_POST_FAILURE';
@@ -60,6 +68,30 @@ export function postBreadcrumb(breadcrumbObj) {
       authenticated: true,
       types: [BREADCRUMB_POST, BREADCRUMB_POST_SUCCESS, BREADCRUMB_POST_FAILURE],
       formObj: breadcrumbObj
+    }
+  }
+}
+
+export function updateSeen(data, breadcrumbID) {
+  return {
+    [CALL_API]: {
+      method: 'PUT',
+      endpoint: `breadcrumbs/seen/${breadcrumbID}`,
+      authenticated: true,
+      types: [SEEN_UPDATE, SEEN_UPDATE_SUCCESS, SEEN_UPDATE_FAILURE],
+      formObj: data
+    }
+  }
+}
+
+export function updateBLinkSeen(data, breadcrumbID) {
+  return {
+    [CALL_API]: {
+      method: 'PUT',
+      endpoint: `breadcrumbs/seen/${breadcrumbID}`,
+      authenticated: true,
+      types: [BLINKSEEN_UPDATE, BLINKSEEN_UPDATE_SUCCESS, BLINKSEEN_UPDATE_FAILURE],
+      formObj: data
     }
   }
 }

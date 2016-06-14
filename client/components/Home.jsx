@@ -10,8 +10,7 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Badge from 'material-ui/Badge';
-import AppBar from 'material-ui/AppBar';
+import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
 import {getProfile} from '../state/profile_actions/core';
@@ -54,58 +53,37 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
-              <AppBar
-                titleStyle={
-                  {fontSize: 20}
-                }
-                title="Rabbit Hole"
-                iconElementLeft={
-                  <IconMenu
-                    iconButtonElement={
-                      <IconButton touch={true}>
-                        <MoreVertIcon />
-                      </IconButton>
-                    }
-                  >
-                    <MenuItem primaryText="Profile" onTouchTap={() => {
-                      dispatch(getProfile(user._id))
-                    }} />
-                    <MenuItem primaryText="---" />
-                    <MenuItem primaryText="Logout" onTouchTap={() => {
-                      dispatch(logoutUser());
-                    }}/>
-                  </IconMenu>
-                }
-                iconElementRight={
-                  <IconMenu
-                    iconButtonElement={
-                      <IconButton touch={true}>
-                        <Badge badgeContent={0}>
-                        </Badge>
-                      </IconButton>
-                    }
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  >
-                    <MenuItem primaryText="notification 1" />
-                    <MenuItem primaryText="notification 2" />
-                    <MenuItem primaryText="notification 3" />
-                  </IconMenu>
-                }
-                />
+                <Toolbar style={{backgroundColor: '#FF9800'}}>
+                  <ToolbarGroup firstChild={true}>
+                    <IconMenu
+                      iconButtonElement={
+                        <IconButton touch={true}>
+                          <MoreVertIcon />
+                        </IconButton>
+                      }
+                    >
+                      <MenuItem primaryText="Profile" onTouchTap={() => {
+                        dispatch(getProfile(user._id))
+                      }} />
+                      <MenuItem primaryText="---" />
+                      <MenuItem primaryText="Logout" onTouchTap={() => {
+                        dispatch(logoutUser());
+                      }}/>
+                    </IconMenu>
+                    <ToolbarTitle text="Rabbit Hole" />
+                  </ToolbarGroup>
+                </Toolbar>
 
                 <Tabs value={this.state.value} onChange={this.handleChange}>
                   <Tab style={{
-                    fontSize: '1.2em',
-                    backgroundColor: '#607D8B'
-                  }} value='/' label="Study" onActive={() => {
+                    fontSize: '1.2em'
+                  }} value='/' label="Subjects" onActive={() => {
                     hashHistory.push('/')
                   }}>
                   </Tab>
                   <Tab style={{
-                    fontSize: '1.2em',
-                    backgroundColor: '#607D8B'
-                  }} value='/echoes' label="Activity" onActive={() => {
+                    fontSize: '1.2em'
+                  }} value='/echoes' label="Community" onActive={() => {
                     hashHistory.push('/echoes')
                   }}>
 
