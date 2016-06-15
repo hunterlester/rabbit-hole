@@ -70,7 +70,7 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle text="Rabbit Hole" />
+                    <ToolbarTitle style={{color: '#333333'}} text="Learnimus" />
                   </ToolbarGroup>
                 </Toolbar>
 
