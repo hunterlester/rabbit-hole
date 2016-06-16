@@ -6,7 +6,8 @@ import {
   LINK_POST_SUCCESS,
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
-  MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
+  MESSAGE_POST_SUCCESS,
+  LINKMESSAGE_POST_SUCCESS, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
 
 import {
   initialStudyMaps, setStudyMaps, apiRequest, apiFailure,
@@ -14,7 +15,8 @@ import {
   postLinkSuccess,
   postBreadcrumbSuccess,
   postLinkBreadcrumbSuccess,
-  postMessageSuccess
+  postMessageSuccess,
+  postLinkMessageSuccess
 } from './core';
 
 export default function study_maps(state = initialStudyMaps, action) {
@@ -43,11 +45,8 @@ export default function study_maps(state = initialStudyMaps, action) {
     case MESSAGE_POST_SUCCESS:
       return postMessageSuccess(state, action);
 
-    case LINK_MESSAGE_POST:
-      let messageObj = action.response;
-      return state.setIn(
-        ['study_maps', messageObj.study_map, 'links', messageObj.link,
-        'breadcrumbs', messageObj.breadcrumb, 'messages', messageObj._id], fromJS(messageObj));
+    case LINKMESSAGE_POST_SUCCESS:
+      return postLinkMessageSuccess(state, action);
 
     case SEEN_UPDATE:
       let breadObj = action.response;

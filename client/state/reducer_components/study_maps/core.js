@@ -63,3 +63,12 @@ export function postMessageSuccess(state, action) {
     isFetching: false
   });
 }
+
+export function postLinkMessageSuccess(state, action) {
+  let messageObj = action.response;
+  return state.setIn(
+    ['study_maps', messageObj.study_map, 'links', messageObj.link,
+    'breadcrumbs', messageObj.breadcrumb, 'messages', messageObj._id], fromJS(messageObj)).merge({
+      isFetching: false
+    });
+}

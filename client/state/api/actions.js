@@ -5,7 +5,8 @@ import {
   LINK_POST_SUCCESS,
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
-  MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
+  MESSAGE_POST_SUCCESS,
+  LINKMESSAGE_POST_SUCCESS, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
 
 export function postStudyMap(study_map) {
   return {
@@ -73,7 +74,7 @@ export function postLinkMessage(messageObj) {
       method: 'POST',
       endpoint: 'messages',
       authenticated: true,
-      types: [LINK_MESSAGE_POST, LINK_MESSAGE_POST_SUCCESS, LINK_MESSAGE_POST_FAILURE],
+      types: [API_REQUEST, LINKMESSAGE_POST_SUCCESS, API_FAILURE],
       formObj: messageObj
     }
   }
