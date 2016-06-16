@@ -12,8 +12,8 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
-import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
-import {getProfile} from '../state/profile_actions/core';
+import { loginUser, logoutUser } from '../state/reducer_components/auth/user_login/login_actions_core';
+import { getProfile } from '../state/reducer_components/profile/core';
 
 const styles = {
   headline: {
@@ -70,7 +70,7 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle text="Rabbit Hole" />
+                    <ToolbarTitle style={{color: '#263238'}} text="Learnimus" />
                   </ToolbarGroup>
                 </Toolbar>
 

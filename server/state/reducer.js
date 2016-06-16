@@ -12,8 +12,8 @@ export default function reducer(state = initialState , action) {
     case 'SET_SUBJECTS':
       return setSubjects(state, action.subjects);
 
-    case 'SUBJECT_POST':
-      return postSubject(state, action.response);
+    case 'POST_SUBJECT':
+      return postSubject(state, action.subject);
 
   }
   return state;

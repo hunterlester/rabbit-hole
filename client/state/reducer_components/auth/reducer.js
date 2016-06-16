@@ -1,6 +1,14 @@
-import { initialAuth } from '../user_login/login_actions_core';
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE, LOGOUT_SUCCESS, UPDATE_SUBSCRIPTIONS, UPDATE_SUBSCRIPTIONS_REQUEST } from '../user_login/login_action_factories';
-import { REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE } from '../user_registration/actions';
+import { initialAuth } from './user_login/login_actions_core';
+
+import {
+  LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE,
+  LOGOUT_REQUEST, LOGOUT_SUCCESS,
+  UPDATE_SUBSCRIPTIONS, UPDATE_SUBSCRIPTIONS_REQUEST
+} from './user_login/login_action_factories';
+
+import {
+  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE
+} from './user_registration/actions';
 
 export default function auth(state = initialAuth, action) {
   switch (action.type) {
@@ -47,6 +55,11 @@ export default function auth(state = initialAuth, action) {
         isFetching: false,
         isAuthenticated: false,
         errorMessage: action.message
+      });
+    case LOGOUT_REQUEST:
+      return state.merge({
+        isFetching: true,
+        isAuthenticated: true
       });
     case LOGOUT_SUCCESS:
       return state.merge({

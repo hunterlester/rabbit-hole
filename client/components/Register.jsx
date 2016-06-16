@@ -2,7 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {registerUser} from '../state/user_registration/register_core';
+import { registerUser } from '../state/reducer_components/auth/user_registration/register_core';
 import {Toolbar } from 'material-ui/Toolbar';
 
 

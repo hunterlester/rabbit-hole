@@ -23,7 +23,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: '#FF9800'}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: '#ffffff', fontSize: '18px'}} text="Community for avid learners"/>
+          <ToolbarTitle style={{color: '#263238', fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
         </ToolbarGroup>
       </Toolbar>
 
@@ -34,7 +34,6 @@ export default React.createClass({
           <div className='container'>
             <div className='row'>
               <div className='col-sm-8'>
-                <h3>Welcome to Rabbit Hole!</h3>
                 <ConnectedEchoes />
               </div>
               <div className='col-sm-4'>

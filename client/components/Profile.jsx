@@ -4,7 +4,7 @@ import {hashHistory} from 'react-router';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Select from 'react-select';
-import { subjectSubscription } from '../state/profile_actions/core';
+import { subjectSubscription } from '../state/reducer_components/profile/core';
 
 export const Profile = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {

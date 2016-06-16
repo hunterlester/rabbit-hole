@@ -32,6 +32,7 @@ export const StudyMapForm = React.createClass({
     }
   },
   handleSelectChange(value) {
+    this.refs.keywords.closeMenu();
     this.setState({value});
   },
   componentWillReceiveProps: function(nextProps) {
