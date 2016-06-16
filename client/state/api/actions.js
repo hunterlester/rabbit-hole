@@ -1,4 +1,5 @@
 import { CALL_API } from '../middleware/api';
+
 import {
   API_REQUEST, API_FAILURE,
   STUDY_MAPS_POST_SUCCESS,
@@ -6,7 +7,9 @@ import {
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
   MESSAGE_POST_SUCCESS,
-  LINKMESSAGE_POST_SUCCESS, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
+  LINKMESSAGE_POST_SUCCESS, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
+
+import { SUBJECT_POST_SUCCESS } from '../reducer_components/subjects/actions';
 
 export function postStudyMap(study_map) {
   return {
@@ -86,7 +89,7 @@ export function postSubject(subjectObj) {
       method: 'POST',
       endpoint: 'subjects',
       authenticated: true,
-      types: [SUBJECT_POST, SUBJECT_POST_SUCCESS, SUBJECT_POST_FAILURE],
+      types: [API_REQUEST, SUBJECT_POST_SUCCESS, API_FAILURE],
       formObj: subjectObj
     }
   }

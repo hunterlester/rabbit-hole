@@ -4,3 +4,10 @@ export function postEcho(echo) {
     echo
   }
 }
+
+export function postSubject(subject) {
+  return {
+    type: 'POST_SUBJECT',
+    subject
+  }
+}

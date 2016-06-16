@@ -7,7 +7,7 @@ import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import reducers from './state/reducers';
 import {setEchoes} from './state/echo_action_creators';
-import { setSubjects } from './state/subject_actions.js';
+import { setSubjectsAction } from './state/reducer_components/subjects/actions';
 import remoteActionMiddleware from './state/middleware/remote_action_middleware';
 import thunkMiddleware from 'redux-thunk';
 import api from './state/middleware/api';
@@ -28,7 +28,7 @@ import cleanest from 'cleanest';
 import 'react-select/dist/react-select.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
-import { deepOrange500, darkBlack, orange500 } from 'material-ui/styles/colors';
+import { blueGrey900, orange500 } from 'material-ui/styles/colors';
 
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
@@ -43,7 +43,7 @@ socket.on('state', state => {
   localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
   localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
   store.dispatch(setEchoes(cleanest(state)))
-  store.dispatch(setSubjects(cleanest(state)))
+  store.dispatch(setSubjectsAction(cleanest(state)))
 }
 );
 
@@ -66,7 +66,7 @@ const routes = <Route component={App}>
 
 const muiTheme = getMuiTheme({
   palette: {
-    accent1Color: darkBlack,
+    accent1Color: blueGrey900,
     primary1Color: orange500,
   }
 });

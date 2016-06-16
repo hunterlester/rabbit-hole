@@ -23,7 +23,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: '#FF9800'}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: '#212121', fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
+          <ToolbarTitle style={{color: '#263238', fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
         </ToolbarGroup>
       </Toolbar>
 
