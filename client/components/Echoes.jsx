@@ -3,10 +3,9 @@ import {hashHistory} from 'react-router';
 import {connect} from 'react-redux';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
 import moment from 'moment';
 import MessageForm from './MessageForm';
+import BreadcrumbForm from './BreadCrumbForm';
 import Select from 'react-select';
 
 import { getProfile } from '../state/reducer_components/profile/core';
@@ -47,31 +46,11 @@ export const Echoes = React.createClass({
       if(echo.studymap) {
         echo.body = `Studying ${echo.studymap.subject}`;
 
-        echo.quickreply = <div>
-          <TextField
-            hintText="Quickly leave helpful breadcrumb"
-            floatingLabelText="Breadcrumb"
-            ref='content'
-            fullWidth={true}/>
-
-          <RaisedButton
-            label="Contribute breadcrumb"
-            onTouchTap={() => {
-              const content = this.refs.content.input.value;
-              let breadcrumbObj = {
-                study_map: echo.studymap._id,
-                content: content,
-                user: this.props.user._id
-              };
-              if(echo.studymap.user != this.props.user._id) {
-                breadcrumbObj.seen = false;
-              }
-              this.props.dispatch(postBreadcrumb(breadcrumbObj));
-
-              this.refs.content.input.value = '';
-            }}
-          />
-        </div>;
+        echo.quickreply = <BreadcrumbForm
+          study_map={echo.studymap}
+          user={this.props.user._id}
+          postBreadcrumb={ breadcrumbObj => {
+          this.props.dispatch(postBreadcrumb(breadcrumbObj)) }} />;
         return echo;
       } else if (echo.breadcrumb && echo.breadcrumb.link) {
         echo.quickreply = <MessageForm
@@ -153,32 +132,13 @@ export const Echoes = React.createClass({
       } else if (echo.link) {
         echo.body = `link added: ${echo.link.title}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
-        echo.quickreply = <div>
-          <TextField
-            hintText="Quickly leave helpful breadcrumb"
-            floatingLabelText="Breadcrumb"
-            ref='content'
-            fullWidth={true}/>
-
-          <RaisedButton
-            label="Contribute breadcrumb"
-            onTouchTap={() => {
-              const content = this.refs.content.input.value;
-              let breadcrumbObj = {
-                study_map: echo.link.study_map._id,
-                link: echo.link._id,
-                content: content,
-                user: this.props.user._id
-              };
-              if(echo.link.study_map.user != this.props.user._id) {
-                breadcrumbObj.seen = false;
-              }
-              this.props.dispatch(postLinkBreadcrumb(breadcrumbObj));
-
-              this.refs.content.input.value = '';
-            }}
-          />
-        </div>;
+        echo.quickreply = <BreadcrumbForm
+          study_map={echo.link.study_map}
+          user={this.props.user._id}
+          link={echo.link._id}
+          postLinkBreadcrumb={ breadcrumbObj => {
+          this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
+        }} />;
         echo.action = <FlatButton label='go to link post' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.user._id,
