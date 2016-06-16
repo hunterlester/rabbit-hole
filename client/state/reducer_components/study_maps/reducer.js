@@ -1,8 +1,14 @@
 import { Map, fromJS, toJS } from 'immutable';
-import { STUDY_MAPS_POST, STUDY_MAPS_POST_SUCCESS, STUDY_MAPS_POST_FAILURE, LINK_POST, BREADCRUMB_POST, BREADCRUMB_LINK_POST, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
+import {
+  STUDY_MAPS_POST, STUDY_MAPS_POST_SUCCESS, STUDY_MAPS_POST_FAILURE,
+  LINK_POST, LINK_POST_SUCCESS, LINK_POST_FAILURE,
+  BREADCRUMB_POST, BREADCRUMB_LINK_POST, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
 import { SET_STUDY_MAPS } from './actions';
-import {initialStudyMaps, setStudyMaps,
-        postStudyMapRequest, postStudyMapSuccess, postStudyMapFailure } from './core';
+import {
+  initialStudyMaps, setStudyMaps,
+  postStudyMapRequest, postStudyMapSuccess, postStudyMapFailure,
+  postLinkRequest, postLinkSuccess, postLinkFailure
+} from './core';
 
 export default function study_maps(state = initialStudyMaps, action) {
   switch (action.type) {
@@ -19,8 +25,13 @@ export default function study_maps(state = initialStudyMaps, action) {
       return postStudyMapFailure(state, action);
 
     case LINK_POST:
-        let linkObj = action.response;
-        return state.setIn(['study_maps', linkObj.study_map, 'links', linkObj._id], fromJS(linkObj));
+      return postLinkRequest(state, action);
+
+    case LINK_POST_SUCCESS:
+      return postLinkSuccess(state, action);
+
+    case LINK_POST_FAILURE:
+      return postLinkFailure(state, action);
 
     case SEEN_UPDATE:
       let breadObj = action.response;

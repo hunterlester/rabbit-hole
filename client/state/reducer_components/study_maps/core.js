@@ -29,7 +29,27 @@ export function postStudyMapSuccess(state, action) {
 
 export function postStudyMapFailure(state, action) {
   return state.merge({
-    isfetching: false,
+    isFetching: false,
+    errorMessage: action.message
+  });
+}
+
+export function postLinkRequest(state, action) {
+  return state.merge({
+    isFetching: true
+  });
+}
+
+export function postLinkSuccess(state, action) {
+  let linkObj = action.response;
+  return state.setIn(['study_maps', linkObj.study_map, 'links', linkObj._id], fromJS(linkObj)).merge({
+    isFetching: false
+  });
+}
+
+export function postLinkFailure(state, action) {
+  return state.merge({
+    isFetching: false,
     errorMessage: action.message
   });
 }
