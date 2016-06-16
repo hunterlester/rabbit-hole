@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 
 import MessageForm from './MessageForm.jsx';
+import BreadcrumbForm from './BreadCrumbForm';
 import {updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
 
 function compare(a , b) {
@@ -77,55 +78,26 @@ export const StudyMap = React.createClass({
               showExpandableButton={true}
             />
             <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+              <BreadcrumbForm
+                study_map={study_map}
+                user={user._id}
+                link={study_map.links[key]._id}
+                postLinkBreadcrumb={ breadcrumbObj => {
+                this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
+              }} />
               <div>
-                <TextField
-                  hintText="Leave a breadcrump for this link"
-                  floatingLabelText="Breadcrumb"
-                  ref='content'
-                  fullWidth={true}
-                />
-
-                <RaisedButton
-                  label="Contribute breadcrumb"
-                  onTouchTap={() => {
-                    let content = this.refs.content.input.value;
-                    let breadcrumbObj = {
-                      link: study_map.links[key]._id,
-                      content: content,
-                      user: user._id,
-                      study_map: this.props.params.studyMap
-                    };
-
-                    dispatch(postLinkBreadcrumb(breadcrumbObj));
-                    this.refs.content.input.value = '';
-                  }}
-                />
                 {this.getLinkBreadcrumbs(study_map.links[key])}
               </div>
             </CardText>
           </Card>
         ).sort(compare).reverse()}
-        <TextField
-          hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
-          floatingLabelText="Breadcrumbs"
-          ref='breadcrumb'
-          fullWidth={true}
-        />
 
-        <RaisedButton
-          label="Contribute breadcrumb"
-          onTouchTap={() => {
-            let content = this.refs.breadcrumb.input.value;
-            let breadcrumbObj = {
-              study_map: study_map._id,
-              content: content,
-              user: user._id
-            };
-
-            dispatch(postBreadcrumb(breadcrumbObj));
-            this.refs.breadcrumb.input.value = '';
-          }}
-        />
+        <BreadcrumbForm
+          study_map={study_map}
+          user={user._id}
+          postBreadcrumb={ breadcrumbObj => {
+          this.props.dispatch(postBreadcrumb(breadcrumbObj))
+        }} />
 
         <h3>Breadcrumbs</h3>
         {Object.keys(study_map.breadcrumbs).map(key => {
@@ -169,7 +141,6 @@ function mapStateToProps(state, ownProps) {
   const { isAuthenticated, user } = state.auth.toJS();
 
   let studyMap = state.study_maps.toJS().study_maps[ownProps.params.studyMap];
-
   return {
     isAuthenticated,
     user,
