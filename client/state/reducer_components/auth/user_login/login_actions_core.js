@@ -1,5 +1,5 @@
 import { requestLogin, loginError, receiveLogin, requestLogout, receiveLogout } from './login_action_factories';
-import { setStudyMapsAction } from '../reducer_components/study_maps/actions';
+import { setStudyMapsAction } from '../../study_maps/actions';
 import { hashHistory } from 'react-router';
 import { fromJS } from 'immutable';
 import fetch from 'isomorphic-fetch';
