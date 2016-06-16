@@ -9,7 +9,7 @@ import moment from 'moment';
 import MessageForm from './MessageForm';
 import Select from 'react-select';
 
-import {getProfile} from '../state/profile_actions/core';
+import { getProfile } from '../state/reducer_components/profile/core';
 import {
   postBreadcrumb,
   postLinkBreadcrumb,

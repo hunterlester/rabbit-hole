@@ -1,5 +1,5 @@
-import {receiveProfile} from './action_creators';
-import { updateSubscriptions, subscription_request } from '../user_login/login_action_factories';
+import { receiveProfile } from './actions';
+import { updateSubscriptions, subscription_request } from './actions';
 import {hashHistory} from 'react-router';
 import {Map, fromJS} from 'immutable';
 import fetch from 'isomorphic-fetch';

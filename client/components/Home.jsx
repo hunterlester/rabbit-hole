@@ -13,7 +13,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 
 import { loginUser, logoutUser } from '../state/user_login/login_actions_core';
-import {getProfile} from '../state/profile_actions/core';
+import { getProfile } from '../state/reducer_components/profile/core';
 
 const styles = {
   headline: {
