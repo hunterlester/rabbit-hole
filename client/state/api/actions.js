@@ -4,7 +4,7 @@ import {
   STUDY_MAPS_POST_SUCCESS,
   LINK_POST_SUCCESS,
   BREADCRUMB_POST_SUCCESS,
-  BREADCRUMB_LINK_POST, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
+  LINKBREADCRUMB_POST_SUCCESS, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
 
 export function postStudyMap(study_map) {
   return {
@@ -48,7 +48,7 @@ export function postLinkBreadcrumb(breadcrumbObj) {
       method: 'POST',
       endpoint: 'breadcrumbs/link',
       authenticated: true,
-      types: [BREADCRUMB_LINK_POST, BREADCRUMB_LINK_POST_SUCCESS, BREADCRUMB_LINK_POST_FAILURE],
+      types: [API_REQUEST, LINKBREADCRUMB_POST_SUCCESS, API_FAILURE],
       formObj: breadcrumbObj
     }
   }
