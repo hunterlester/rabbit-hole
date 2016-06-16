@@ -4,7 +4,7 @@ import echoes from './reducer_components/echoes';
 import subjects from './reducer_components/subjects';
 import profile from './reducer_components/profile';
 import auth from './reducer_components/auth';
-import study_maps from './reducer_components/study_maps';
+import study_maps from './reducer_components/study_maps/reducer';
 
 const reducers = combineReducers({
   auth,

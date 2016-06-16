@@ -1,6 +1,6 @@
-import {requestLogin, loginError, receiveLogin, requestLogout, receiveLogout} from './login_action_factories';
-import { setStudyMaps } from '../study_map_actions';
-import {hashHistory} from 'react-router';
+import { requestLogin, loginError, receiveLogin, requestLogout, receiveLogout } from './login_action_factories';
+import { setStudyMapsAction } from '../reducer_components/study_maps/actions';
+import { hashHistory } from 'react-router';
 import { fromJS } from 'immutable';
 import fetch from 'isomorphic-fetch';
 import cleanest from 'cleanest';
@@ -34,6 +34,8 @@ export function loginUser(creds) {
         response.json().then(user => ({user, response}))
       ).then(({user, response}) => {
         if (!response.ok) {
+          console.log(user);
+          console.log(response);
           dispatch(loginError(user.message));
           return Promise.reject(user);
         } else {
@@ -47,7 +49,7 @@ export function loginUser(creds) {
           localStorage.setItem('points', cleaned_user.points);
           localStorage.setItem('subscribed_subjects', JSON.stringify(cleaned_user.subscribed_subjects));
           dispatch(receiveLogin(cleaned_user));
-          dispatch(setStudyMaps(cleaned_user.study_maps));
+          dispatch(setStudyMapsAction(cleaned_user.study_maps));
         }
       }).catch(err => console.log("Error: ", err))
   }

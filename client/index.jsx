@@ -25,7 +25,6 @@ import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
 import 'react-select/dist/react-select.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles.css';
@@ -34,6 +33,12 @@ import { deepOrange500, darkBlack, orange500 } from 'material-ui/styles/colors';
 
 const socket = io(`${location.protocol}//${location.hostname}:3001`);
 
+let createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware, api, remoteActionMiddleware(socket)
+)(createStore);
+
+const store = createStoreWithMiddleware(reducers);
+
 socket.on('state', state => {
   localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
   localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
@@ -41,14 +46,6 @@ socket.on('state', state => {
   store.dispatch(setSubjects(cleanest(state)))
 }
 );
-
-let createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware, api, remoteActionMiddleware(socket)
-)(createStore);
-
-const store = createStoreWithMiddleware(reducers);
-
-
 
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>
@@ -73,7 +70,6 @@ const muiTheme = getMuiTheme({
     primary1Color: orange500,
   }
 });
-const darkMuiTheme = getMuiTheme(darkBaseTheme);
 
 ReactDOM.render(
   <MuiThemeProvider muiTheme={muiTheme}>

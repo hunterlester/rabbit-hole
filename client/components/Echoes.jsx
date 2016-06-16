@@ -38,6 +38,7 @@ export const Echoes = React.createClass({
     }
   },
   handleSelectChange(value) {
+    this.refs.filter.closeMenu();
     this.setState({value});
     this.setState({keyIDs: value.map(val => val.value)});
   },
