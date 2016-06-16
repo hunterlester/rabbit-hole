@@ -56,3 +56,10 @@ export function postLinkBreadcrumbSuccess(state, action) {
     isFetching: false
   });
 }
+
+export function postMessageSuccess(state, action) {
+  let message = action.response;
+  return state.setIn(['study_maps', message.study_map, 'breadcrumbs', message.breadcrumb, 'messages', message._id], fromJS(message)).merge({
+    isFetching: false
+  });
+}
