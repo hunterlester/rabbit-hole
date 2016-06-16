@@ -1,12 +1,14 @@
 import { Map, fromJS, toJS } from 'immutable';
+
 import {
-  STUDY_MAPS_POST, STUDY_MAPS_POST_SUCCESS, STUDY_MAPS_POST_FAILURE,
-  LINK_POST, LINK_POST_SUCCESS, LINK_POST_FAILURE,
-  BREADCRUMB_POST, BREADCRUMB_POST_SUCCESS, BREADCRUMB_POST_FAILURE,
+  SET_STUDY_MAPS, API_REQUEST, API_FAILURE,
+  STUDY_MAPS_POST_SUCCESS,
+  LINK_POST_SUCCESS,
+  BREADCRUMB_POST_SUCCESS,
   BREADCRUMB_LINK_POST, MESSAGE_POST, LINK_MESSAGE_POST, STUDYMAP_GET, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
-import { SET_STUDY_MAPS } from './actions';
+
 import {
-  initialStudyMaps, setStudyMaps, postRequest, postFailure,
+  initialStudyMaps, setStudyMaps, apiRequest, apiFailure,
   postStudyMapSuccess,
   postLinkSuccess,
   postBreadcrumbSuccess
@@ -17,32 +19,20 @@ export default function study_maps(state = initialStudyMaps, action) {
     case SET_STUDY_MAPS:
       return setStudyMaps(state, action.study_maps);
 
-    case STUDY_MAPS_POST:
-      return postRequest(state, action);
+    case API_REQUEST:
+      return apiRequest(state, action);
+
+    case API_FAILURE:
+      return apiFailure(state, action);
 
     case STUDY_MAPS_POST_SUCCESS:
       return postStudyMapSuccess(state, action);
 
-    case STUDY_MAPS_POST_FAILURE:
-      return postFailure(state, action);
-
-    case LINK_POST:
-      return postRequest(state, action);
-
     case LINK_POST_SUCCESS:
       return postLinkSuccess(state, action);
 
-    case LINK_POST_FAILURE:
-      return postFailure(state, action);
-
-    case BREADCRUMB_POST:
-      return postRequest(state, action);
-
     case BREADCRUMB_POST_SUCCESS:
       return postBreadcrumbSuccess(state, action);
-
-    case BREADCRUMB_POST_FAILURE:
-      return postFailure(state, action);
 
     case BREADCRUMB_LINK_POST:
       let breadcrumbObj = action.response;

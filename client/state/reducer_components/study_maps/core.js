@@ -15,7 +15,7 @@ export function setStudyMaps(state, study_maps) {
   });
 }
 
-export function postRequest(state, action) {
+export function apiRequest(state, action) {
   return state.merge({
     isFetching: true,
     method: action.method,
@@ -23,7 +23,7 @@ export function postRequest(state, action) {
   });
 }
 
-export function postFailure(state, action) {
+export function apiFailure(state, action) {
   return state.merge({
     isFetching: false,
     errorMessage: action.message
