@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import echoes from './reducer_components/echoes';
+import echoes from './reducer_components/echoes/reducer';
 import subjects from './reducer_components/subjects/reducer';
 import profile from './reducer_components/profile';
 import auth from './reducer_components/auth';

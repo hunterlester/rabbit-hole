@@ -6,7 +6,7 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import reducers from './state/reducers';
-import {setEchoes} from './state/echo_action_creators';
+import { setEchoesAction } from './state/reducer_components/echoes/actions';
 import { setSubjectsAction } from './state/reducer_components/subjects/actions';
 import remoteActionMiddleware from './state/middleware/remote_action_middleware';
 import thunkMiddleware from 'redux-thunk';
@@ -42,7 +42,7 @@ const store = createStoreWithMiddleware(reducers);
 socket.on('state', state => {
   localStorage.setItem('echoes', JSON.stringify(cleanest(state.echoes)))
   localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
-  store.dispatch(setEchoes(cleanest(state)))
+  store.dispatch(setEchoesAction(cleanest(state)))
   store.dispatch(setSubjectsAction(cleanest(state)))
 }
 );
