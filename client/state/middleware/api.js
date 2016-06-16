@@ -142,7 +142,9 @@ export default store => next => action => {
   const [ requestType, successType, errorType ] = types;
   store.dispatch(
     {
-      type: requestType
+      type: requestType,
+      method,
+      datum: formObj
     }
 );
   return callApi(endpoint, authenticated, method, formObj).then(

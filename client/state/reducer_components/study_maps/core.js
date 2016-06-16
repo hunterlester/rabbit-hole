@@ -15,28 +15,24 @@ export function setStudyMaps(state, study_maps) {
   });
 }
 
-export function postStudyMapRequest(state, action) {
+export function postRequest(state, action) {
   return state.merge({
-    isFetching: true
-  })
-}
-
-export function postStudyMapSuccess(state, action) {
-  return state.setIn(['study_maps', action.response._id], fromJS(action.response)).merge({
-    isFetching: false
+    isFetching: true,
+    method: action.method,
+    datum: action.datum
   });
 }
 
-export function postStudyMapFailure(state, action) {
+export function postFailure(state, action) {
   return state.merge({
     isFetching: false,
     errorMessage: action.message
   });
 }
 
-export function postLinkRequest(state, action) {
-  return state.merge({
-    isFetching: true
+export function postStudyMapSuccess(state, action) {
+  return state.setIn(['study_maps', action.response._id], fromJS(action.response)).merge({
+    isFetching: false
   });
 }
 
@@ -47,9 +43,9 @@ export function postLinkSuccess(state, action) {
   });
 }
 
-export function postLinkFailure(state, action) {
-  return state.merge({
-    isFetching: false,
-    errorMessage: action.message
+export function postBreadcrumbSuccess(state, action) {
+  let breadcrumb = action.response;
+  return state.setIn(['study_maps', breadcrumb.study_map, 'breadcrumbs', breadcrumb._id], fromJS(breadcrumb)).merge({
+    isFetching: false
   });
 }
