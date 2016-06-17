@@ -36,7 +36,7 @@ export const Profile = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <RaisedButton label="Open" className='pull-xs-right' onTouchTap={() => {
                 hashHistory.push(`/profile/study_map/${studymaps[key]._id}`)
               }}/>

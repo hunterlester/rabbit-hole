@@ -46,26 +46,43 @@ export const StudyMaps = React.createClass({
                   hashHistory.push('/studyMapForm')
                 }}/>
 
-                {Object.keys(study_maps).map(key =>
-                  <Card style={{clear: 'both'}} key={study_maps[key]._id}>
-                    <CardHeader
-                      title={study_maps[key].subject}
-                      actAsExpander={true}
-                      showExpandableButton={true}
-                    />
-                    <CardText expandable={true}>
-                      <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
-                        hashHistory.push(`/studymaps/${study_maps[key]._id}`)
-                      }}/>
-                      <div>
-                        {this.getLinks(study_maps[key])}
-                      </div>
-                    </CardText>
-                  </Card>
+                {Object.values(study_maps).map(study_map => {
+                  let style = {};
+                  const seen = 'seen';
+                  let linkNotify = Object.values(study_map.links).some(link => {
+                    return Object.values(link.breadcrumbs).some(brdcrmb => {
+                      return brdcrmb.seen == false;
+                    })
+                  });
+                  let notify = Object.values(study_map.breadcrumbs).some(brdcrmb => {
+                    return brdcrmb.seen == false;
+                  });
+                  if(notify) {
+                    style.backgroundColor = '#2196F3';
+                  } else if(linkNotify) {
+                    style.backgroundColor = '#2196F3';
+                  }
+                  return (
+                    <Card style={{clear: 'both'}} key={study_map._id}>
+                      <CardHeader
+                        title={study_map.subject}
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                        style={style}
+                      />
+                      <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                        <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
+                          hashHistory.push(`/studymaps/${study_map._id}`)
+                        }}/>
+                        <div>
+                          {this.getLinks(study_map)}
+                        </div>
+                      </CardText>
+                    </Card>
+                  )
+                }
                 )}
-
               </div>
-
           </div>
         }
       </div>

@@ -7,7 +7,9 @@ import {
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
   MESSAGE_POST_SUCCESS,
-  LINKMESSAGE_POST_SUCCESS, SEEN_UPDATE, BLINKSEEN_UPDATE } from '../reducer_components/study_maps/actions';
+  LINKMESSAGE_POST_SUCCESS,
+  SEEN_UPDATE_SUCCESS,
+  BLINKSEEN_UPDATE_SUCCESS } from '../reducer_components/study_maps/actions';
 
 import { SUBJECT_POST_SUCCESS } from '../reducer_components/subjects/actions';
 
@@ -101,7 +103,7 @@ export function updateSeen(data, breadcrumbID) {
       method: 'PUT',
       endpoint: `breadcrumbs/seen/${breadcrumbID}`,
       authenticated: true,
-      types: [SEEN_UPDATE, SEEN_UPDATE_SUCCESS, SEEN_UPDATE_FAILURE],
+      types: [API_REQUEST, SEEN_UPDATE_SUCCESS, API_FAILURE],
       formObj: data
     }
   }
@@ -113,7 +115,7 @@ export function updateBLinkSeen(data, breadcrumbID) {
       method: 'PUT',
       endpoint: `breadcrumbs/seen/${breadcrumbID}`,
       authenticated: true,
-      types: [BLINKSEEN_UPDATE, BLINKSEEN_UPDATE_SUCCESS, BLINKSEEN_UPDATE_FAILURE],
+      types: [API_REQUEST, BLINKSEEN_UPDATE_SUCCESS, API_FAILURE],
       formObj: data
     }
   }

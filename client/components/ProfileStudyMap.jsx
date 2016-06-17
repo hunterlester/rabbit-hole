@@ -35,7 +35,7 @@ export const ProfileStudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 <MessageForm
                   linkID={link._id}
@@ -81,7 +81,7 @@ export const ProfileStudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 <TextField
                   hintText="Leave a breadcrump for this link"
@@ -152,7 +152,7 @@ export const ProfileStudyMap = React.createClass({
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 {this.getMessages(study_map.breadcrumbs[key])}
               </div>
