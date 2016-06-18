@@ -70,7 +70,7 @@ export const StudyMaps = React.createClass({
                         showExpandableButton={true}
                         style={style}
                       />
-                      <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                      <CardText className="clearfix" expandable={true} style={{backgroundColor: '#ECEFF1'}}>
                         <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
                           hashHistory.push(`/studymaps/${study_map._id}`)
                         }}/>
