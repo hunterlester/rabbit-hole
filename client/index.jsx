@@ -67,11 +67,7 @@ const routes = <Route component={App}>
 const muiTheme = getMuiTheme({
   palette: {
     accent1Color: blueGrey900,
-    primary1Color: orange500,
-    canvasColor: orange500
-  },
-  cardHeader: {
-    fontSize: 24
+    primary1Color: orange500
   }
 });
 

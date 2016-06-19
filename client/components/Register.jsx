@@ -4,6 +4,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { registerUser } from '../state/reducer_components/auth/user_registration/register_core';
 import {Toolbar } from 'material-ui/Toolbar';
+import {blue500, white} from 'material-ui/styles/colors';
 
 
 export const Register = React.createClass({
@@ -42,7 +43,9 @@ export const Register = React.createClass({
                          ref='password2'/>
 
                <RaisedButton label="Register"
-                             onTouchTap={() => {
+                            backgroundColor={blue500}
+                            labelColor={white}
+                            onTouchTap={() => {
 
                               if (this.refs.password.getValue() !== this.refs.password2.getValue()) {
                                 this.refs.password2.setErrorText("Passwords not matched");

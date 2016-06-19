@@ -2,7 +2,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Select from 'react-select';
-
+import { blue500, white } from 'material-ui/styles/colors';
 
 export default React.createClass({
   getInitialState() {
@@ -44,6 +44,8 @@ export default React.createClass({
 
       <RaisedButton
         label="Add Link"
+        backgroundColor={blue500}
+        labelColor={white}
         onTouchTap={() => {
           let linkObj = {
             user: this.props.userID,

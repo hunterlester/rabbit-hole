@@ -9,23 +9,59 @@ import Divider from 'material-ui/Divider';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { ConnectedEchoes } from './Echoes';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import Dialog from 'material-ui/Dialog';
+import Info from 'material-ui/svg-icons/action/info';
 
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
+import {blue500, white, green500, orange500} from 'material-ui/styles/colors';
 
 
 export default React.createClass({
+  getInitialState() {
+    return {
+      open: false
+    };
+  },
+  handleClose: function() {
+    this.setState({
+      open: false
+    })
+  },
+  handleOpen: function() {
+    this.setState({
+      open: true
+    })
+  },
   render: function() {
+    const listItemStyles = {
+      color: white
+    };
     return (
       <div>
-      <Toolbar style={{backgroundColor: '#FF9800'}}>
+      <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
+          <IconButton touch={true} onTouchTap={() => {
+            this.handleOpen();
+          }}>
+            <Info />
+          </IconButton>
           <ToolbarTitle style={{color: '#263238', fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
         </ToolbarGroup>
       </Toolbar>
+      <Dialog
+        modal={false}
+        bodyStyle={{textAlign: 'center', backgroundColor: orange500}}
+        open={this.state.open}
+        onRequestClose={() => {
+          this.handleClose()
+        }}
+      >
+        <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.' Welcome and have fun!</h4>
+      </Dialog>
 
       <Tabs>
         <Tab style={{
@@ -40,33 +76,30 @@ export default React.createClass({
                 <div class='row'>
                   <div class='col-xs-12'>
 
-                    <Card>
+                    <Card style={{marginTop: '15px'}}>
                       <CardHeader
                         title="How it works"
+                        titleColor={white}
+                        style={{backgroundColor: blue500}}
                         actAsExpander={true} />
 
-                      <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                        <List>
-                          <ListItem primaryText="Organize your subjects of study" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Collect resource links" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Pose questions and record thoughts" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Your activities are echoed on community feed" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Discover more helpful resources" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Let community focus your path, so you don't become lost in information" />
+                      <CardText expandable={true} style={{backgroundColor: green500}}>
+                        <List style={{backgroundColor: green500}}>
+                          <ListItem style={listItemStyles} primaryText="Organize your subjects of study" />
+                          <ListItem style={listItemStyles} primaryText="Collect resource links" />
+                          <ListItem style={listItemStyles} primaryText="Pose questions and record thoughts" />
+                          <ListItem style={listItemStyles} primaryText="Your activities are echoed on community feed" />
+                          <ListItem style={listItemStyles} primaryText="Discover more helpful resources" />
+                          <ListItem style={listItemStyles} primaryText="Let community focus your path, so you don't become lost in information" />
                         </List>
 
-                        <h4>Give back:</h4>
+                        <h4 style={{color: white}}>Give back:</h4>
+                        <Divider />
+
                         <List>
-                          <ListItem primaryText="Help others to discover and to focus on relevant resources" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Provide mentorship without great time commitments" />
-                          <Divider inset={true} />
-                          <ListItem primaryText="Organize your studies so that others can learn and discover from your process" />
+                          <ListItem style={listItemStyles} primaryText="Help others to discover and to focus on relevant resources" />
+                          <ListItem style={listItemStyles} primaryText="Provide mentorship without great time commitments" />
+                          <ListItem style={listItemStyles} primaryText="Organize your studies so that others can learn and discover from your process" />
                         </List>
                       </CardText>
                     </Card>
@@ -95,6 +128,8 @@ export default React.createClass({
                            floatingLabelText="Password" />
 
                 <RaisedButton label="Login"
+                              backgroundColor={blue500}
+                              labelColor={white}
                               onTouchTap={() => {
                                 let loginObj = {};
 

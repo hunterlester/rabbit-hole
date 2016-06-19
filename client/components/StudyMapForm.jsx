@@ -9,6 +9,8 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Select from 'react-select';
 import Paper from 'material-ui/Paper';
+import { blue500 } from 'material-ui/styles/colors';
+
 
 
 export const StudyMapForm = React.createClass({
@@ -64,7 +66,8 @@ export const StudyMapForm = React.createClass({
     const style = {
       padding: 20,
       textAlign: 'center',
-      margin: 20
+      margin: 20,
+      backgroundColor: blue500
     };
 
     return (
@@ -80,10 +83,15 @@ export const StudyMapForm = React.createClass({
           {
             this.state.createNewSubject &&
             <Paper style={style} zDepth={5}>
-              No results found.
+              <h4 style={{color: '#ffffff'}}>Keyword not found.</h4>
+              <h4 style={{color: '#ffffff'}}>Be the first to contribute new keyword!</h4>
               <TextField
                 ref='newSubject'
+                floatingLabelStyle={{color: '#ffffff'}}
+                floatingLabelFocusStyle={{color: '#ffffff'}}
                 floatingLabelText="Contribute a new keyword"
+                underlineFocusStyle={{color: '#ffffff'}}
+                underlineStyle={{color: '#ffffff'}}
                 fullWidth={true}
                 value={this.state.input}
                 onChange={() => {
@@ -115,7 +123,7 @@ export const StudyMapForm = React.createClass({
             value={this.state.value}
             options={keywords}
             multi={true}
-            placeholder="Start typing or choose keywords to help community find you"
+            placeholder="Start typing to choose keywords for discovery"
             onChange={this.handleSelectChange}
             noResultsText={false}
             onInputChange={this.handleInput}

@@ -9,8 +9,7 @@ export default React.createClass({
       <div>
         <TextField
           ref='body'
-          hintText='Reply to breadcrumb'
-          floatingLabelText="Reply"
+          floatingLabelText="Ask for or give further clarity"
           fullWidth={true}/>
 
         <RaisedButton

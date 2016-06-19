@@ -11,6 +11,8 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
+import Info from 'material-ui/svg-icons/action/info';
+import Dialog from 'material-ui/Dialog';
 
 import { loginUser, logoutUser } from '../state/reducer_components/auth/user_login/login_actions_core';
 import { getProfile } from '../state/reducer_components/profile/core';
@@ -27,6 +29,7 @@ const styles = {
 export const Home = React.createClass({
   getInitialState() {
     return {
+      open: false,
       value: this.props.location.pathname
     };
   },
@@ -38,6 +41,16 @@ export const Home = React.createClass({
   handleChange: function(value) {
     this.setState({
       value: value
+    })
+  },
+  handleClose: function() {
+    this.setState({
+      open: false
+    })
+  },
+  handleOpen: function() {
+    this.setState({
+      open: true
     })
   },
   render: function () {
@@ -53,6 +66,15 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
+                <Dialog
+                  modal={false}
+                  open={this.state.open}
+                  onRequestClose={() => {
+                    this.handleClose()
+                  }}
+                >
+                  <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
+                </Dialog>
                 <Toolbar style={{backgroundColor: '#FF9800'}}>
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
@@ -62,15 +84,20 @@ export const Home = React.createClass({
                         </IconButton>
                       }
                     >
-                      <MenuItem primaryText="Profile" onTouchTap={() => {
+                      <MenuItem primaryText="Profile & Settings" onTouchTap={() => {
                         dispatch(getProfile(user._id))
                       }} />
-                      <MenuItem primaryText="---" />
+                      <MenuItem primaryText="About" />
                       <MenuItem primaryText="Logout" onTouchTap={() => {
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
                     <ToolbarTitle style={{color: '#263238'}} text="Learnimus" />
+                    <IconButton touch={true} onTouchTap={() => {
+                      this.handleOpen();
+                    }}>
+                      <Info />
+                    </IconButton>
                   </ToolbarGroup>
                 </Toolbar>
 
