@@ -87,7 +87,9 @@ export const Home = React.createClass({
                       <MenuItem primaryText="Profile & Settings" onTouchTap={() => {
                         dispatch(getProfile(user._id))
                       }} />
-                      <MenuItem primaryText="About" />
+                      <MenuItem primaryText="About" onTouchTap={() => {
+                        hashHistory.push('/about');
+                      }} />
                       <MenuItem primaryText="Logout" onTouchTap={() => {
                         dispatch(logoutUser());
                       }}/>
