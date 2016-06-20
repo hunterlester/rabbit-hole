@@ -15,12 +15,12 @@ const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
 router.post('/studymap', auth, (req, res) => {
   const breadcrumb = new Breadcrumb(req.body);
   breadcrumb.save((err, breadcrumb) => {
-    if (err) return res.sendStatus(500);
+    if (err) return res.status(500).json(err);
     StudyMap.findById(breadcrumb.study_map, (err, studymap) => {
       if (err) return res.sendStatus(404);
       studymap.breadcrumbs.push(breadcrumb._id);
       studymap.save((err, studymap) => {
-        if (err) return res.sendStatus(500);
+        if (err) return res.status(500).json(err);
         var echo = new Echo();
         echo.user = breadcrumb.user;
         echo.breadcrumb = breadcrumb._id;
@@ -45,6 +45,7 @@ router.post('/studymap', auth, (req, res) => {
             path: 'user'
           }
         ], (err, echo) => {
+          if (err) return res.status(500).json(err);
           const echoUserID = echo.breadcrumb.study_map.user;
             store.dispatch(postEcho(echo));
           });
@@ -58,12 +59,12 @@ router.post('/studymap', auth, (req, res) => {
 router.post('/link', auth, (req, res) => {
   const breadcrumb = new Breadcrumb(req.body);
   breadcrumb.save((err, breadcrumb) => {
-    if (err) return res.sendStatus(500);
+    if (err) return res.status(500).json(err);
     Link.findById(breadcrumb.link, (err, link) => {
       if (err) return res.sendStatus(404);
       link.breadcrumbs.push(breadcrumb._id);
       link.save((err) => {
-        if (err) return res.sendStatus(500);
+        if (err) return res.status(500).json(err);
         var echo = new Echo();
         echo.user = breadcrumb.user;
         echo.breadcrumb = breadcrumb._id;
