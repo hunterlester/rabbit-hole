@@ -49,11 +49,16 @@ export const StudyMaps = React.createClass({
     if(study_map.links) {
       return Object.keys(study_map.links).map(key => {
         return (
-          <div key={study_map.links[key]._id}>
-            <a href={study_map.links[key].uri} target="_blank">
-              <h5>{study_map.links[key].title}</h5>
-            </a>
-            <h6>{study_map.links[key].uri}</h6>
+          <div key={study_map.links[key]._id} className='row'>
+            <div className='col-xs-1'>
+              <Avatar size={15} backgroundColor={green500}/>
+            </div>
+            <div className='col-xs-10'>
+              <a href={study_map.links[key].uri} target="_blank">
+                {study_map.links[key].title}
+              </a>
+              <h6>{study_map.links[key].uri}</h6>
+            </div>
           </div>
         );
       });

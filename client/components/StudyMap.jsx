@@ -4,7 +4,6 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
 import Avatar from 'material-ui/Avatar';
 import {orange500, green500, blue500, blueGrey500} from 'material-ui/styles/colors';
 
@@ -55,7 +54,7 @@ export const StudyMap = React.createClass({
             </CardText>
           </Card>
         );
-      }).sort(compare).reverse();
+      }).sort(compare);
     }
   },
   getMessages: function(breadcrumb) {
@@ -110,7 +109,7 @@ export const StudyMap = React.createClass({
             </Card>
           )
         }
-        ).sort(compare).reverse()}
+        ).sort(compare)}
 
         <h3>Breadcrumbs</h3>
 
@@ -147,7 +146,7 @@ export const StudyMap = React.createClass({
             </Card>
           );
         }
-        ).sort(compare).reverse()}
+        ).sort(compare)}
         <BreadcrumbForm
           study_map={study_map}
           user={user._id}
