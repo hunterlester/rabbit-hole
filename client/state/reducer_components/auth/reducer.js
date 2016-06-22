@@ -34,7 +34,8 @@ export default function auth(state = initialAuth, action) {
       return state.merge({
         isFetching: true,
         isAuthenticated: false,
-        user: action.creds
+        user: action.creds,
+        errorMessage: ''
       });
     case LOGIN_SUCCESS:
       return state.merge({

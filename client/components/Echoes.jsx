@@ -7,6 +7,8 @@ import moment from 'moment';
 import MessageForm from './MessageForm';
 import BreadcrumbForm from './BreadCrumbForm';
 import Select from 'react-select';
+import { white, orange500, green500, blue500, blueGrey500 } from 'material-ui/styles/colors';
+import Avatar from 'material-ui/Avatar';
 
 import { getProfile } from '../state/reducer_components/profile/core';
 import {
@@ -45,7 +47,7 @@ export const Echoes = React.createClass({
     return Object.values(echoes).map(echo => {
       if(echo.studymap) {
         echo.body = `Studying ${echo.studymap.subject}`;
-
+        echo.subtitle = `user: ${echo.user.displayName}`
         echo.quickreply = <BreadcrumbForm
           study_map={echo.studymap}
           user={this.props.user._id}
@@ -133,6 +135,7 @@ export const Echoes = React.createClass({
         echo.body = `link added: ${echo.link.title}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
         echo.quickreply = <BreadcrumbForm
+          disabled={!this.props.isAuthenticated}
           study_map={echo.link.study_map}
           user={this.props.user._id}
           link={echo.link._id}
@@ -187,7 +190,7 @@ export const Echoes = React.createClass({
   },
  render: function() {
 
-   const {echoes} = this.props;
+   const {echoes, isAuthenticated} = this.props;
 
    let keywords = Object.values(this.props.subjects).map(obj => {
      return Object.assign({}, {value: obj._id, label: obj.keyword});
@@ -206,13 +209,25 @@ export const Echoes = React.createClass({
          noResultsText='Subject not found. Be the first to contribute!'
        />
        {this.parseEchoes(echoes).map(echo => {
+         let avatarColor = '';
+         if(echo.studymap) {
+           avatarColor = orange500;
+         } else if(echo.link) {
+           avatarColor = green500;
+         } else if(echo.breadcrumb) {
+           avatarColor = blue500;
+         } else if(echo.message) {
+           avatarColor = blueGrey500;
+         }
          return (
            <Card key={echo._id}>
              <CardHeader
                title={echo.body}
+               avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
+               titleStyle={{fontSize: '1.25em'}}
                subtitle={echo.subtitle}
                actAsExpander={true}
-               showExpandableButton={true}/>
+               showExpandableButton={false}/>
 
              <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div className='pull-right'>

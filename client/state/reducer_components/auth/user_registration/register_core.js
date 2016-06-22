@@ -28,7 +28,7 @@ export function registerUser(creds) {
           dispatch(receiveRegister(user));
           hashHistory.push('/');
         }
-      })
+      }).catch(err => console.log(err))
 
   }
 }

@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
-
+import Avatar from 'material-ui/Avatar';
+import {orange500, green500, blue500, blueGrey500} from 'material-ui/styles/colors';
+import BreadcrumbForm from './BreadCrumbForm';
 import MessageForm from './MessageForm.jsx';
 import {
   postBreadcrumb,
@@ -31,12 +32,14 @@ export const ProfileStudyMap = React.createClass({
             }
           }} key={link.breadcrumbs[key]._id}>
             <CardHeader
+              avatar={<Avatar size={30} backgroundColor={blue500}/>}
               title={link.breadcrumbs[key].content}
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
+                {this.getMessages(link.breadcrumbs[key])}
                 <MessageForm
                   linkID={link._id}
                   studyMapID={this.props.study_map._id}
@@ -45,21 +48,20 @@ export const ProfileStudyMap = React.createClass({
                   postMessage={ messageObj => {
                   this.props.dispatch(postLinkMessage(messageObj))
                 }}/>
-                {this.getMessages(link.breadcrumbs[key])}
               </div>
             </CardText>
           </Card>
         );
-      }).sort(compare).reverse();
+      }).sort(compare);
     }
   },
   getMessages: function(breadcrumb) {
     if(breadcrumb.messages) {
       return Object.keys(breadcrumb.messages).map(key => {
         return (
-          <div key={breadcrumb.messages[key]._id}>{breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
+          <div key={breadcrumb.messages[key]._id}> <Avatar size={15} backgroundColor={blueGrey500}/> {breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
         )
-      }).sort(compare).reverse();
+      }).sort(compare);
     }
   },
   render: function() {
@@ -70,72 +72,32 @@ export const ProfileStudyMap = React.createClass({
         <h3>
           {study_map.subject}
         </h3>
-        {Object.keys(study_map.links).map(key =>
+        {Object.values(study_map.links).map(link =>
           <Card ref={function(input) {
             if(params.link && input) {
               input.setState({expanded: true});
             }
-          }} key={study_map.links[key]._id}>
+          }} key={link._id}>
             <CardHeader
-              title={<a href={study_map.links[key].uri} target="_blank">{study_map.links[key].title}</a>}
+              avatar={<Avatar size={30} backgroundColor={green500}/>}
+              title={<a href={link.uri} target="_blank">{link.title}</a>}
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
-                <TextField
-                  hintText="Leave a breadcrump for this link"
-                  floatingLabelText="Breadcrumb"
-                  multiLine={true}
-                  rows={2}
-                  ref='content'
-                  fullWidth={true}
-                />
-
-                <RaisedButton
-                  label="Contribute breadcrumb"
-                  onTouchTap={() => {
-                    let content = this.refs.content.getValue();
-                    let breadcrumbObj = {
-                      link: study_map.links[key]._id,
-                      content: content,
-                      user: user._id,
-                      study_map: this.props.params.studyMap
-                    };
-                    dispatch(postLinkBreadcrumb(breadcrumbObj));
-
-                    this.refs.content.clearValue();
-                  }}
-                />
-                {this.getLinkBreadcrumbs(study_map.links[key], params)}
+                {this.getLinkBreadcrumbs(link, params)}
+                <BreadcrumbForm
+                  study_map={study_map}
+                  user={user._id}
+                  link={link._id}
+                  postLinkBreadcrumb={ breadcrumbObj => {
+                  this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
+                }} />
               </div>
             </CardText>
           </Card>
         ).sort(compare).reverse()}
-        <TextField
-          hintText="Ask a question, track your thoughts, leave helpful breadcrumbs in the form of resources or constructive guidance"
-          floatingLabelText="Breadcrumbs"
-          multiLine={true}
-          rows={2}
-          ref='breadcrumb'
-          fullWidth={true}
-        />
-
-        <RaisedButton
-          label="Contribute breadcrumb"
-          onTouchTap={() => {
-            const content = this.refs.breadcrumb.getValue();
-            let breadcrumbObj = {
-              study_map: study_map._id,
-              content: content,
-              user: user._id
-            };
-
-            dispatch(postBreadcrumb(breadcrumbObj));
-
-            this.refs.breadcrumb.clearValue();
-          }}
-        />
 
         <h3>Breadcrumbs</h3>
         {Object.keys(study_map.breadcrumbs).map(key =>
@@ -148,11 +110,12 @@ export const ProfileStudyMap = React.createClass({
                 key={study_map.breadcrumbs[key]._id}>
 
             <CardHeader
+              avatar={<Avatar size={30} backgroundColor={blue500}/>}
               title={study_map.breadcrumbs[key].content}
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
+            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
                 {this.getMessages(study_map.breadcrumbs[key])}
               </div>
@@ -166,7 +129,14 @@ export const ProfileStudyMap = React.createClass({
             </CardText>
           </Card>
 
-        ).sort(compare).reverse()}
+        ).sort(compare)}
+
+        <BreadcrumbForm
+          study_map={study_map}
+          user={user._id}
+          postBreadcrumb={ breadcrumbObj => {
+          this.props.dispatch(postBreadcrumb(breadcrumbObj))
+        }} />
       </div>
     );
   }

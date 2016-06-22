@@ -5,22 +5,27 @@ import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import Select from 'react-select';
 import { subjectSubscription } from '../state/reducer_components/profile/core';
+import Avatar from 'material-ui/Avatar';
+import {orange500, green500} from 'material-ui/styles/colors';
 
 export const Profile = React.createClass({
   shouldComponentUpdate: function(nextProps, nextState) {
-    // console.log(this.props);
-    // console.log(nextProps);
     return true;
   },
   getLinks: function(study_map) {
     if(study_map.links) {
       return Object.keys(study_map.links).map(key => {
         return (
-          <div key={study_map.links[key]._id}>
-            <a href={study_map.links[key].uri} target="_blank">
-              <h5>{study_map.links[key].title}</h5>
-            </a>
-            <h6>{study_map.links[key].uri}</h6>
+          <div key={study_map.links[key]._id} className='row'>
+            <div className='col-xs-1'>
+              <Avatar size={15} backgroundColor={green500}/>
+            </div>
+            <div className='col-xs-10'>
+              <a href={study_map.links[key].uri} target="_blank">
+                {study_map.links[key].title}
+              </a>
+              <h6>{study_map.links[key].uri}</h6>
+            </div>
           </div>
         );
       });
@@ -32,12 +37,13 @@ export const Profile = React.createClass({
         return (
           <Card key={studymaps[key]._id}>
             <CardHeader
+              avatar={<Avatar size={30} backgroundColor={orange500}/>}
               title={studymaps[key].subject}
               actAsExpander={true}
               showExpandableButton={true}
             />
-            <CardText expandable={true}>
-              <RaisedButton label="Open" className='pull-xs-right' onTouchTap={() => {
+            <CardText className='clearfix' expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+              <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
                 hashHistory.push(`/profile/study_map/${studymaps[key]._id}`)
               }}/>
               <div>

@@ -4,16 +4,18 @@ import TextField from 'material-ui/TextField';
 
 export default React.createClass({
   render: function() {
-    const { user, study_map, link, postBreadcrumb, postLinkBreadcrumb } = this.props;
+    const { user, study_map, link, postBreadcrumb, postLinkBreadcrumb, disabled } = this.props;
     return (
       <div>
         <TextField
+          disabled={disabled}
           hintText="Question, insight, or helpful tip"
           floatingLabelText="Breadcrumb"
           ref='content'
           fullWidth={true}/>
 
         <RaisedButton
+          disabled={disabled}
           label="Contribute"
           onTouchTap={() => {
             const content = this.refs.content.input.value;

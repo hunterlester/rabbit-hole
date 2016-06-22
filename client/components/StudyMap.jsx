@@ -1,14 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {Card, CardHeader, CardText} from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
+import {orange500, green500, blue500, blueGrey500} from 'material-ui/styles/colors';
 
 import MessageForm from './MessageForm.jsx';
 import BreadcrumbForm from './BreadCrumbForm';
-import {updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
+import { updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
 
 function compare(a , b) {
   return Date.parse(a.date) - Date.parse(b.date);
@@ -20,22 +21,23 @@ export const StudyMap = React.createClass({
   },
   getLinkBreadcrumbs: function(link) {
     if (link.breadcrumbs) {
-      let style = {};
-      let seen = 'seen';
-      return Object.keys(link.breadcrumbs).map(key => {
-        if('seen' in link.breadcrumbs[key] && link.breadcrumbs[key].seen == false) {
+      return Object.values(link.breadcrumbs).map(brdcrmb => {
+        let style = {};
+        let avatarColor = blue500;
+        let seen = 'seen';
+        if(seen in brdcrmb && brdcrmb.seen == false) {
           style.backgroundColor = '#2196F3';
         }
         return (
-          <Card key={link.breadcrumbs[key]._id}>
+          <Card key={brdcrmb._id}>
             <CardHeader
-              title={link.breadcrumbs[key].content}
-              subtitle={link.breadcrumbs[key].seen}
+              avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
+              title={brdcrmb.content}
               style={style}
               onClick={() => {
-                if( seen in link.breadcrumbs[key] && link.breadcrumbs[key].seen == false) {
-                  let newObj = Object.assign({}, link.breadcrumbs[key], {seen: true});
-                  dispatch(updateBLinkSeen(JSON.stringify(newObj), newObj._id));
+                if( seen in brdcrmb && brdcrmb.seen == false) {
+                  let newObj = Object.assign({}, brdcrmb, {seen: true});
+                  this.props.dispatch(updateBLinkSeen(JSON.stringify(newObj), newObj._id));
                 }
               }}
               actAsExpander={true}
@@ -43,24 +45,25 @@ export const StudyMap = React.createClass({
             />
             <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
               <div>
-                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={link.breadcrumbs[key]._id} userID={this.props.user._id} postMessage={ messageObj => {
+                {this.getMessages(brdcrmb)}
+                <MessageForm linkID={link._id} studyMapID={this.props.study_map._id} breadcrumbID={brdcrmb._id} userID={this.props.user._id} postMessage={ messageObj => {
                   this.props.dispatch(postLinkMessage(messageObj))
                 }}/>
-                {this.getMessages(link.breadcrumbs[key])}
+
               </div>
             </CardText>
           </Card>
         );
-      }).sort(compare).reverse();
+      }).sort(compare);
     }
   },
   getMessages: function(breadcrumb) {
     if(breadcrumb.messages) {
       return Object.keys(breadcrumb.messages).map(key => {
         return (
-          <div key={breadcrumb.messages[key]._id}>{breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.username}</div>
+          <div key={breadcrumb.messages[key]._id}><Avatar size={15} backgroundColor={blueGrey500}/> {breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.displayName}</div>
         )
-      }).sort(compare).reverse();
+      }).sort(compare);
     }
   },
   render: function() {
@@ -70,45 +73,57 @@ export const StudyMap = React.createClass({
         <h3>
           {study_map.subject}
         </h3>
-        {Object.keys(study_map.links).map(key =>
-          <Card key={study_map.links[key]._id}>
-            <CardHeader
-              title={<a href={study_map.links[key].uri} target="_blank">{study_map.links[key].title}</a>}
-              actAsExpander={true}
-              showExpandableButton={true}
-            />
-            <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-              <BreadcrumbForm
-                study_map={study_map}
-                user={user._id}
-                link={study_map.links[key]._id}
-                postLinkBreadcrumb={ breadcrumbObj => {
-                this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
-              }} />
-              <div>
-                {this.getLinkBreadcrumbs(study_map.links[key])}
-              </div>
-            </CardText>
-          </Card>
-        ).sort(compare).reverse()}
-
-        <BreadcrumbForm
-          study_map={study_map}
-          user={user._id}
-          postBreadcrumb={ breadcrumbObj => {
-          this.props.dispatch(postBreadcrumb(breadcrumbObj))
-        }} />
+        {Object.values(study_map.links).map(link => {
+          let style = {};
+          let avatarColor = green500
+          const seen = 'seen';
+          let notify = Object.values(link.breadcrumbs).some(brdcrmb => {
+              return brdcrmb.seen == false;
+          });
+          if(notify) {
+            style.backgroundColor = blue500;
+            style.color = '#ffffff';
+          }
+          return (
+            <Card key={link._id}>
+              <CardHeader
+                avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
+                title={<a href={link.uri} style={style} target="_blank">{link.title}</a>}
+                subtitle={link.uri}
+                actAsExpander={true}
+                showExpandableButton={true}
+                style={style}
+              />
+              <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                <div>
+                  {this.getLinkBreadcrumbs(link)}
+                </div>
+                <BreadcrumbForm
+                  study_map={study_map}
+                  user={user._id}
+                  link={link._id}
+                  postLinkBreadcrumb={ breadcrumbObj => {
+                  this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
+                }} />
+              </CardText>
+            </Card>
+          )
+        }
+        ).sort(compare)}
 
         <h3>Breadcrumbs</h3>
+
         {Object.keys(study_map.breadcrumbs).map(key => {
           let style = {};
+          let avatarColor = blue500;
           let seen = 'seen';
           if('seen' in study_map.breadcrumbs[key] && study_map.breadcrumbs[key].seen == false) {
-            style.backgroundColor = '#2196F3';
+            style.backgroundColor = blue500;
           }
           return (
             <Card key={study_map.breadcrumbs[key]._id}>
               <CardHeader
+                avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
                 title={study_map.breadcrumbs[key].content}
                 actAsExpander={true}
                 showExpandableButton={true}
@@ -131,7 +146,13 @@ export const StudyMap = React.createClass({
             </Card>
           );
         }
-        ).sort(compare).reverse()}
+        ).sort(compare)}
+        <BreadcrumbForm
+          study_map={study_map}
+          user={user._id}
+          postBreadcrumb={ breadcrumbObj => {
+          this.props.dispatch(postBreadcrumb(breadcrumbObj))
+        }} />
       </div>
     );
   }

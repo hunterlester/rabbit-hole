@@ -10,7 +10,12 @@ import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
+import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
+import Info from 'material-ui/svg-icons/action/info';
+import Dialog from 'material-ui/Dialog';
+import Snackbar from 'material-ui/Snackbar';
+import { red500 } from 'material-ui/styles/colors';
+
 
 import { loginUser, logoutUser } from '../state/reducer_components/auth/user_login/login_actions_core';
 import { getProfile } from '../state/reducer_components/profile/core';
@@ -27,8 +32,16 @@ const styles = {
 export const Home = React.createClass({
   getInitialState() {
     return {
+      open: false,
       value: this.props.location.pathname
     };
+  },
+  handleSnackbar: function() {
+    if(this.props.errorMessage) {
+      return true;
+    } else {
+      return false;
+    }
   },
   componentWillReceiveProps(nextProps) {
     this.setState({
@@ -40,10 +53,26 @@ export const Home = React.createClass({
       value: value
     })
   },
+  handleClose: function() {
+    this.setState({
+      open: false
+    })
+  },
+  handleOpen: function() {
+    this.setState({
+      open: true
+    })
+  },
   render: function () {
-    const { dispatch, isAuthenticated, errorMessage, user } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user, isFetching } = this.props;
     return (
       <div>
+        <Snackbar
+          bodyStyle={{backgroundColor: red500}}
+          open={this.handleSnackbar()}
+          message={errorMessage || ''}
+          autoHideDuration={4000}
+        />
 
         {!isAuthenticated &&
           <Login onLoginClick={ creds => dispatch(loginUser(creds)) }/>
@@ -53,6 +82,15 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
+                <Dialog
+                  modal={false}
+                  open={this.state.open}
+                  onRequestClose={() => {
+                    this.handleClose()
+                  }}
+                >
+                  <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
+                </Dialog>
                 <Toolbar style={{backgroundColor: '#FF9800'}}>
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
@@ -62,15 +100,22 @@ export const Home = React.createClass({
                         </IconButton>
                       }
                     >
-                      <MenuItem primaryText="Profile" onTouchTap={() => {
+                      <MenuItem primaryText="Profile & Settings" onTouchTap={() => {
                         dispatch(getProfile(user._id))
                       }} />
-                      <MenuItem primaryText="---" />
+                      <MenuItem primaryText="About" onTouchTap={() => {
+                        hashHistory.push('/about');
+                      }} />
                       <MenuItem primaryText="Logout" onTouchTap={() => {
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
                     <ToolbarTitle style={{color: '#263238'}} text="Learnimus" />
+                    <IconButton touch={true} onTouchTap={() => {
+                      this.handleOpen();
+                    }}>
+                      <Info />
+                    </IconButton>
                   </ToolbarGroup>
                 </Toolbar>
 
@@ -102,10 +147,12 @@ export const Home = React.createClass({
 });
 
 function mapStateToProps(state) {
-  const { isAuthenticated, user } = state.auth.toJS();
+  const { isAuthenticated, user, isFetching, errorMessage } = state.auth.toJS();
   return {
     isAuthenticated,
-    user
+    user,
+    isFetching,
+    errorMessage
   };
 
 }

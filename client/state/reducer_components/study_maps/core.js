@@ -26,7 +26,9 @@ export function apiRequest(state, action) {
 export function apiFailure(state, action) {
   return state.merge({
     isFetching: false,
-    errorMessage: action.message
+    errorMessage: action.error,
+    datum: '',
+    method: ''
   });
 }
 
@@ -71,4 +73,26 @@ export function postLinkMessageSuccess(state, action) {
     'breadcrumbs', messageObj.breadcrumb, 'messages', messageObj._id], fromJS(messageObj)).merge({
       isFetching: false
     });
+}
+
+export function updateSeen(state, action) {
+  let breadObj = action.response;
+
+  let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+  parsedStudyMaps[breadObj.study_map].breadcrumbs[breadObj._id] = breadObj;
+  let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+  localStorage.setItem('study_maps', JSONstudyMaps);
+
+  return state.updateIn(['study_maps', breadObj.study_map, 'breadcrumbs', breadObj._id, 'seen'], val => true);
+}
+
+export function updateBLinkSeen(state, action) {
+  let breadLink = action.response;
+
+  let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
+  parsedStudyMaps[breadLink.study_map].links[breadLink.link].breadcrumbs[breadLink._id] = breadLink;
+  let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
+  localStorage.setItem('study_maps', JSONstudyMaps);
+
+  return state.updateIn(['study_maps', breadLink.study_map, 'links', breadLink.link , 'breadcrumbs', breadLink._id, 'seen'], val => true);
 }

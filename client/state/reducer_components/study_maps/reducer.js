@@ -7,7 +7,9 @@ import {
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
   MESSAGE_POST_SUCCESS,
-  LINKMESSAGE_POST_SUCCESS, SEEN_UPDATE, BLINKSEEN_UPDATE } from './actions';
+  LINKMESSAGE_POST_SUCCESS,
+  SEEN_UPDATE_SUCCESS,
+  BLINKSEEN_UPDATE_SUCCESS } from './actions';
 
 import {
   initialStudyMaps, setStudyMaps, apiRequest, apiFailure,
@@ -16,7 +18,9 @@ import {
   postBreadcrumbSuccess,
   postLinkBreadcrumbSuccess,
   postMessageSuccess,
-  postLinkMessageSuccess
+  postLinkMessageSuccess,
+  updateSeen,
+  updateBLinkSeen
 } from './core';
 
 export default function study_maps(state = initialStudyMaps, action) {
@@ -48,20 +52,11 @@ export default function study_maps(state = initialStudyMaps, action) {
     case LINKMESSAGE_POST_SUCCESS:
       return postLinkMessageSuccess(state, action);
 
-    case SEEN_UPDATE:
-      let breadObj = action.response;
+    case SEEN_UPDATE_SUCCESS:
+      return updateSeen(state, action);
 
-      let parsedStudyMaps = JSON.parse(localStorage.getItem('study_maps'));
-      parsedStudyMaps[breadObj.study_map].breadcrumbs[breadObj._id] = breadObj;
-      let JSONstudyMaps = JSON.stringify(parsedStudyMaps);
-      localStorage.setItem('study_maps', JSONstudyMaps);
-
-      return state.updateIn(['study_maps', breadObj.study_map, 'breadcrumbs', breadObj._id, 'seen'], val => true);
-
-    case BLINKSEEN_UPDATE:
-      let breadLink = action.response;
-      return state.updateIn(['study_maps', breadLink.study_map, 'links', breadLink.link , 'breadcrumbs', breadLink._id, 'seen'], val => true);
-
+    case BLINKSEEN_UPDATE_SUCCESS:
+      return updateBLinkSeen(state, action);
   }
   return state;
 }

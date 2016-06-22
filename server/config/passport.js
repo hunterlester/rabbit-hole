@@ -22,18 +22,23 @@ passport.use(new LocalStrategy(
               path: 'breadcrumbs',
               populate: {
                 path: 'messages',
-                populate: {
-                  path:
-                    'user'
-                  }}}
+                populate: [
+                  {
+                    path: 'user'
+                  }
+                ]
+              }
+            }
           },
           {
             path: 'breadcrumbs',
             populate: {
               path: 'messages',
-              populate: {
-                path: 'user'
-              }
+              populate: [
+                {
+                  path: 'user'
+                }
+              ]
             }
           }
         ]

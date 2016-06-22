@@ -22,6 +22,7 @@ import {ConnectedStudyMaps} from './components/StudyMaps';
 import {ConnectedSingleStudyMap} from './components/StudyMap';
 import {ConnectedProfile} from './components/Profile';
 import {ConnectedProfileStudyMap} from './components/ProfileStudyMap';
+import About from './components/About';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import cleanest from 'cleanest';
@@ -50,6 +51,7 @@ socket.on('state', state => {
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>
     <Route path="/" component={ConnectedStudyMaps} />
+    <Route path="/about" component={About} />
     <Route path="/echoes" component={ConnectedEchoes} />
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
     <Route path="/studymaps/:studyMap" component={ConnectedSingleStudyMap} />
@@ -67,7 +69,7 @@ const routes = <Route component={App}>
 const muiTheme = getMuiTheme({
   palette: {
     accent1Color: blueGrey900,
-    primary1Color: orange500,
+    primary1Color: orange500
   }
 });
 

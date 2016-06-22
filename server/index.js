@@ -85,6 +85,9 @@ let echoPromise = new Promise((fulfill, reject) => {
           path: 'message',
           populate: [
             {
+              path: 'user'
+            },
+            {
               path: 'breadcrumb'
             },
             {

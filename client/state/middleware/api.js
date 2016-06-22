@@ -53,20 +53,14 @@ function callApi(endpoint, authenticated, method, obj) {
     }
   };
 
-  if (authenticated) {
-    if (token) {
-      config = configFactory(method, token, obj);
-    } else {
-      throw "No token saved."
-    }
-  }
+  config = configFactory(method, token, obj);
 
   return fetch(BASE_URL + endpoint, config)
     .then(response =>
       response.json().then(json => ({ json, response }))
     ).then(({ json, response }) => {
       if (!response.ok) {
-        return Promise.reject(json)
+        return Promise.reject(json);
       }
 
       let cleaned_json = cleanest(json);
@@ -125,7 +119,7 @@ function callApi(endpoint, authenticated, method, obj) {
       }
 
       return cleaned_json;
-    }).catch(err => console.log(err))
+    }).catch(err => {throw err})
 }
 
 export const CALL_API = Symbol('Call API');
@@ -156,7 +150,7 @@ export default store => next => action => {
         meta: {remote: true}
       }),
     error => next({
-      error: error.message || 'There was an error.',
+      error: error.error || 'There was an error.',
       type: errorType
     })
   )
