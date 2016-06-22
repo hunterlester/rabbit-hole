@@ -23,3 +23,7 @@ export function postSubject(state, subject) {
     subjects: subjects.push(fromJS(subject))
   })
 }
+
+export function setUsers(state, users) {
+  return state.set('users', fromJS(users));
+}

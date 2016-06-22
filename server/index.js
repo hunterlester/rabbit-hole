@@ -7,6 +7,7 @@ import Server from 'socket.io';
 import mongoose from 'mongoose';
 const Echo = mongoose.model('Echo');
 const Subject = mongoose.model('Subject');
+const User = mongoose.model('User');
 
 let port = normalizePort(process.env.PORT || '3000');
 
@@ -30,6 +31,15 @@ function startSocketServer(store) {
 }
 
 startSocketServer(store);
+
+let userPromise = new Promise((fulfill, reject) => {
+  fulfill(
+    User.find().select('displayName username').exec((err, users) => {
+      if(err) throw error
+      return users;
+    })
+  )
+});
 
 let subjectPromise = new Promise((fulfill, reject) => {
   fulfill(
@@ -124,6 +134,13 @@ subjectPromise.then(res => {
     subjects: res
   });
 });
+
+userPromise.then(res => {
+  store.dispatch({
+    type: 'SET_USERS',
+    users: res
+  })
+})
 
 
 server.listen(port);

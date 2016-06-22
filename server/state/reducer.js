@@ -1,4 +1,4 @@
-import {setEchoes, postEcho, setSubjects, postSubject} from './core';
+import {setEchoes, postEcho, setSubjects, postSubject, setUsers} from './core';
 import { initialState } from './core';
 
 export default function reducer(state = initialState , action) {
@@ -14,6 +14,9 @@ export default function reducer(state = initialState , action) {
 
     case 'POST_SUBJECT':
       return postSubject(state, action.subject);
+
+    case 'SET_USERS':
+      return setUsers(state, action.users);
 
   }
   return state;
