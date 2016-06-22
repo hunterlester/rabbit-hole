@@ -5,9 +5,10 @@ import LinkForm from './LinkForm';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateNewFolder from 'material-ui/svg-icons/file/create-new-folder';
-import {green500} from 'material-ui/styles/colors';
+import {orange500, green500, blue500} from 'material-ui/styles/colors';
 import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
+import Avatar from 'material-ui/Avatar';
 
 import { postLink } from '../state/api/actions';
 
@@ -79,7 +80,6 @@ export const StudyMaps = React.createClass({
                 </IconButton>
 
                 {Object.values(study_maps).map(study_map => {
-                  let style = {};
                   const seen = 'seen';
                   let linkNotify = Object.values(study_map.links).some(link => {
                     return Object.values(link.breadcrumbs).some(brdcrmb => {
@@ -89,18 +89,19 @@ export const StudyMaps = React.createClass({
                   let notify = Object.values(study_map.breadcrumbs).some(brdcrmb => {
                     return brdcrmb.seen == false;
                   });
+                  let avatarColor = orange500;
                   if(notify) {
-                    style.backgroundColor = '#2196F3';
+                    avatarColor = blue500;
                   } else if(linkNotify) {
-                    style.backgroundColor = '#2196F3';
+                    avatarColor = green500;
                   }
                   return (
                     <Card style={{clear: 'both'}} key={study_map._id}>
                       <CardHeader
+                        avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
                         title={study_map.subject}
                         actAsExpander={true}
                         showExpandableButton={true}
-                        style={style}
                       />
                       <CardText className="clearfix" expandable={true} style={{backgroundColor: '#ECEFF1'}}>
                         <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
