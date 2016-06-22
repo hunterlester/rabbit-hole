@@ -83,6 +83,14 @@ app.use(function(req, res, next) {
 
 // error handlers
 
+app.use(function (err, req, res, next) {
+  if (err.status === 401) {
+    res.status(401).send({error: 'Please sign in to contribute'});
+  } else {
+    next(err);
+  }
+});
+
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {

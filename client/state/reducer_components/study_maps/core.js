@@ -26,7 +26,9 @@ export function apiRequest(state, action) {
 export function apiFailure(state, action) {
   return state.merge({
     isFetching: false,
-    errorMessage: action.message
+    errorMessage: action.error,
+    datum: '',
+    method: ''
   });
 }
 

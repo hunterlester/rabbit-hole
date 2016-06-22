@@ -7,10 +7,8 @@ import moment from 'moment';
 import MessageForm from './MessageForm';
 import BreadcrumbForm from './BreadCrumbForm';
 import Select from 'react-select';
-import {white, orange500, green500, blue500, blueGrey500} from 'material-ui/styles/colors';
+import { white, orange500, green500, blue500, blueGrey500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
-
-
 
 import { getProfile } from '../state/reducer_components/profile/core';
 import {
@@ -137,6 +135,7 @@ export const Echoes = React.createClass({
         echo.body = `link added: ${echo.link.title}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
         echo.quickreply = <BreadcrumbForm
+          disabled={!this.props.isAuthenticated}
           study_map={echo.link.study_map}
           user={this.props.user._id}
           link={echo.link._id}
@@ -191,7 +190,7 @@ export const Echoes = React.createClass({
   },
  render: function() {
 
-   const {echoes} = this.props;
+   const {echoes, isAuthenticated} = this.props;
 
    let keywords = Object.values(this.props.subjects).map(obj => {
      return Object.assign({}, {value: obj._id, label: obj.keyword});

@@ -148,7 +148,6 @@ export const Home = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user, isFetching, errorMessage } = state.auth.toJS();
-  console.log(state.auth.toJS());
   return {
     isAuthenticated,
     user,
