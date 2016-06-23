@@ -25,7 +25,9 @@ export function receiveRegister(user) {
   return {
     type: REGISTER_SUCCESS,
     isFetching: false,
-    isAuthenticated: false
+    isAuthenticated: false,
+    meta: {remote: true},
+    user
   }
 }
 

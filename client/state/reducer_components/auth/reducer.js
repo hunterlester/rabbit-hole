@@ -15,7 +15,6 @@ export default function auth(state = initialAuth, action) {
     case SET_RESERVED_USERS:
       return state.merge({
         isFetching: false,
-        isAuthenticated: false,
         reserved_user_info: action.state.users
       });
     case REGISTER_REQUEST:
@@ -28,7 +27,8 @@ export default function auth(state = initialAuth, action) {
       return state.merge({
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: ''
+        errorMessage: '',
+        user: action.user
       });
     case REGISTER_FAILURE:
       return state.merge({

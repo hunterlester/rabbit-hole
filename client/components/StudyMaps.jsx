@@ -26,10 +26,10 @@ export const StudyMaps = React.createClass({
   newUser: function() {
     if(!Object.values(this.props.study_maps).length) {
       return (
-        <div>
-          <h3 style={{textAlign: 'right'}}>Get started by creating a new subject</h3>
-          <h3 style={{textAlign: 'right'}}>(click the green folder)</h3>
-        </div>
+        <Paper style={style} zDepth={5}>
+          <h3>Get started by creating a new subject</h3>
+          <h3>(click the green folder)</h3>
+        </Paper>
       );
     }
   },
@@ -49,11 +49,11 @@ export const StudyMaps = React.createClass({
     if(study_map.links) {
       return Object.keys(study_map.links).map(key => {
         return (
-          <div key={study_map.links[key]._id} className='row'>
+          <div key={study_map.links[key]._id} className='row clearfix'>
             <div className='col-xs-1'>
               <Avatar size={15} backgroundColor={green500}/>
             </div>
-            <div className='col-xs-10'>
+            <div className='col-xs-8'>
               <a href={study_map.links[key].uri} target="_blank">
                 {study_map.links[key].title}
               </a>
@@ -109,7 +109,7 @@ export const StudyMaps = React.createClass({
                         showExpandableButton={true}
                       />
                       <CardText className="clearfix" expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                        <RaisedButton label="Open" className='pull-right' onTouchTap={() => {
+                        <RaisedButton label="Open" className='pull-right clearfix' onTouchTap={() => {
                           hashHistory.push(`/studymaps/${study_map._id}`)
                         }}/>
                         <div>

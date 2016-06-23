@@ -9,7 +9,7 @@ export default React.createClass({
       <div>
         <Card style={{backgroundColor: orange500, marginTop: '15px'}}>
           <CardHeader
-            title='GRATITUDE & DUES'
+            title='GRATITUDE TO'
             titleColor={white}
             actAsExpander={true}
           />
@@ -108,7 +108,7 @@ export default React.createClass({
             actAsExpander={true}
           />
           <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-
+            To learn something new is the ultimate liberation. 
           </CardText>
         </Card>
       </div>
