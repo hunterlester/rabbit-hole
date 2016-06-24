@@ -9,7 +9,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import Select from 'react-select';
 import Paper from 'material-ui/Paper';
-import { blue500 } from 'material-ui/styles/colors';
+import { blue500, orange500, white } from 'material-ui/styles/colors';
 
 
 
@@ -130,7 +130,9 @@ export const StudyMapForm = React.createClass({
           />
 
           <RaisedButton
-            label="Save"
+            label="add"
+            backgroundColor={orange500}
+            labelColor={white}
             onTouchTap={() => {
               let studyMapObj = {
                 user: this.props.user._id,

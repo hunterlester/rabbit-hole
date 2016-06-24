@@ -17,7 +17,7 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
-import {blue500, white, green500, orange500} from 'material-ui/styles/colors';
+import {blue500, white, green500, orange500, blueGrey900} from 'material-ui/styles/colors';
 
 
 export default React.createClass({
@@ -44,12 +44,12 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
+          <ToolbarTitle style={{color: blueGrey900, fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
           <IconButton touch={true} onTouchTap={() => {
             this.handleOpen();
           }}>
-            <Info />
+            <Info color={blueGrey900}/>
           </IconButton>
-          <ToolbarTitle style={{color: '#263238', fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
         </ToolbarGroup>
       </Toolbar>
       <Dialog
@@ -60,7 +60,7 @@ export default React.createClass({
           this.handleClose()
         }}
       >
-        <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.' Welcome and have fun!</h4>
+        <h4 style={{color: '#000000'}}>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.' Welcome and have fun!</h4>
       </Dialog>
 
       <Tabs>
@@ -69,13 +69,9 @@ export default React.createClass({
         }} label="Explore">
           <div className='container'>
             <div className='row'>
-              <div className='col-sm-8'>
-                <ConnectedEchoes />
-              </div>
-              <div className='col-sm-4'>
+              <div className='col-sm-4 col-sm-push-8'>
                 <div class='row'>
                   <div class='col-xs-12'>
-
                     <Card style={{marginTop: '15px'}}>
                       <CardHeader
                         title="How it works"
@@ -105,6 +101,9 @@ export default React.createClass({
                     </Card>
                   </div>
                 </div>
+              </div>
+              <div className='col-sm-8 col-sm-pull-4'>
+                <ConnectedEchoes />
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {blue500, white} from 'material-ui/styles/colors';
+
 
 export default React.createClass({
   render: function() {
@@ -17,6 +19,8 @@ export default React.createClass({
         <RaisedButton
           disabled={disabled}
           label="Contribute"
+          backgroundColor={blue500}
+          labelColor={white}
           onTouchTap={() => {
             const content = this.refs.content.input.value;
             let breadcrumbObj = {

@@ -133,6 +133,7 @@ export const Echoes = React.createClass({
         return echo;
       } else if (echo.link) {
         echo.body = `link added: ${echo.link.title}`
+        echo.subtitle = `user: ${echo.user.displayName}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
         echo.quickreply = <BreadcrumbForm
           disabled={!this.props.isAuthenticated}

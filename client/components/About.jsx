@@ -21,7 +21,7 @@ export default React.createClass({
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                The design components for this app were created created using
+                The design components for this app were created using
                 <a href="http://www.material-ui.com/#/" target="_blank"> Material UI</a>.
                 Thank you so much for creating these beautiful React components!
               </CardText>
@@ -108,7 +108,7 @@ export default React.createClass({
             actAsExpander={true}
           />
           <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-            To learn something new is the ultimate liberation. 
+            To learn something new is the ultimate liberation.
           </CardText>
         </Card>
       </div>

@@ -28,7 +28,7 @@ export const StudyMaps = React.createClass({
       return (
         <Paper style={style} zDepth={5}>
           <h3>Get started by creating a new subject</h3>
-          <h3>(click the green folder)</h3>
+          <h3>(click the orange folder)</h3>
         </Paper>
       );
     }
@@ -81,7 +81,7 @@ export const StudyMaps = React.createClass({
                 <IconButton className="pull-right" iconStyle={{height: 36, width: 36}} touch={true} onTouchTap={() => {
                   hashHistory.push('/studyMapForm')
                 }}>
-                  <CreateNewFolder style={{margin: '3%'}} color={green500} />
+                  <CreateNewFolder style={{margin: '3%'}} color={orange500} />
                 </IconButton>
 
                 {Object.values(study_maps).map(study_map => {

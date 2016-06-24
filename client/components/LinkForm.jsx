@@ -2,7 +2,7 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import Select from 'react-select';
-import { blue500, white } from 'material-ui/styles/colors';
+import { green500, white } from 'material-ui/styles/colors';
 
 export default React.createClass({
   getInitialState() {
@@ -25,7 +25,7 @@ export default React.createClass({
         value={this.state.value}
         onChange={this.handleSelectChange}
         placeholder="Choose subject"
-        noResultsText='First create new subject by clicking on black folder icon.'
+        noResultsText='First create new subject by clicking on orange folder icon.'
       />
 
       <TextField
@@ -44,7 +44,7 @@ export default React.createClass({
 
       <RaisedButton
         label="Add Link"
-        backgroundColor={blue500}
+        backgroundColor={green500}
         labelColor={white}
         onTouchTap={() => {
           let linkObj = {
