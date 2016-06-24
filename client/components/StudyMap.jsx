@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import IconButton from 'material-ui/IconButton';
+import Info from 'material-ui/svg-icons/action/info';
+import Dialog from 'material-ui/Dialog';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -16,8 +19,23 @@ function compare(a , b) {
 }
 
 export const StudyMap = React.createClass({
+  getInitialState() {
+    return {
+      open: false
+    };
+  },
   shouldComponentUpdate: function(nextProps, nextState) {
     return true;
+  },
+  handleOpen: function() {
+    this.setState({
+      open: true
+    })
+  },
+  handleClose: function() {
+    this.setState({
+      open: false
+    })
   },
   getLinkBreadcrumbs: function(link) {
     if (link.breadcrumbs) {
@@ -70,6 +88,15 @@ export const StudyMap = React.createClass({
     const { isAuthenticated, user, study_map, dispatch} = this.props;
     return (
       <div>
+      <Dialog
+        modal={false}
+        open={this.state.open}
+        onRequestClose={() => {
+          this.handleClose()
+        }}
+      >
+        <h4 style={{color: '#000000'}}>Breadcrumbs can take the form of questions, tips, insights, or any thought that a user would like to record in the community.</h4>
+      </Dialog>
         <h3>
           {study_map.subject}
         </h3>
@@ -111,7 +138,11 @@ export const StudyMap = React.createClass({
         }
         ).sort(compare)}
 
-        <h3>Breadcrumbs</h3>
+        <IconButton touch={true} onTouchTap={() => {
+          this.handleOpen();
+        }}>
+          <h3>Breadcrumbs</h3>
+        </IconButton>
 
         {Object.keys(study_map.breadcrumbs).map(key => {
           let style = {};

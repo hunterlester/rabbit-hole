@@ -8,6 +8,7 @@ import io from 'socket.io-client';
 import reducers from './state/reducers';
 import { setEchoesAction } from './state/reducer_components/echoes/actions';
 import { setSubjectsAction } from './state/reducer_components/subjects/actions';
+import { setReservedUsers } from './state/reducer_components/auth/user_registration/actions';
 import remoteActionMiddleware from './state/middleware/remote_action_middleware';
 import thunkMiddleware from 'redux-thunk';
 import api from './state/middleware/api';
@@ -45,8 +46,11 @@ socket.on('state', state => {
   localStorage.setItem('subjects', JSON.stringify(cleanest(state.subjects)))
   store.dispatch(setEchoesAction(cleanest(state)))
   store.dispatch(setSubjectsAction(cleanest(state)))
+  store.dispatch(setReservedUsers(state))
 }
 );
+
+
 
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>

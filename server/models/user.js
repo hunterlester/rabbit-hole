@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
   date: {type: Date, default: Date.now},
   provider: String,
   id: String,
-  displayName: String,
+  displayName: {type: String, lowercase: true, unique: true, trim: true},
   name: {
     familyName: String,
     givenName: String,

@@ -46,8 +46,7 @@ export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
     return Object.values(echoes).map(echo => {
       if(echo.studymap) {
-        echo.body = `Studying ${echo.studymap.subject}`;
-        echo.subtitle = `user: ${echo.user.displayName}`
+        echo.body = `${echo.studymap.subject}`;
         echo.quickreply = <BreadcrumbForm
           study_map={echo.studymap}
           user={this.props.user._id}
@@ -69,8 +68,8 @@ export const Echoes = React.createClass({
             `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`
           ))
         }} />
-        echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
-        echo.subtitle = `regarding: ${echo.breadcrumb.study_map.subject}`
+        echo.body = `${echo.breadcrumb.content}`;
+        echo.subtitle = `${echo.breadcrumb.study_map.subject}`
         return echo;
       } else if (echo.breadcrumb && !echo.breadcrumb.link) {
         echo.quickreply = <MessageForm
@@ -86,14 +85,12 @@ export const Echoes = React.createClass({
             `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb._id}`
           ))
         }} />
-        echo.body = `left breadcrumb: ${echo.breadcrumb.content}`;
-        echo.subtitle = `regarding: ${echo.breadcrumb.study_map.subject}`
+        echo.body = `${echo.breadcrumb.content}`;
+        echo.subtitle = `${echo.breadcrumb.study_map.subject}`
         return echo;
       } else if (echo.message && echo.message.link) {
-        echo.subtitle = `regarding: ${echo.message.breadcrumb.content}`
-        echo.body = <div>
-          <div>replied: {echo.message.body}</div>
-        </div>;
+        echo.subtitle = `${echo.message.breadcrumb.content}`
+        echo.body = `${echo.message.body}`;
         echo.quickreply = <MessageForm
           linkID={echo.message.link}
           studyMapID={echo.message.study_map._id}
@@ -109,13 +106,10 @@ export const Echoes = React.createClass({
           ))
 
         }} />
-
         return echo;
       } else if (echo.message && !echo.message.link) {
-        echo.subtitle = `regarding: ${echo.message.breadcrumb.content}`
-        echo.body = <div>
-          <div>replied: {echo.message.body}</div>
-        </div>;
+        echo.subtitle = `${echo.message.breadcrumb.content}`
+        echo.body = `${echo.message.body}`;
         echo.quickreply = <MessageForm
           studyMapID={echo.message.study_map._id}
           breadcrumbID={echo.message.breadcrumb._id}
@@ -132,7 +126,8 @@ export const Echoes = React.createClass({
 
         return echo;
       } else if (echo.link) {
-        echo.body = `link added: ${echo.link.title}`
+        echo.body = `${echo.link.title}`
+        echo.subtitle = `${echo.link.study_map.subject}`
         echo.linkuri = <a href={echo.link.uri} target="_blank">{echo.link.uri}</a>
         echo.quickreply = <BreadcrumbForm
           disabled={!this.props.isAuthenticated}
@@ -210,6 +205,7 @@ export const Echoes = React.createClass({
        />
        {this.parseEchoes(echoes).map(echo => {
          let avatarColor = '';
+         let subtitle = echo.subtitle || '';
          if(echo.studymap) {
            avatarColor = orange500;
          } else if(echo.link) {
@@ -222,10 +218,10 @@ export const Echoes = React.createClass({
          return (
            <Card key={echo._id}>
              <CardHeader
-               title={echo.body}
+               title={`${echo.body}`}
                avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
                titleStyle={{fontSize: '1.25em'}}
-               subtitle={echo.subtitle}
+               subtitle={`@${echo.user.displayName} ${subtitle}`}
                actAsExpander={true}
                showExpandableButton={false}/>
 

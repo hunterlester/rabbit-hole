@@ -1,6 +1,7 @@
 import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {blueGrey500, white} from 'material-ui/styles/colors';
 
 export default React.createClass({
   render: function() {
@@ -14,6 +15,8 @@ export default React.createClass({
 
         <RaisedButton
           label="Reply"
+          backgroundColor={blueGrey500}
+          labelColor={white}
           onTouchTap={() => {
             let body = this.refs.body.input.value;
             let messageObj = {

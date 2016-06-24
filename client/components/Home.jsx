@@ -89,7 +89,7 @@ export const Home = React.createClass({
                     this.handleClose()
                   }}
                 >
-                  <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
+                  <h4 style={{color: '#000000'}}>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
                 </Dialog>
                 <Toolbar style={{backgroundColor: '#FF9800'}}>
                   <ToolbarGroup firstChild={true}>

@@ -7,11 +7,16 @@ import {
 } from './user_login/login_action_factories';
 
 import {
-  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE
+  REGISTER_REQUEST, REGISTER_SUCCESS, REGISTER_FAILURE, SET_RESERVED_USERS
 } from './user_registration/actions';
 
 export default function auth(state = initialAuth, action) {
   switch (action.type) {
+    case SET_RESERVED_USERS:
+      return state.merge({
+        isFetching: false,
+        reserved_user_info: action.state.users
+      });
     case REGISTER_REQUEST:
       return state.merge({
         isFetching: true,
@@ -22,7 +27,8 @@ export default function auth(state = initialAuth, action) {
       return state.merge({
         isFetching: false,
         isAuthenticated: false,
-        errorMessage: ''
+        errorMessage: '',
+        user: action.user
       });
     case REGISTER_FAILURE:
       return state.merge({
@@ -75,6 +81,9 @@ export default function auth(state = initialAuth, action) {
       return state.merge({
         isFetching: true
       })
+
+    case SET_RESERVED_USERS:
+      return state.merge
   }
   return state;
 }

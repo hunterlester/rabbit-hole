@@ -23,3 +23,20 @@ export function postSubject(state, subject) {
     subjects: subjects.push(fromJS(subject))
   })
 }
+
+export function setUsers(state, users) {
+  return state.set('users', fromJS(users));
+}
+
+export function reserveNewUserInfo(state, user) {
+  const userObj = Object.assign({}, {
+    _id: user._id,
+    displayName: user.displayName,
+    username: user.username
+  });
+  const users = state.get('users');
+  return state.merge({
+    users: users.push(fromJS(userObj))
+  })
+
+}
