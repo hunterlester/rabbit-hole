@@ -205,6 +205,7 @@ export const Echoes = React.createClass({
        />
        {this.parseEchoes(echoes).map(echo => {
          let avatarColor = '';
+         console.log(echo)
          let subtitle = echo.subtitle || '';
          if(echo.studymap) {
            avatarColor = orange500;
@@ -232,13 +233,11 @@ export const Echoes = React.createClass({
               {echo.linkuri}
               {echo.quickreply}
              </CardText>
-             <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-              {echo.action}
-            </CardActions>
             <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
              {<FlatButton label={echo.user.displayName} onTouchTap={() => {
                this.props.dispatch(getProfile(echo.user._id))
              }}/>}
+             {echo.action}
            </CardActions>
            </Card>
          );
