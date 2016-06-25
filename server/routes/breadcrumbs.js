@@ -38,6 +38,10 @@ router.post('/studymap', auth, (req, res) => {
                       model: 'Subject'
                     }
                   ]
+                },
+                {
+                  path: 'messages',
+                  model: 'Message'
                 }
               ]
           },
@@ -80,6 +84,10 @@ router.post('/link', auth, (req, res) => {
                     {
                       path: 'keywords',
                       model: 'Subject'
+                    },
+                    {
+                      path: 'messages',
+                      model: 'Message'
                     }
                   ]
                 }

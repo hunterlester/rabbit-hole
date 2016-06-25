@@ -46,7 +46,23 @@ router.post('/', auth, (req, res) => {
                     ]
                   },
                   {
-                    path: 'breadcrumb'
+                    path: 'breadcrumb',
+                    populate: [
+                      {
+                        path: 'messages',
+                        model: 'Message',
+                        populate: [
+                          {
+                            path: 'user',
+                            model: 'User'
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    path: 'user',
+                    model: 'User'
                   }
                 ]
                 },

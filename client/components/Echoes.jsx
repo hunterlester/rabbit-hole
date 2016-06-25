@@ -54,6 +54,9 @@ export const Echoes = React.createClass({
           this.props.dispatch(postBreadcrumb(breadcrumbObj)) }} />;
         return echo;
       } else if (echo.breadcrumb && echo.breadcrumb.link) {
+        echo.messages = Object.values(echo.breadcrumb.messages).map(msg => {
+          return <div key={msg._id}>{msg.body} | {msg.user.displayName}</div>
+        });
         echo.quickreply = <MessageForm
           linkID={echo.breadcrumb.link}
           studyMapID={echo.breadcrumb.study_map._id}
@@ -62,7 +65,7 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
-        echo.action = <FlatButton label='go to breadcrumb' onTouchTap={() => {
+        echo.action = <FlatButton label='open' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.breadcrumb.study_map.user,
             `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb.link}/${echo.breadcrumb._id}`
@@ -72,6 +75,9 @@ export const Echoes = React.createClass({
         echo.subtitle = `${echo.breadcrumb.study_map.subject}`
         return echo;
       } else if (echo.breadcrumb && !echo.breadcrumb.link) {
+        echo.messages = Object.values(echo.breadcrumb.messages).map(msg => {
+          return <div key={msg._id}>{msg.body} | {msg.user.displayName}</div>
+        });
         echo.quickreply = <MessageForm
           studyMapID={echo.breadcrumb.study_map._id}
           breadcrumbID={echo.breadcrumb._id}
@@ -79,7 +85,7 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
-        echo.action = <FlatButton label='go to breadcrumb' onTouchTap={() => {
+        echo.action = <FlatButton label='open' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.breadcrumb.study_map.user,
             `/profile/study_map/${echo.breadcrumb.study_map._id}/${echo.breadcrumb._id}`
@@ -89,6 +95,9 @@ export const Echoes = React.createClass({
         echo.subtitle = `${echo.breadcrumb.study_map.subject}`
         return echo;
       } else if (echo.message && echo.message.link) {
+        echo.messages = Object.values(echo.message.breadcrumb.messages).map(msg => {
+          return <div key={msg._id}>{msg.body} | {msg.user.displayName}</div>
+        });
         echo.subtitle = `${echo.message.breadcrumb.content}`
         echo.body = `${echo.message.body}`;
         echo.quickreply = <MessageForm
@@ -99,7 +108,7 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
-        echo.action = <FlatButton label='go to message' onTouchTap={() => {
+        echo.action = <FlatButton label='open' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.message.study_map.user,
             `/profile/link/${echo.message.study_map._id}/${echo.message.link}/${echo.message.breadcrumb._id}/${echo.message._id}`
@@ -108,6 +117,9 @@ export const Echoes = React.createClass({
         }} />
         return echo;
       } else if (echo.message && !echo.message.link) {
+        echo.messages = Object.values(echo.message.breadcrumb.messages).map(msg => {
+          return <div key={msg._id}>{msg.body} | {msg.user.displayName}</div>
+        });
         echo.subtitle = `${echo.message.breadcrumb.content}`
         echo.body = `${echo.message.body}`;
         echo.quickreply = <MessageForm
@@ -117,7 +129,7 @@ export const Echoes = React.createClass({
           postMessage={ messageObj => {
           this.props.dispatch(postLinkMessage(messageObj))
         }}/>
-        echo.action = <FlatButton label='go to message' onTouchTap={() => {
+        echo.action = <FlatButton label='open' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.message.study_map.user,
             `/profile/study_map/${echo.message.study_map._id}/${echo.message.breadcrumb._id}/${echo.message._id}`
@@ -137,7 +149,7 @@ export const Echoes = React.createClass({
           postLinkBreadcrumb={ breadcrumbObj => {
           this.props.dispatch(postLinkBreadcrumb(breadcrumbObj))
         }} />;
-        echo.action = <FlatButton label='go to link post' onTouchTap={() => {
+        echo.action = <FlatButton label='open' onTouchTap={() => {
           this.props.dispatch(getProfile(
             echo.user._id,
             `/profile/link/${echo.link.study_map._id}/${echo.link._id}`
@@ -221,7 +233,7 @@ export const Echoes = React.createClass({
                title={`${echo.body}`}
                avatar={<Avatar size={30} backgroundColor={avatarColor}/>}
                titleStyle={{fontSize: '1.25em'}}
-               subtitle={`@${echo.user.displayName} ${subtitle}`}
+               subtitle={`${subtitle} | ${echo.user.displayName}`}
                actAsExpander={true}
                showExpandableButton={false}/>
 
@@ -230,15 +242,14 @@ export const Echoes = React.createClass({
                 {moment(echo.date).fromNow()}
               </div>
               {echo.linkuri}
+              {echo.messages}
               {echo.quickreply}
              </CardText>
-             <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-              {echo.action}
-            </CardActions>
             <CardActions expandable={true} style={{backgroundColor: '#ECEFF1'}}>
              {<FlatButton label={echo.user.displayName} onTouchTap={() => {
                this.props.dispatch(getProfile(echo.user._id))
              }}/>}
+             {echo.action}
            </CardActions>
            </Card>
          );

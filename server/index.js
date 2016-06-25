@@ -74,6 +74,16 @@ let echoPromise = new Promise((fulfill, reject) => {
                   model: 'Subject'
                 }
               ]
+            },
+            {
+              path: 'messages',
+              model: 'Message',
+              populate: [
+                {
+                  path: 'user',
+                  model: 'User'
+                }
+              ]
             }
           ]
         },
@@ -98,7 +108,19 @@ let echoPromise = new Promise((fulfill, reject) => {
               path: 'user'
             },
             {
-              path: 'breadcrumb'
+              path: 'breadcrumb',
+              populate: [
+                {
+                  path: 'messages',
+                  model: 'Message',
+                  populate: [
+                    {
+                      path: 'user',
+                      model: 'User'
+                    }
+                  ]
+                }
+              ]
             },
             {
               path: 'study_map',
