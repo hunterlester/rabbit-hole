@@ -6,7 +6,7 @@ import Login from './Login';
 
 import {Tabs, Tab} from 'material-ui/Tabs';
 
-import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -31,7 +31,6 @@ const styles = {
 export const Home = React.createClass({
   getInitialState() {
     return {
-      open: false,
       value: this.props.location.pathname
     };
   },
@@ -50,16 +49,6 @@ export const Home = React.createClass({
   handleChange: function(value) {
     this.setState({
       value: value
-    })
-  },
-  handleClose: function() {
-    this.setState({
-      open: false
-    })
-  },
-  handleOpen: function() {
-    this.setState({
-      open: true
     })
   },
   render: function () {
@@ -85,9 +74,7 @@ export const Home = React.createClass({
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
                       iconButtonElement={
-                        <IconButton touch={true}>
-                          <MoreVertIcon />
-                        </IconButton>
+                        <FlatButton labelStyle={{color: '#000000'}} hoverColor='#FF9800' label={user.displayName}/>
                       }
                     >
                       <MenuItem primaryText="Profile & Settings" onTouchTap={() => {
@@ -100,8 +87,7 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle text="Learnimus" />
-                    <ToolbarTitle text={user.displayName} />
+                    <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus" />
                   </ToolbarGroup>
                 </Toolbar>
 

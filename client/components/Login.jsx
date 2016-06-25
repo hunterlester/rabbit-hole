@@ -44,7 +44,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: blueGrey900, fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
+          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus. Community for avid learners."/>
           <IconButton touch={true} onTouchTap={() => {
             this.handleOpen();
           }}>
