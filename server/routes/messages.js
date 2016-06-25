@@ -50,9 +50,19 @@ router.post('/', auth, (req, res) => {
                     populate: [
                       {
                         path: 'messages',
-                        model: 'Message'
+                        model: 'Message',
+                        populate: [
+                          {
+                            path: 'user',
+                            model: 'User'
+                          }
+                        ]
                       }
                     ]
+                  },
+                  {
+                    path: 'user',
+                    model: 'User'
                   }
                 ]
                 },

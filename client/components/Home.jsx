@@ -12,7 +12,6 @@ import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import Info from 'material-ui/svg-icons/action/info';
-import Dialog from 'material-ui/Dialog';
 import Snackbar from 'material-ui/Snackbar';
 import { red500 } from 'material-ui/styles/colors';
 
@@ -82,15 +81,6 @@ export const Home = React.createClass({
           <div>
             <div className='container-fluid'>
               <div className="row">
-                <Dialog
-                  modal={false}
-                  open={this.state.open}
-                  onRequestClose={() => {
-                    this.handleClose()
-                  }}
-                >
-                  <h4 style={{color: '#000000'}}>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
-                </Dialog>
                 <Toolbar style={{backgroundColor: '#FF9800'}}>
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
@@ -110,12 +100,8 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle style={{color: '#263238'}} text="Learnimus" />
-                    <IconButton touch={true} onTouchTap={() => {
-                      this.handleOpen();
-                    }}>
-                      <Info />
-                    </IconButton>
+                    <ToolbarTitle text="Learnimus" />
+                    <ToolbarTitle text={user.displayName} />
                   </ToolbarGroup>
                 </Toolbar>
 
