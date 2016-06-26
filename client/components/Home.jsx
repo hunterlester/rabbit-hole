@@ -13,7 +13,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import Info from 'material-ui/svg-icons/action/info';
 import Snackbar from 'material-ui/Snackbar';
-import { red500 } from 'material-ui/styles/colors';
+import { red500, green500 } from 'material-ui/styles/colors';
 
 
 import { loginUser, logoutUser } from '../state/reducer_components/auth/user_login/login_actions_core';
@@ -35,7 +35,7 @@ export const Home = React.createClass({
     };
   },
   handleSnackbar: function() {
-    if(this.props.errorMessage) {
+    if(this.props.errorMessage || this.props.confirmMessage) {
       return true;
     } else {
       return false;
@@ -52,13 +52,19 @@ export const Home = React.createClass({
     })
   },
   render: function () {
-    const { dispatch, isAuthenticated, errorMessage, user, isFetching } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user, isFetching, confirmMessage } = this.props;
+    let snackbarColor;
+    if(errorMessage) {
+      snackbarColor = red500;
+    } else if(confirmMessage) {
+      snackbarColor = green500;
+    }
     return (
       <div>
         <Snackbar
-          bodyStyle={{backgroundColor: red500}}
+          bodyStyle={{backgroundColor: snackbarColor}}
           open={this.handleSnackbar()}
-          message={errorMessage || ''}
+          message={errorMessage || confirmMessage || ''}
           autoHideDuration={4000}
         />
 
@@ -120,11 +126,17 @@ export const Home = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user, isFetching, errorMessage } = state.auth.toJS();
+  const { message } = state.notify.toJS();
+  let confirmMessage;
+  if(message) {
+    confirmMessage = 'A confirmation has been sent to you email address';
+  }
   return {
     isAuthenticated,
     user,
     isFetching,
-    errorMessage
+    errorMessage,
+    confirmMessage: confirmMessage
   };
 
 }
