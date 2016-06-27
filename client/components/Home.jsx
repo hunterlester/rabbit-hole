@@ -69,7 +69,7 @@ export const Home = React.createClass({
         />
 
         {!isAuthenticated &&
-          <Login onLoginClick={ creds => dispatch(loginUser(creds)) }/>
+          <Login location={this.props.location.pathname} dispatch={dispatch} onLoginClick={ creds => dispatch(loginUser(creds)) }/>
         }
 
         {isAuthenticated &&
@@ -129,7 +129,11 @@ function mapStateToProps(state) {
   const { message } = state.notify.toJS();
   let confirmMessage;
   if(message) {
-    confirmMessage = 'A confirmation has been sent to you email address';
+    if(typeof message != 'string') {
+      confirmMessage = 'A confirmation has been sent to your email address';
+    } else {
+      confirmMessage = message;
+    }
   }
   return {
     isAuthenticated,

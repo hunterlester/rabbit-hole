@@ -32,7 +32,7 @@ router.post('/register', (req, res, next) => {
     return res.json({
       username: user.username,
       _id: user._id,
-      token: user.generateJWT(),
+      token: user.generateTempJWT(),
       study_maps: user.study_maps,
       displayName: user.displayName,
       points: user.points,
@@ -49,7 +49,9 @@ router.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {return next(err)}
 
-
+    if(!user.emailConfirmed) {
+      return res.status(400).json({message: 'Please first confirm your email address'});
+    }
     if (user) {
       return res.json({
         username: user.username,
@@ -61,7 +63,7 @@ router.post('/login', (req, res, next) => {
         subscribed_subjects: user.subscribed_subjects
       });
     } else {
-      return res. status(401).json(info);
+      return res.status(401).json(info);
     }
   })(req, res, next);
 });
@@ -126,6 +128,14 @@ router.put('/:userId', auth, (req, res) => {
   req.user.update({$set: req.body}, (err) => {
     if (err) return res.status(400).json(err);
     res.sendStatus(200);
+  })
+});
+
+router.put('/confirm/:userId', (req, res) => {
+  req.user.emailConfirmed = true;
+  req.user.save((err, user) => {
+    if (err) return res.status(400).json(err);
+    res.json(user);
   })
 });
 

@@ -19,6 +19,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import {blue500, white, green500, orange500, blueGrey900} from 'material-ui/styles/colors';
 
+import { confirmEmail } from '../state/reducer_components/notifications/core';
+
 
 export default React.createClass({
   getInitialState() {
@@ -35,6 +37,11 @@ export default React.createClass({
     this.setState({
       open: true
     })
+  },
+  componentDidMount() {
+    if(this.props.location.split('/')[1] == 'confirm') {
+      this.props.dispatch(confirmEmail(this.props.location.split('/')[2]));
+    }
   },
   render: function() {
     const listItemStyles = {

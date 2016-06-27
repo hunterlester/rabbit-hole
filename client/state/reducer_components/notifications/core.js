@@ -1,7 +1,34 @@
 import fetch from 'isomorphic-fetch';
-import { requestConfirmation, failuerConfirmation, receiveConfirmation } from './actions';
+import {hashHistory} from 'react-router';
 
-export function confirmEmail(user) {
+import {
+  requestConfirmation, receiveConfirmation, failureConfirmation,
+  requestConfirmationEmail, receiveConfirmationEmail, failureConfirmationEmail
+} from './actions';
+
+export function confirmEmail(userID) {
+  let config = {
+    method: 'PUT'
+  };
+
+  return dispatch => {
+    dispatch(requestConfirmation(userID));
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/confirm/${userID}`, config)
+    .then(response =>
+      response.json().then(json => ({json, response}))
+    ).then(({json, response}) => {
+      if(!response.ok) {
+        dispatch(failureConfirmation(json));
+        return Promise.reject(json);
+      } else {
+        dispatch(receiveConfirmation(json));
+        hashHistory.push('/');
+      }
+    }).catch(err => console.log(err))
+  }
+}
+
+export function sendConfirmEmail(user) {
   let config = {
     method: 'GET',
     headers: {
@@ -11,16 +38,16 @@ export function confirmEmail(user) {
   };
 
   return dispatch => {
-    dispatch(requestConfirmation(user));
-    return fetch(`${location.protocol}//${location.hostname}:${location.port}/notify/confirm/${user.username}`, config)
+    dispatch(requestConfirmationEmail(user));
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}/notify/confirm/${user.username}/${user._id}`, config)
     .then(response =>
       response.json().then(msg => ({msg, response}))
     ).then(({msg, response}) => {
       if (!response.ok) {
-        dispatch(failuerConfirmation(msg))
+        dispatch(failureConfirmationEmail(msg))
         return Promise.reject(msg);
       } else {
-        dispatch(receiveConfirmation(msg))
+        dispatch(receiveConfirmationEmail(msg));
       }
     }).catch(err => console.log(err))
   }

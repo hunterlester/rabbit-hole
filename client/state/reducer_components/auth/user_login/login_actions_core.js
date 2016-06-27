@@ -1,5 +1,6 @@
 import { requestLogin, loginError, receiveLogin, requestLogout, receiveLogout } from './login_action_factories';
 import { setStudyMapsAction } from '../../study_maps/actions';
+import { clearNotify } from '../../notifications/actions';
 import { hashHistory } from 'react-router';
 import { fromJS } from 'immutable';
 import fetch from 'isomorphic-fetch';
@@ -28,7 +29,7 @@ export function loginUser(creds) {
 
   return dispatch => {
     dispatch(requestLogin(creds));
-
+    dispatch(clearNotify());
     return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/login`, config)
       .then(response =>
         response.json().then(user => ({user, response}))

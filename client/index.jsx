@@ -55,6 +55,7 @@ socket.on('state', state => {
 const routes = <Route component={App}>
   <Route component={ConnectedHome}>
     <Route path="/" component={ConnectedStudyMaps} />
+      <Route path="/confirm/:userId" component={ConnectedStudyMaps} />
     <Route path="/about" component={About} />
     <Route path="/echoes" component={ConnectedEchoes} />
     <Route path="/studymapform" component={ConnectedStudyMapForm} />
