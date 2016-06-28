@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     givenName: String,
     middleName: String
   },
-  username: String,
+  username: {type: String, lowercase: true, unique: true, trim: true},
   emailConfirmed: {type: Boolean, default: false},
   salt: String,
   hash: String,

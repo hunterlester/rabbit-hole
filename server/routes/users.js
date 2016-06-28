@@ -3,6 +3,16 @@ const router = express.Router();
 import passport from 'passport';
 import mongoose from 'mongoose';
 const User = mongoose.model('User');
+import crypto from 'crypto';
+const algorithm = 'aes-256-ctr';
+const password = process.env.PASSWORD;
+
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -119,6 +129,18 @@ router.param('userId', (req, res, next, userId) => {
     next();
   });
 });
+
+router.put('/reset/', (req, res) => {
+  const email = decrypt(req.body.username)
+  User.findOne({username: email}, (err, user) => {
+    if(err) return res.sendStatus(404);
+    user.setPassword(req.body.password);
+    user.save((err, user) => {
+      if(err) return res.status(500).json(err);
+      res.json(user);
+    })
+  })
+})
 
 router.get('/:userId', auth, (req, res) => {
   res.json(req.user);
