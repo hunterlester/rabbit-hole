@@ -19,11 +19,15 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import {Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import {blue500, white, green500, orange500, blueGrey900} from 'material-ui/styles/colors';
 
+import { confirmEmail, sendPasswordResetEmail, resetPassword } from '../state/reducer_components/notifications/core';
+
 
 export default React.createClass({
   getInitialState() {
     return {
-      open: false
+      open: false,
+      resetForm: false,
+      passwordForm: false
     };
   },
   handleClose: function() {
@@ -36,6 +40,15 @@ export default React.createClass({
       open: true
     })
   },
+  componentDidMount() {
+    if(this.props.location.split('/')[1] == 'confirm') {
+      this.props.dispatch(confirmEmail(this.props.location.split('/')[2]));
+    } else if(this.props.location.split('/')[1] == 'reset') {
+      this.setState({
+        passwordForm: true
+      });
+    }
+  },
   render: function() {
     const listItemStyles = {
       color: white
@@ -44,7 +57,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: blueGrey900, fontSize: '18px'}} text="Learnimus. Community for avid learners."/>
+          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus. Community for avid learners."/>
           <IconButton touch={true} onTouchTap={() => {
             this.handleOpen();
           }}>
@@ -115,36 +128,92 @@ export default React.createClass({
           <div className='container'>
             <div class='row'>
               <div class="col-xs-12">
-                <TextField hintText="Email"
-                           fullWidth={true}
-                           ref='username'
-                           floatingLabelText="Email" />
+                {!this.state.resetForm && !this.state.passwordForm &&
+                  <div>
+                    <TextField hintText="Email"
+                               fullWidth={true}
+                               ref='username'
+                               floatingLabelText="Email" />
 
-                <TextField hintText="Password"
-                           fullWidth={true}
-                           type='password'
-                           ref='password'
-                           floatingLabelText="Password" />
+                    <TextField hintText="Password"
+                               fullWidth={true}
+                               type='password'
+                               ref='password'
+                               floatingLabelText="Password" />
 
-                <RaisedButton label="Login"
-                              backgroundColor={blue500}
-                              labelColor={white}
+                    <RaisedButton label="Login"
+                                  backgroundColor={blue500}
+                                  labelColor={white}
+                                  onTouchTap={() => {
+                                    let loginObj = {};
+
+                                    Object.keys(this.refs).map((key) => {
+                                      loginObj = Object.assign(loginObj, {[key]: this.refs[key].input.value});
+                                    });
+
+                                    this.props.onLoginClick(loginObj);
+
+                                  }}/>
+
+                    <FlatButton label="Register"
+                                primary={true}
+                                onTouchTap={() => {
+                                  hashHistory.push('/register');
+                                }} />
+
+                    <a style={{display: 'block'}} onTouchTap={() => {
+                      this.setState({
+                        resetForm: true
+                      })
+                    }}>Reset Password</a>
+                  </div>
+                }
+
+                {this.state.passwordForm &&
+                  <div>
+                    <TextField hintText="Choose a strong password"
+                               fullWidth={true}
+                               type='password'
+                               ref='newpassword'
+                               floatingLabelText="New password" />
+
+                    <RaisedButton label="Save"
+                                  backgroundColor={blue500}
+                                  labelColor={white}
+                                  onTouchTap={() => {
+                                    const encryptedEmail = this.props.location.split('/')[2];
+                                    const password = this.refs.newpassword.input.value;
+                                    this.props.dispatch(resetPassword(encryptedEmail, password));
+                                    this.setState({
+                                      passwordForm: false
+                                    })
+                                  }}/>
+                  </div>
+                }
+
+                {this.state.resetForm &&
+                  <div>
+                  <TextField hintText="Email"
+                             fullWidth={true}
+                             ref='email'
+                             floatingLabelText="Email" />
+                  <RaisedButton label="Reset"
+                                backgroundColor={blue500}
+                                labelColor={white}
+                                onTouchTap={() => {
+                                  this.props.dispatch(sendPasswordResetEmail(this.refs.email.input.value))
+                                  this.setState({
+                                    resetForm: false
+                                  })
+                                }}/>
+                  <FlatButton label="Cancel"
                               onTouchTap={() => {
-                                let loginObj = {};
-
-                                Object.keys(this.refs).map((key) => {
-                                  loginObj = Object.assign(loginObj, {[key]: this.refs[key].input.value});
-                                });
-
-                                this.props.onLoginClick(loginObj);
-
-                              }}/>
-
-                <FlatButton label="Register"
-                            primary={true}
-                            onTouchTap={() => {
-                              hashHistory.push('/register');
-                            }} />
+                                this.setState({
+                                  resetForm: false
+                                })
+                              }} />
+                  </div>
+                }
 
               </div>
             </div>

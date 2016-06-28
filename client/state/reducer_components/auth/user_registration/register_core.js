@@ -1,6 +1,7 @@
 import {hashHistory} from 'react-router';
 import {requestRegister, registerError, receiveRegister} from './actions';
-import fetch from 'isomorphic-fetch'
+import { sendConfirmEmail } from '../../notifications/core';
+import fetch from 'isomorphic-fetch';
 
 export function registerUser(creds) {
 
@@ -25,6 +26,7 @@ export function registerUser(creds) {
           dispatch(registerError(user.message));
           return Promise.reject(user);
         } else {
+          dispatch(sendConfirmEmail(user));
           dispatch(receiveRegister(user));
           hashHistory.push('/');
         }

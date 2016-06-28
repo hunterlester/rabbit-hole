@@ -12,7 +12,8 @@ const UserSchema = new mongoose.Schema({
     givenName: String,
     middleName: String
   },
-  username: String,
+  username: {type: String, lowercase: true, unique: true, trim: true},
+  emailConfirmed: {type: Boolean, default: false},
   salt: String,
   hash: String,
   subscribed_subjects: [{type: mongoose.Schema.Types.ObjectId, ref: 'Subject'}],
@@ -32,6 +33,18 @@ UserSchema.methods.validPassword = function (password) {
 UserSchema.methods.setPassword = function(password) {
   this.salt = crypto.randomBytes(16).toString('hex');
   this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64).toString('hex');
+};
+
+UserSchema.methods.generateTempJWT = function () {
+  const today = new Date;
+  const exp = new Date(today);
+  exp.setHours(today.getHours() + 1);
+
+  return jwt.sign({
+    _id: this._id,
+    username: this.username,
+    exp: parseInt(exp.getTime() / 1000)
+  }, process.env.JWT_TOKEN);
 };
 
 UserSchema.methods.generateJWT = function () {

@@ -6,14 +6,14 @@ import Login from './Login';
 
 import {Tabs, Tab} from 'material-ui/Tabs';
 
-import IconButton from 'material-ui/IconButton';
+import FlatButton from 'material-ui/FlatButton';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import { Toolbar, ToolbarGroup, ToolbarTitle } from 'material-ui/Toolbar';
 import Info from 'material-ui/svg-icons/action/info';
 import Snackbar from 'material-ui/Snackbar';
-import { red500 } from 'material-ui/styles/colors';
+import { red500, green500 } from 'material-ui/styles/colors';
 
 
 import { loginUser, logoutUser } from '../state/reducer_components/auth/user_login/login_actions_core';
@@ -31,12 +31,11 @@ const styles = {
 export const Home = React.createClass({
   getInitialState() {
     return {
-      open: false,
       value: this.props.location.pathname
     };
   },
   handleSnackbar: function() {
-    if(this.props.errorMessage) {
+    if(this.props.errorMessage || this.props.confirmMessage) {
       return true;
     } else {
       return false;
@@ -52,29 +51,25 @@ export const Home = React.createClass({
       value: value
     })
   },
-  handleClose: function() {
-    this.setState({
-      open: false
-    })
-  },
-  handleOpen: function() {
-    this.setState({
-      open: true
-    })
-  },
   render: function () {
-    const { dispatch, isAuthenticated, errorMessage, user, isFetching } = this.props;
+    const { dispatch, isAuthenticated, errorMessage, user, isFetching, confirmMessage } = this.props;
+    let snackbarColor;
+    if(errorMessage) {
+      snackbarColor = red500;
+    } else if(confirmMessage) {
+      snackbarColor = green500;
+    }
     return (
       <div>
         <Snackbar
-          bodyStyle={{backgroundColor: red500}}
+          bodyStyle={{backgroundColor: snackbarColor}}
           open={this.handleSnackbar()}
-          message={errorMessage || ''}
+          message={errorMessage || confirmMessage || ''}
           autoHideDuration={4000}
         />
 
         {!isAuthenticated &&
-          <Login onLoginClick={ creds => dispatch(loginUser(creds)) }/>
+          <Login location={this.props.location.pathname} dispatch={dispatch} onLoginClick={ creds => dispatch(loginUser(creds)) }/>
         }
 
         {isAuthenticated &&
@@ -85,9 +80,7 @@ export const Home = React.createClass({
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
                       iconButtonElement={
-                        <IconButton touch={true}>
-                          <MoreVertIcon />
-                        </IconButton>
+                        <FlatButton labelStyle={{color: '#000000'}} hoverColor='#FF9800' label={user.displayName}/>
                       }
                     >
                       <MenuItem primaryText="Profile & Settings" onTouchTap={() => {
@@ -100,8 +93,7 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle text="Learnimus" />
-                    <ToolbarTitle text={user.displayName} />
+                    <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus" />
                   </ToolbarGroup>
                 </Toolbar>
 
@@ -134,11 +126,21 @@ export const Home = React.createClass({
 
 function mapStateToProps(state) {
   const { isAuthenticated, user, isFetching, errorMessage } = state.auth.toJS();
+  const { message } = state.notify.toJS();
+  let confirmMessage;
+  if(message) {
+    if(typeof message != 'string') {
+      confirmMessage = 'A confirmation has been sent to your email address';
+    } else {
+      confirmMessage = message;
+    }
+  }
   return {
     isAuthenticated,
     user,
     isFetching,
-    errorMessage
+    errorMessage,
+    confirmMessage: confirmMessage
   };
 
 }

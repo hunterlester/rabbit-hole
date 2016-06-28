@@ -3,6 +3,16 @@ const router = express.Router();
 import passport from 'passport';
 import mongoose from 'mongoose';
 const User = mongoose.model('User');
+import crypto from 'crypto';
+const algorithm = 'aes-256-ctr';
+const password = process.env.PASSWORD;
+
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
 
 import jwt from 'express-jwt';
 const auth = jwt({secret: process.env.JWT_TOKEN, userProperty: 'payload'});
@@ -32,7 +42,7 @@ router.post('/register', (req, res, next) => {
     return res.json({
       username: user.username,
       _id: user._id,
-      token: user.generateJWT(),
+      token: user.generateTempJWT(),
       study_maps: user.study_maps,
       displayName: user.displayName,
       points: user.points,
@@ -48,8 +58,9 @@ router.post('/login', (req, res, next) => {
 
   passport.authenticate('local', (err, user, info) => {
     if (err) {return next(err)}
-
-
+    if(!user.emailConfirmed) {
+      return res.status(400).json({message: 'Please first confirm your email address'});
+    }
     if (user) {
       return res.json({
         username: user.username,
@@ -61,7 +72,7 @@ router.post('/login', (req, res, next) => {
         subscribed_subjects: user.subscribed_subjects
       });
     } else {
-      return res. status(401).json(info);
+      return res.status(401).json(info);
     }
   })(req, res, next);
 });
@@ -118,6 +129,18 @@ router.param('userId', (req, res, next, userId) => {
   });
 });
 
+router.put('/reset', (req, res) => {
+  const email = decrypt(req.body.username)
+  User.findOne({username: email}, (err, user) => {
+    if(err) return res.sendStatus(404);
+    user.setPassword(req.body.password);
+    user.save((err, user) => {
+      if(err) return res.status(500).json(err);
+      res.json({message: 'Sign in with new password'});
+    })
+  })
+})
+
 router.get('/:userId', auth, (req, res) => {
   res.json(req.user);
 });
@@ -126,6 +149,14 @@ router.put('/:userId', auth, (req, res) => {
   req.user.update({$set: req.body}, (err) => {
     if (err) return res.status(400).json(err);
     res.sendStatus(200);
+  })
+});
+
+router.put('/confirm/:userId', (req, res) => {
+  req.user.emailConfirmed = true;
+  req.user.save((err, user) => {
+    if (err) return res.status(400).json(err);
+    res.json({message: 'Email confirmed. Welcome!'});
   })
 });
 
