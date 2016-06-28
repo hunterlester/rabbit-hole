@@ -36,7 +36,7 @@ router.get('/reset/:email', (req, res) => {
     from: `Learnimus <${sender}>`,
     to: req.params.email,
     subject: 'Password Reset',
-    html: `<h5>Have you requested to reset your password?</h5> <a href="http://localhost:3000/#/reset/${encryptedEmail}" target="_blank">Click to confirm</a> <br><br><br> <h5>Ignore this email</h5>`
+    html: `<h5>Have you requested to reset your password?</h5> <a href="http://localhost:3000/#/reset/${encryptedEmail}" target="_blank">Click to confirm</a> <br><br><br> <h5>Otherwise, ignore this email</h5>`
   };
 
   mailgun.messages().send(data, function(err, body) {
