@@ -3,7 +3,9 @@ import {hashHistory} from 'react-router';
 
 import {
   requestConfirmation, receiveConfirmation, failureConfirmation,
-  requestConfirmationEmail, receiveConfirmationEmail, failureConfirmationEmail
+  requestConfirmationEmail, receiveConfirmationEmail, failureConfirmationEmail,
+  requestResetEmail, receiveResetEmail, failureResetEmail,
+  requestReset, receiveReset, failureReset
 } from './actions';
 
 export function sendPasswordResetEmail(emailAddress) {
@@ -12,13 +14,16 @@ export function sendPasswordResetEmail(emailAddress) {
   };
 
   return dispatch => {
+    dispatch(requestResetEmail(emailAddress));
     return fetch(`${location.protocol}//${location.hostname}:${location.port}/notify/reset/${emailAddress}`, config)
     .then(response =>
       response.json().then(msg => ({msg, response}))
     ).then(({msg, response}) => {
       if (!response.ok) {
+        dispatch(failureResetEmail(msg));
         return Promise.reject(msg);
       } else {
+        dispatch(receiveResetEmail(msg));
       }
     }).catch(err => console.log(err))
   }
@@ -34,13 +39,16 @@ export function resetPassword(encryptedEmail, newPassword) {
   }
 
   return dispatch => {
+    dispatch(requestReset())
     return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/reset/`, config)
     .then(response =>
       response.json().then(json => ({json, response}))
     ).then(({json, response}) => {
       if(!response.ok) {
+        dispatch(failureReset(json));
         return Promise.reject(json);
       } else {
+        dispatch(receiveReset(json))
         hashHistory.push('/');
       }
     }).catch(err => console.log(err))

@@ -44,7 +44,7 @@ router.get('/reset/:email', (req, res) => {
       console.log("error: ", err);
       res.status(500).json(err);
     } else {
-      res.json(body);
+      res.json({message: 'Confirmation to reset password sent'});
     }
   });
 })
@@ -64,7 +64,7 @@ router.get('/confirm/:email/:userId', auth, (req, res) => {
       console.log("error: ", err);
       res.status(500).json(err);
     } else {
-      res.json(body);
+      res.json({message: 'Verification sent to your address'});
     }
   });
 })

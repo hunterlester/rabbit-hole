@@ -58,7 +58,6 @@ router.post('/login', (req, res, next) => {
 
   passport.authenticate('local', (err, user, info) => {
     if (err) {return next(err)}
-    console.log(user);
     if(!user.emailConfirmed) {
       return res.status(400).json({message: 'Please first confirm your email address'});
     }
@@ -137,7 +136,7 @@ router.put('/reset', (req, res) => {
     user.setPassword(req.body.password);
     user.save((err, user) => {
       if(err) return res.status(500).json(err);
-      res.json(user);
+      res.json({message: 'Sign in with new password'});
     })
   })
 })
@@ -157,7 +156,7 @@ router.put('/confirm/:userId', (req, res) => {
   req.user.emailConfirmed = true;
   req.user.save((err, user) => {
     if (err) return res.status(400).json(err);
-    res.json(user);
+    res.json({message: 'Email confirmed. Welcome!'});
   })
 });
 

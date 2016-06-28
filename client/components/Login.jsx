@@ -44,7 +44,6 @@ export default React.createClass({
     if(this.props.location.split('/')[1] == 'confirm') {
       this.props.dispatch(confirmEmail(this.props.location.split('/')[2]));
     } else if(this.props.location.split('/')[1] == 'reset') {
-      console.log(this.props.location.split('/'));
       this.setState({
         passwordForm: true
       });
@@ -178,14 +177,16 @@ export default React.createClass({
                                ref='newpassword'
                                floatingLabelText="New password" />
 
-                    <RaisedButton label="Reset"
+                    <RaisedButton label="Save"
                                   backgroundColor={blue500}
                                   labelColor={white}
                                   onTouchTap={() => {
                                     const encryptedEmail = this.props.location.split('/')[2];
                                     const password = this.refs.newpassword.input.value;
-
                                     this.props.dispatch(resetPassword(encryptedEmail, password));
+                                    this.setState({
+                                      passwordForm: false
+                                    })
                                   }}/>
                   </div>
                 }
@@ -196,11 +197,14 @@ export default React.createClass({
                              fullWidth={true}
                              ref='email'
                              floatingLabelText="Email" />
-                  <RaisedButton label="Send Confirmation"
+                  <RaisedButton label="Reset"
                                 backgroundColor={blue500}
                                 labelColor={white}
                                 onTouchTap={() => {
                                   this.props.dispatch(sendPasswordResetEmail(this.refs.email.input.value))
+                                  this.setState({
+                                    resetForm: false
+                                  })
                                 }}/>
                   <FlatButton label="Cancel"
                               onTouchTap={() => {
