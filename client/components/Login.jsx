@@ -129,7 +129,7 @@ export default React.createClass({
           <div className='container'>
             <div class='row'>
               <div class="col-xs-12">
-                {!this.state.resetForm &&
+                {!this.state.resetForm && !this.state.passwordForm &&
                   <div>
                     <TextField hintText="Email"
                                fullWidth={true}
@@ -182,7 +182,10 @@ export default React.createClass({
                                   backgroundColor={blue500}
                                   labelColor={white}
                                   onTouchTap={() => {
-                                    this.props.dispatch(resetPassword(this.props.location.split('/')[2]), this.refs.newpassword.input.value);
+                                    const encryptedEmail = this.props.location.split('/')[2];
+                                    const password = this.refs.newpassword.input.value;
+
+                                    this.props.dispatch(resetPassword(encryptedEmail, password));
                                   }}/>
                   </div>
                 }
@@ -193,7 +196,7 @@ export default React.createClass({
                              fullWidth={true}
                              ref='email'
                              floatingLabelText="Email" />
-                  <RaisedButton label="Reset"
+                  <RaisedButton label="Send Confirmation"
                                 backgroundColor={blue500}
                                 labelColor={white}
                                 onTouchTap={() => {

@@ -58,7 +58,7 @@ router.post('/login', (req, res, next) => {
 
   passport.authenticate('local', (err, user, info) => {
     if (err) {return next(err)}
-
+    console.log(user);
     if(!user.emailConfirmed) {
       return res.status(400).json({message: 'Please first confirm your email address'});
     }
@@ -130,7 +130,7 @@ router.param('userId', (req, res, next, userId) => {
   });
 });
 
-router.put('/reset/', (req, res) => {
+router.put('/reset', (req, res) => {
   const email = decrypt(req.body.username)
   User.findOne({username: email}, (err, user) => {
     if(err) return res.sendStatus(404);

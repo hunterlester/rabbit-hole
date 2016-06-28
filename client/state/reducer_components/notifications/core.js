@@ -34,7 +34,7 @@ export function resetPassword(encryptedEmail, newPassword) {
   }
 
   return dispatch => {
-    return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/reset/`)
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}/users/reset/`, config)
     .then(response =>
       response.json().then(json => ({json, response}))
     ).then(({json, response}) => {
