@@ -87,7 +87,7 @@ export default React.createClass({
                   <div class='col-xs-12'>
                     <Card style={{marginTop: '15px'}}>
                       <CardHeader
-                        title="How it works"
+                        title="HOW IT WORKS"
                         titleColor={white}
                         style={{backgroundColor: blue500}}
                         actAsExpander={true} />
@@ -95,11 +95,10 @@ export default React.createClass({
                       <CardText expandable={true} style={{backgroundColor: green500}}>
                         <List style={{backgroundColor: green500}}>
                           <ListItem style={listItemStyles} primaryText="Organize your subjects of study" />
-                          <ListItem style={listItemStyles} primaryText="Collect resource links" />
-                          <ListItem style={listItemStyles} primaryText="Pose questions and record thoughts" />
-                          <ListItem style={listItemStyles} primaryText="Your activities are echoed on community feed" />
-                          <ListItem style={listItemStyles} primaryText="Discover more helpful resources" />
-                          <ListItem style={listItemStyles} primaryText="Let community focus your path, so you don't become lost in information" />
+                          <ListItem style={listItemStyles} primaryText="Subscribe to subjects that you care about" />
+                          <ListItem style={listItemStyles} primaryText="Community members and mentors help you focus" />
+                          <ListItem style={listItemStyles} primaryText="Community members tip each other with micropayments" />
+
                         </List>
 
                         <h4 style={{color: white}}>Give back:</h4>
