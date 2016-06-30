@@ -38,7 +38,7 @@ export function subjectSubscription(userID, arrayBody) {
 
   return dispatch => {
     dispatch(subscription_request());
-    return fetch(`${location.protocol}//${location.hostname}:${location.port}/${endpoint}/${userID}`, config)
+    return fetch(`${location.protocol}//${location.hostname}:${location.port}${endpoint}${userID}`, config)
       .then(response =>
         response.json().then(subjectsArray => ({subjectsArray, response}))
       ).then(({subjectsArray, response}) => {
