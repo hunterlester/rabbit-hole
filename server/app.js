@@ -21,8 +21,14 @@ if(process.env.NODE_ENV == 'development') {
 }
 
 
-// mlab uri
-mongoose.connect(process.env.MONGO_URI);
+if(process.env.NODE_ENV == 'development') {
+  mongoose.connect(process.env.MONGO_URI);
+}
+
+if(process.env.NOD_ENV == 'production') {
+  mongoose.connect('mongodb://10.7.0.3:27107/data/db');
+}
+
 
 // Docker Machine host ip
 // mongoose.connect('mongodb://192.168.99.100:27017/data/db');
