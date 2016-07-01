@@ -77,9 +77,9 @@ export const StudyMap = React.createClass({
   },
   getMessages: function(breadcrumb) {
     if(breadcrumb.messages) {
-      return Object.keys(breadcrumb.messages).map(key => {
+      return Object.values(breadcrumb.messages).map(msg => {
         return (
-          <div key={breadcrumb.messages[key]._id}><Avatar size={15} backgroundColor={blueGrey500}/> {breadcrumb.messages[key].body} - {breadcrumb.messages[key].user.displayName}</div>
+          <div key={msg._id}><Avatar size={15} backgroundColor={blueGrey500}/> {msg.body} - {msg.user.displayName}</div>
         )
       }).sort(compare);
     }

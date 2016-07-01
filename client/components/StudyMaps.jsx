@@ -28,7 +28,7 @@ export const StudyMaps = React.createClass({
       return (
         <Paper style={style} zDepth={5}>
           <h3>Get started by creating a new subject</h3>
-          <h3>(click the orange folder)</h3>
+          <h3>(click the orange folder below)</h3>
         </Paper>
       );
     }
