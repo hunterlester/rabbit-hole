@@ -11,9 +11,16 @@ fs.readdirSync('node_modules')
     nodeModules[mod] = 'commonjs ' + mod;
   });
 
+// Development instructions
+// 'devtool == eval' in development
+// ONLY FOR target = 'web'
+// uncomment webpack-hot-middleware/client in entry
+// add 'react-hot!' to loader where test = jsx
+// uncomment new webpack.HotModuleReplacementPlugin in plugins
+
 module.exports = [
   {
-    devtool: 'eval',
+    devtool: 'cheap-module-source-map',
     target: 'node',
     node: {
       __dirname: true
@@ -49,9 +56,9 @@ module.exports = [
   },
   {
     target: 'web',
-    devtool: 'eval',
+    devtool: 'cheap-module-source-map',
     entry: [
-      'webpack-hot-middleware/client',
+      // 'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
     query: {
@@ -63,7 +70,7 @@ module.exports = [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'react-hot!babel'
+          loader: 'babel'
         },
         {
           test: /\.css$/,
@@ -87,15 +94,20 @@ module.exports = [
       filename: 'webpack_bundle.js'
     },
     plugins: [
-      new webpack.optimize.OccurenceOrderPlugin(),
-      new webpack.HotModuleReplacementPlugin(),
+      // new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
-          'NODE_ENV': JSON.stringify('development')
-          //change to 'production' in production
+          'NODE_ENV': JSON.stringify('production')
         }
-      })
+      }),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: false
+        }
+      }),
+      new webpack.optimize.DedupePlugin(),
+      new webpack.optimize.OccurenceOrderPlugin()
     ]
   }
 ];

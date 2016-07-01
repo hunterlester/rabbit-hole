@@ -8,15 +8,17 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import 'dotenv/config';
 
-var webpack = require('webpack');
-var webpackConfig = require('../webpack.config')[1];
-var compiler = webpack(webpackConfig);
+if(process.env.NODE_ENV == 'development') {
+  var webpack = require('webpack');
+  var webpackConfig = require('../webpack.config')[1];
+  var compiler = webpack(webpackConfig);
 
-app.use(require("webpack-dev-middleware")(compiler, {
-    noInfo: true, publicPath: webpackConfig.output.publicPath
-}));
+  app.use(require("webpack-dev-middleware")(compiler, {
+      noInfo: true, publicPath: webpackConfig.output.publicPath
+  }));
 
-app.use(require("webpack-hot-middleware")(compiler));
+  app.use(require("webpack-hot-middleware")(compiler));
+}
 
 
 // mlab uri
