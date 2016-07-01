@@ -29,6 +29,7 @@
   "homepage": "https://github.com/hunterlester/rabbit-hole#readme",
   "dependencies": {
     "babel-polyfill": "^6.8.0",
+    "bluebird": "^3.4.1",
     "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
     "cleanest": "^1.0.2",

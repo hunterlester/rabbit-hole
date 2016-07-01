@@ -7,6 +7,9 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import dotenv from 'dotenv';
 import 'dotenv/config';
+import bluebird from 'bluebird';
+
+mongoose.Promise = bluebird;
 
 if(process.env.NODE_ENV == 'development') {
   var webpack = require('webpack');
@@ -19,7 +22,6 @@ if(process.env.NODE_ENV == 'development') {
 
   app.use(require("webpack-hot-middleware")(compiler));
 }
-
 
 if(process.env.NODE_ENV == 'development') {
   console.log('development');
