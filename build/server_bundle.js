@@ -364,8 +364,15 @@ require("source-map-support").install();
 	  app.use(__webpack_require__(39)(compiler));
 	}
 
-	// mlab uri
-	_mongoose2.default.connect(process.env.MONGO_URI);
+	if (process.env.NODE_ENV == 'development') {
+	  console.log('development');
+	  _mongoose2.default.connect(process.env.MONGO_URI);
+	}
+
+	if (process.env.NODE_ENV == 'production') {
+	  console.log(production);
+	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db');
+	}
 
 	// Docker Machine host ip
 	// mongoose.connect('mongodb://192.168.99.100:27017/data/db');

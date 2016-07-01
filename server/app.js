@@ -22,10 +22,12 @@ if(process.env.NODE_ENV == 'development') {
 
 
 if(process.env.NODE_ENV == 'development') {
+  console.log('development');
   mongoose.connect(process.env.MONGO_URI);
 }
 
-if(process.env.NOD_ENV == 'production') {
+if(process.env.NODE_ENV == 'production') {
+  console.log(production);
   mongoose.connect('mongodb://10.7.0.3:27107/data/db');
 }
 
