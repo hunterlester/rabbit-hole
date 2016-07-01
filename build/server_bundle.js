@@ -370,7 +370,7 @@ require("source-map-support").install();
 	}
 
 	if (process.env.NODE_ENV == 'production') {
-	  console.log(production);
+	  console.log('production');
 	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db');
 	}
 

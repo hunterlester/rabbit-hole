@@ -27,7 +27,7 @@ if(process.env.NODE_ENV == 'development') {
 }
 
 if(process.env.NODE_ENV == 'production') {
-  console.log(production);
+  console.log('production');
   mongoose.connect('mongodb://10.7.0.3:27107/data/db');
 }
 
