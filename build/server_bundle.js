@@ -1883,7 +1883,9 @@ require("source-map-support").install();
 	}, (_ref = {
 	  target: 'web',
 	  devtool: 'cheap-module-source-map',
-	  entry: ['webpack-hot-middleware/client', './client/index.jsx'],
+	  entry: [
+	  // 'webpack-hot-middleware/client',
+	  './client/index.jsx'],
 	  query: {
 	    cacheDirectory: true
 	  }
@@ -1891,7 +1893,7 @@ require("source-map-support").install();
 	  loaders: [{
 	    test: /\.jsx?$/,
 	    exclude: /node_modules/,
-	    loader: 'react-hot!babel'
+	    loader: 'babel'
 	  }, {
 	    test: /\.css$/,
 	    loader: 'style!css!autoprefixer'
@@ -1905,7 +1907,9 @@ require("source-map-support").install();
 	  path: __dirname + '/server/public/',
 	  publicPath: '/',
 	  filename: 'webpack_bundle.js'
-	}), _defineProperty(_ref, 'plugins', [new webpack.HotModuleReplacementPlugin(), new webpack.NoErrorsPlugin(), new webpack.DefinePlugin({
+	}), _defineProperty(_ref, 'plugins', [
+	// new webpack.HotModuleReplacementPlugin(),
+	new webpack.NoErrorsPlugin(), new webpack.DefinePlugin({
 	  'process.env': {
 	    'NODE_ENV': JSON.stringify('production')
 	  }
