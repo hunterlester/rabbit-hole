@@ -372,7 +372,7 @@ require("source-map-support").install();
 	}
 
 	if (process.env.NODE_ENV == 'production') {
-	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db');
+	  _mongoose2.default.connect('mongodb://10.7.0.3:27017/data/db');
 	}
 
 	// Docker Machine host ip
