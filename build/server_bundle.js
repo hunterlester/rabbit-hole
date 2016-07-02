@@ -1777,7 +1777,7 @@ require("source-map-support").install();
 	    from: 'Learnimus <' + sender + '>',
 	    to: req.params.email,
 	    subject: 'Password Reset',
-	    html: '<h5>Have you requested to reset your password?</h5> <a href="http://localhost:3000/#/reset/' + encryptedEmail + '" target="_blank">Click to confirm</a> <br><br><br> <h5>Otherwise, ignore this email</h5>'
+	    html: '<h5>Have you requested to reset your password?</h5> <a href="http://52.37.27.5/#/reset/' + encryptedEmail + '" target="_blank">Click to confirm</a> <br><br><br> <h5>Otherwise, ignore this email</h5>'
 	  };
 
 	  mailgun.messages().send(data, function (err, body) {
@@ -1797,7 +1797,7 @@ require("source-map-support").install();
 	    from: 'Learnimus <' + sender + '>',
 	    to: req.params.email,
 	    subject: 'Please confirm your email address',
-	    html: '<h3>Welcome to the Learnimus Community!</h3> <a href="http://localhost:3000/#/confirm/' + req.params.userId + '" target="_blank">Please confirm that this is your email address.</a> <br><br><br><br> <a href="#" target="_blank">"I didn\'t register my email with Learnimus"</a>'
+	    html: '<h3>Welcome to the Learnimus Community!</h3> <a href="http://http://52.37.27.5/#/confirm/' + req.params.userId + '" target="_blank">Please confirm that this is your email address.</a> <br><br><br><br> <a href="#" target="_blank">"I didn\'t register my email with Learnimus"</a>'
 	  };
 
 	  mailgun.messages().send(data, function (err, body) {

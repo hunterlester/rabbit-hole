@@ -10,6 +10,7 @@ COPY package.json /app/package.json
 RUN cd /app; npm install --production
 COPY . /app
 
+EXPOSE 3001
 EXPOSE 3000
 WORKDIR app
 

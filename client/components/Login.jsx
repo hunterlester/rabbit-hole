@@ -96,12 +96,9 @@ export default React.createClass({
                         <List style={{backgroundColor: green500}}>
                           <ListItem style={listItemStyles} primaryText="Organize your subjects of study" />
                           <ListItem style={listItemStyles} primaryText="Subscribe to subjects that you care about" />
-                          <ListItem style={listItemStyles} primaryText="Community members and mentors help you focus" />
-                          <ListItem style={listItemStyles} primaryText="Community members tip each other with micropayments" />
-
+                          <ListItem style={listItemStyles} primaryText="Community helps you focus on and waste less time" />
                         </List>
 
-                        <h4 style={{color: white}}>Give back:</h4>
                         <Divider />
 
                         <List>
