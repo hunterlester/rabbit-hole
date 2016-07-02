@@ -7,11 +7,8 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import dotenv from 'dotenv';
 import 'dotenv/config';
-import bluebird from 'bluebird';
 
-const options = {
-  promiseLibrary: bluebird
-};
+mongoose.Promise = global.Promise;
 
 if(process.env.NODE_ENV == 'development') {
   var webpack = require('webpack');
@@ -27,12 +24,11 @@ if(process.env.NODE_ENV == 'development') {
 
 if(process.env.NODE_ENV == 'development') {
   console.log('development');
-  mongoose.connect(process.env.MONGO_URI, options);
+  mongoose.connect(process.env.MONGO_URI);
 }
 
 if(process.env.NODE_ENV == 'production') {
-  console.log('production');
-  mongoose.connect('mongodb://10.7.0.3:27107/data/db', options);
+  mongoose.connect('mongodb://10.7.0.3:27107/data/db');
 }
 
 

@@ -63,19 +63,19 @@ require("source-map-support").install();
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _http = __webpack_require__(41);
+	var _http = __webpack_require__(40);
 
 	var _http2 = _interopRequireDefault(_http);
 
-	var _debug = __webpack_require__(42);
+	var _debug = __webpack_require__(41);
 
 	var _debug2 = _interopRequireDefault(_debug);
 
-	var _store = __webpack_require__(43);
+	var _store = __webpack_require__(42);
 
 	var _store2 = _interopRequireDefault(_store);
 
-	var _socket = __webpack_require__(49);
+	var _socket = __webpack_require__(48);
 
 	var _socket2 = _interopRequireDefault(_socket);
 
@@ -295,11 +295,9 @@ require("source-map-support").install();
 
 	__webpack_require__(10);
 
-	var _bluebird = __webpack_require__(13);
+	__webpack_require__(13);
 
-	var _bluebird2 = _interopRequireDefault(_bluebird);
-
-	__webpack_require__(14);
+	__webpack_require__(16);
 
 	__webpack_require__(17);
 
@@ -313,41 +311,39 @@ require("source-map-support").install();
 
 	__webpack_require__(22);
 
-	__webpack_require__(23);
-
-	var _index = __webpack_require__(25);
+	var _index = __webpack_require__(24);
 
 	var _index2 = _interopRequireDefault(_index);
 
-	var _users = __webpack_require__(26);
+	var _users = __webpack_require__(25);
 
 	var _users2 = _interopRequireDefault(_users);
 
-	var _studymaps = __webpack_require__(28);
+	var _studymaps = __webpack_require__(27);
 
 	var _studymaps2 = _interopRequireDefault(_studymaps);
 
-	var _messages = __webpack_require__(30);
+	var _messages = __webpack_require__(29);
 
 	var _messages2 = _interopRequireDefault(_messages);
 
-	var _links = __webpack_require__(31);
+	var _links = __webpack_require__(30);
 
 	var _links2 = _interopRequireDefault(_links);
 
-	var _breadcrumbs = __webpack_require__(32);
+	var _breadcrumbs = __webpack_require__(31);
 
 	var _breadcrumbs2 = _interopRequireDefault(_breadcrumbs);
 
-	var _echoes = __webpack_require__(33);
+	var _echoes = __webpack_require__(32);
 
 	var _echoes2 = _interopRequireDefault(_echoes);
 
-	var _subjects = __webpack_require__(34);
+	var _subjects = __webpack_require__(33);
 
 	var _subjects2 = _interopRequireDefault(_subjects);
 
-	var _notifications = __webpack_require__(35);
+	var _notifications = __webpack_require__(34);
 
 	var _notifications2 = _interopRequireDefault(_notifications);
 
@@ -356,30 +352,27 @@ require("source-map-support").install();
 	var app = (0, _express2.default)();
 
 
-	var options = {
-	  promiseLibrary: _bluebird2.default
-	};
+	_mongoose2.default.Promise = global.Promise;
 
 	if (process.env.NODE_ENV == 'development') {
-	  var webpack = __webpack_require__(37);
-	  var webpackConfig = __webpack_require__(38)[1];
+	  var webpack = __webpack_require__(36);
+	  var webpackConfig = __webpack_require__(37)[1];
 	  var compiler = webpack(webpackConfig);
 
-	  app.use(__webpack_require__(39)(compiler, {
+	  app.use(__webpack_require__(38)(compiler, {
 	    noInfo: true, publicPath: webpackConfig.output.publicPath
 	  }));
 
-	  app.use(__webpack_require__(40)(compiler));
+	  app.use(__webpack_require__(39)(compiler));
 	}
 
 	if (process.env.NODE_ENV == 'development') {
 	  console.log('development');
-	  _mongoose2.default.connect(process.env.MONGO_URI, options);
+	  _mongoose2.default.connect(process.env.MONGO_URI);
 	}
 
 	if (process.env.NODE_ENV == 'production') {
-	  console.log('production');
-	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db', options);
+	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db');
 	}
 
 	// Docker Machine host ip
@@ -619,12 +612,6 @@ require("source-map-support").install();
 
 /***/ },
 /* 13 */
-/***/ function(module, exports) {
-
-	module.exports = require("bluebird");
-
-/***/ },
-/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -633,11 +620,11 @@ require("source-map-support").install();
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
-	var _crypto = __webpack_require__(15);
+	var _crypto = __webpack_require__(14);
 
 	var _crypto2 = _interopRequireDefault(_crypto);
 
-	var _jsonwebtoken = __webpack_require__(16);
+	var _jsonwebtoken = __webpack_require__(15);
 
 	var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
@@ -703,19 +690,19 @@ require("source-map-support").install();
 	_mongoose2.default.model('User', UserSchema);
 
 /***/ },
-/* 15 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = require("crypto");
 
 /***/ },
-/* 16 */
+/* 15 */
 /***/ function(module, exports) {
 
 	module.exports = require("jsonwebtoken");
 
 /***/ },
-/* 17 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -738,7 +725,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('StudyMap', StudyMapSchema);
 
 /***/ },
-/* 18 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -763,7 +750,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('Link', LinkSchema);
 
 /***/ },
-/* 19 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -788,7 +775,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('Breadcrumb', BreadcrumbSchema);
 
 /***/ },
-/* 20 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -811,7 +798,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('Message', MessageSchema);
 
 /***/ },
-/* 21 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -834,7 +821,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('Echo', EchoSchema);
 
 /***/ },
-/* 22 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -855,7 +842,7 @@ require("source-map-support").install();
 		_mongoose2.default.model('Subject', SubjectSchema);
 
 /***/ },
-/* 23 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -864,7 +851,7 @@ require("source-map-support").install();
 
 	var _passport2 = _interopRequireDefault(_passport);
 
-	var _passportLocal = __webpack_require__(24);
+	var _passportLocal = __webpack_require__(23);
 
 	var _passportLocal2 = _interopRequireDefault(_passportLocal);
 
@@ -919,13 +906,13 @@ require("source-map-support").install();
 		}));
 
 /***/ },
-/* 24 */
+/* 23 */
 /***/ function(module, exports) {
 
 	module.exports = require("passport-local");
 
 /***/ },
-/* 25 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -949,7 +936,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 26 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -970,11 +957,11 @@ require("source-map-support").install();
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
-	var _crypto = __webpack_require__(15);
+	var _crypto = __webpack_require__(14);
 
 	var _crypto2 = _interopRequireDefault(_crypto);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1158,13 +1145,13 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 27 */
+/* 26 */
 /***/ function(module, exports) {
 
 	module.exports = require("express-jwt");
 
 /***/ },
-/* 28 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1183,9 +1170,9 @@ require("source-map-support").install();
 
 	var _index = __webpack_require__(1);
 
-	var _action_creators = __webpack_require__(29);
+	var _action_creators = __webpack_require__(28);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1253,7 +1240,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 29 */
+/* 28 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -1278,7 +1265,7 @@ require("source-map-support").install();
 		}
 
 /***/ },
-/* 30 */
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1297,9 +1284,9 @@ require("source-map-support").install();
 
 	var _index = __webpack_require__(1);
 
-	var _action_creators = __webpack_require__(29);
+	var _action_creators = __webpack_require__(28);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1379,7 +1366,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 31 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1398,9 +1385,9 @@ require("source-map-support").install();
 
 	var _index = __webpack_require__(1);
 
-	var _action_creators = __webpack_require__(29);
+	var _action_creators = __webpack_require__(28);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1477,7 +1464,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 32 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1496,9 +1483,9 @@ require("source-map-support").install();
 
 	var _index = __webpack_require__(1);
 
-	var _action_creators = __webpack_require__(29);
+	var _action_creators = __webpack_require__(28);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1609,7 +1596,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 33 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1626,7 +1613,7 @@ require("source-map-support").install();
 
 	var _mongoose2 = _interopRequireDefault(_mongoose);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
@@ -1683,7 +1670,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1702,7 +1689,7 @@ require("source-map-support").install();
 
 	var _index = __webpack_require__(1);
 
-	var _action_creators = __webpack_require__(29);
+	var _action_creators = __webpack_require__(28);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1730,7 +1717,7 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 35 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1743,17 +1730,17 @@ require("source-map-support").install();
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _expressJwt = __webpack_require__(27);
+	var _expressJwt = __webpack_require__(26);
 
 	var _expressJwt2 = _interopRequireDefault(_expressJwt);
 
-	var _crypto = __webpack_require__(15);
+	var _crypto = __webpack_require__(14);
 
 	var _crypto2 = _interopRequireDefault(_crypto);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Mailgun = __webpack_require__(36);
+	var Mailgun = __webpack_require__(35);
 	var router = _express2.default.Router();
 
 	var auth = (0, _expressJwt2.default)({ secret: process.env.JWT_TOKEN, userProperty: 'payload' });
@@ -1826,19 +1813,19 @@ require("source-map-support").install();
 	exports.default = router;
 
 /***/ },
-/* 36 */
+/* 35 */
 /***/ function(module, exports) {
 
 	module.exports = require("mailgun-js");
 
 /***/ },
-/* 37 */
+/* 36 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack");
 
 /***/ },
-/* 38 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(__dirname) {'use strict';
@@ -1847,7 +1834,7 @@ require("source-map-support").install();
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var webpack = __webpack_require__(37);
+	var webpack = __webpack_require__(36);
 	var path = __webpack_require__(4);
 	var fs = __webpack_require__(12);
 
@@ -1896,9 +1883,7 @@ require("source-map-support").install();
 	}, (_ref = {
 	  target: 'web',
 	  devtool: 'cheap-module-source-map',
-	  entry: [
-	  // 'webpack-hot-middleware/client',
-	  './client/index.jsx'],
+	  entry: ['webpack-hot-middleware/client', './client/index.jsx'],
 	  query: {
 	    cacheDirectory: true
 	  }
@@ -1906,7 +1891,7 @@ require("source-map-support").install();
 	  loaders: [{
 	    test: /\.jsx?$/,
 	    exclude: /node_modules/,
-	    loader: 'babel'
+	    loader: 'react-hot!babel'
 	  }, {
 	    test: /\.css$/,
 	    loader: 'style!css!autoprefixer'
@@ -1920,9 +1905,7 @@ require("source-map-support").install();
 	  path: __dirname + '/server/public/',
 	  publicPath: '/',
 	  filename: 'webpack_bundle.js'
-	}), _defineProperty(_ref, 'plugins', [
-	// new webpack.HotModuleReplacementPlugin(),
-	new webpack.NoErrorsPlugin(), new webpack.DefinePlugin({
+	}), _defineProperty(_ref, 'plugins', [new webpack.HotModuleReplacementPlugin(), new webpack.NoErrorsPlugin(), new webpack.DefinePlugin({
 	  'process.env': {
 	    'NODE_ENV': JSON.stringify('production')
 	  }
@@ -1934,31 +1917,31 @@ require("source-map-support").install();
 	/* WEBPACK VAR INJECTION */}.call(exports, ""))
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack-dev-middleware");
 
 /***/ },
-/* 40 */
+/* 39 */
 /***/ function(module, exports) {
 
 	module.exports = require("webpack-hot-middleware");
 
 /***/ },
-/* 41 */
+/* 40 */
 /***/ function(module, exports) {
 
 	module.exports = require("http");
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports) {
 
 	module.exports = require("debug");
 
 /***/ },
-/* 43 */
+/* 42 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1968,13 +1951,13 @@ require("source-map-support").install();
 	});
 	exports.default = makeStore;
 
-	var _redux = __webpack_require__(44);
+	var _redux = __webpack_require__(43);
 
-	var _reduxThunk = __webpack_require__(45);
+	var _reduxThunk = __webpack_require__(44);
 
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-	var _reducer = __webpack_require__(46);
+	var _reducer = __webpack_require__(45);
 
 	var _reducer2 = _interopRequireDefault(_reducer);
 
@@ -1985,19 +1968,19 @@ require("source-map-support").install();
 	}
 
 /***/ },
-/* 44 */
+/* 43 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux");
 
 /***/ },
-/* 45 */
+/* 44 */
 /***/ function(module, exports) {
 
 	module.exports = require("redux-thunk");
 
 /***/ },
-/* 46 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2007,7 +1990,7 @@ require("source-map-support").install();
 	});
 	exports.default = reducer;
 
-	var _core = __webpack_require__(47);
+	var _core = __webpack_require__(46);
 
 	function reducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? _core.initialState : arguments[0];
@@ -2037,7 +2020,7 @@ require("source-map-support").install();
 	}
 
 /***/ },
-/* 47 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2053,7 +2036,7 @@ require("source-map-support").install();
 	exports.setUsers = setUsers;
 	exports.reserveNewUserInfo = reserveNewUserInfo;
 
-	var _immutable = __webpack_require__(48);
+	var _immutable = __webpack_require__(47);
 
 	var initialState = exports.initialState = (0, _immutable.Map)();
 
@@ -2096,13 +2079,13 @@ require("source-map-support").install();
 		}
 
 /***/ },
-/* 48 */
+/* 47 */
 /***/ function(module, exports) {
 
 	module.exports = require("immutable");
 
 /***/ },
-/* 49 */
+/* 48 */
 /***/ function(module, exports) {
 
 	module.exports = require("socket.io");

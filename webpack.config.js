@@ -58,7 +58,7 @@ module.exports = [
     target: 'web',
     devtool: 'cheap-module-source-map',
     entry: [
-      // 'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
     query: {
@@ -70,7 +70,7 @@ module.exports = [
         {
           test: /\.jsx?$/,
           exclude: /node_modules/,
-          loader: 'babel'
+          loader: 'react-hot!babel'
         },
         {
           test: /\.css$/,
@@ -94,7 +94,7 @@ module.exports = [
       filename: 'webpack_bundle.js'
     },
     plugins: [
-      // new webpack.HotModuleReplacementPlugin(),
+      new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
       new webpack.DefinePlugin({
         'process.env': {
