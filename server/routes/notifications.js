@@ -56,7 +56,7 @@ router.get('/confirm/:email/:userId', auth, (req, res) => {
     from: `Learnimus <${sender}>`,
     to: req.params.email,
     subject: 'Please confirm your email address',
-    html: `<h3>Welcome to the Learnimus Community!</h3> <a href="http://http://52.37.27.5/#/confirm/${req.params.userId}" target="_blank">Please confirm that this is your email address.</a> <br><br><br><br> <a href="#" target="_blank">"I didn't register my email with Learnimus"</a>`
+    html: `<h3>Welcome to the Learnimus Community!</h3> <a href="http://52.37.27.5/#/confirm/${req.params.userId}" target="_blank">Please confirm that this is your email address.</a> <br><br><br><br> <a href="#" target="_blank">"I didn't register my email with Learnimus"</a>`
   };
 
   mailgun.messages().send(data, function(err, body) {
