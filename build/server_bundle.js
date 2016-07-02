@@ -356,7 +356,9 @@ require("source-map-support").install();
 	var app = (0, _express2.default)();
 
 
-	_mongoose2.default.Promise = _bluebird2.default;
+	var options = {
+	  promiseLibrary: _bluebird2.default
+	};
 
 	if (process.env.NODE_ENV == 'development') {
 	  var webpack = __webpack_require__(37);
@@ -372,12 +374,12 @@ require("source-map-support").install();
 
 	if (process.env.NODE_ENV == 'development') {
 	  console.log('development');
-	  _mongoose2.default.connect(process.env.MONGO_URI);
+	  _mongoose2.default.connect(process.env.MONGO_URI, options);
 	}
 
 	if (process.env.NODE_ENV == 'production') {
 	  console.log('production');
-	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db');
+	  _mongoose2.default.connect('mongodb://10.7.0.3:27107/data/db', options);
 	}
 
 	// Docker Machine host ip
