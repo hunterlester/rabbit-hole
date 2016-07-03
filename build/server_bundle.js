@@ -1860,7 +1860,6 @@ require("source-map-support").install();
 	  },
 	  entry: ['./server/index.js'],
 	  query: {
-	    cacheDirectory: true,
 	    presets: ['es2015']
 	  },
 	  module: {
@@ -1885,10 +1884,7 @@ require("source-map-support").install();
 	  devtool: 'cheap-module-source-map',
 	  entry: [
 	  // 'webpack-hot-middleware/client',
-	  './client/index.jsx'],
-	  query: {
-	    cacheDirectory: true
-	  }
+	  './client/index.jsx']
 	}, _defineProperty(_ref, 'target', 'web'), _defineProperty(_ref, 'module', {
 	  loaders: [{
 	    test: /\.jsx?$/,
