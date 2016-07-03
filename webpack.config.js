@@ -29,7 +29,6 @@ module.exports = [
       './server/index.js'
     ],
     query: {
-      cacheDirectory: true,
       presets: ['es2015']
     },
     module: {
@@ -61,9 +60,6 @@ module.exports = [
       // 'webpack-hot-middleware/client',
       './client/index.jsx'
     ],
-    query: {
-      cacheDirectory: true,
-    },
     target: 'web',
     module: {
       loaders: [

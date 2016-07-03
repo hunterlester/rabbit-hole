@@ -199,9 +199,11 @@ export const Echoes = React.createClass({
 
    const {echoes, isAuthenticated} = this.props;
 
-   let keywords = Object.values(this.props.subjects).map(obj => {
-     return Object.assign({}, {value: obj._id, label: obj.keyword});
-   });
+   if(this.props.subjects) {
+     var keywords = Object.values(this.props.subjects).map(obj => {
+       return Object.assign({}, {value: obj._id, label: obj.keyword});
+     });
+   }
 
    return (
      <div>
@@ -209,13 +211,13 @@ export const Echoes = React.createClass({
          ref='filter'
          className="selectInput"
          value={this.state.value}
-         options={keywords}
+         options={keywords || []}
          multi={true}
          placeholder="Start typing to find your favorite subjects"
          onChange={this.handleSelectChange}
          noResultsText='Subject not found. Be the first to contribute!'
        />
-       {this.parseEchoes(echoes).map(echo => {
+       {this.parseEchoes(echoes || []).map(echo => {
          let avatarColor = '';
          let subtitle = echo.subtitle || '';
          if(echo.studymap) {
@@ -262,6 +264,7 @@ export const Echoes = React.createClass({
 function mapStateToProps(state) {
   const { isAuthenticated, user } = state.auth.toJS();
   const subjects = state.subjects.toJS().subjects;
+
   return {
     user,
     isAuthenticated,
