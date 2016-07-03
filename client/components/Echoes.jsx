@@ -46,7 +46,9 @@ export const Echoes = React.createClass({
   parseEchoes: function(echoes) {
     return Object.values(echoes).map(echo => {
       if(echo.studymap) {
+        let keywords = Object.values(echo.studymap.keywords).map(obj => obj. keyword).join(', ');
         echo.body = `${echo.studymap.subject}`;
+        echo.subtitle = `${keywords}`;
         echo.quickreply = <BreadcrumbForm
           study_map={echo.studymap}
           user={this.props.user._id}
@@ -213,7 +215,7 @@ export const Echoes = React.createClass({
          value={this.state.value}
          options={keywords || []}
          multi={true}
-         placeholder="Start typing to find your favorite subjects"
+         placeholder="Subscribe to subjects"
          onChange={this.handleSelectChange}
          noResultsText='Subject not found. Be the first to contribute!'
        />

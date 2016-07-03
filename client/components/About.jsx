@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardHeader, CardText} from 'material-ui/Card';
-import {orange500, blue500, white, green500, red500, red900, blueGrey500, darkBlack, yellow500} from 'material-ui/styles/colors';
-
+import {deepPurple500, orange500, blue500, white, green500, red500, red900, blueGrey500, darkBlack, yellow500} from 'material-ui/styles/colors';
+import { List, ListItem } from 'material-ui/List';
 
 export default React.createClass({
   render: function() {
@@ -16,14 +16,13 @@ export default React.createClass({
           <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
             <Card style={{backgroundColor: orange500}}>
               <CardHeader
-                title='call-em-all for Material UI'
+                title='Call-Em-All for Material UI'
                 titleColor={white}
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
                 The design components for this app were created using
                 <a href="http://www.material-ui.com/#/" target="_blank"> Material UI</a>.
-                Thank you so much for creating these beautiful React components!
               </CardText>
             </Card>
             <Card style={{backgroundColor: red500}}>
@@ -33,7 +32,7 @@ export default React.createClass({
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                This app would be lost and ugly without Google's Material Design. Thank you <a href="https://material.google.com/" target="_blank">Material Design</a>.
+                This UI would be lost without Google's <a href="https://material.google.com/" target="_blank">Material Design</a>.
               </CardText>
             </Card>
             <Card style={{backgroundColor: blue500}}>
@@ -43,27 +42,17 @@ export default React.createClass({
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                React is such a pleasure. How can I describe how lovely it is to develop this app. Thank you.
+                <a href="https://facebook.github.io/react/" target='_blank'>React</a> components are speedy and such a pleasure.
               </CardText>
             </Card>
-            <Card style={{backgroundColor: blueGrey500}}>
+            <Card style={{backgroundColor: deepPurple500}}>
               <CardHeader
                 title='Dan Abramov for Redux'
                 titleColor={white}
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                I become a better developer just by reading the Redux documentation. Testing, development, and organization has become so simple and pleasurable due to Redux. Thank you.
-              </CardText>
-            </Card>
-            <Card style={{backgroundColor: red900}}>
-              <CardHeader
-                title='Geekwise, Bitwise, and Greg Goforth'
-                titleColor={white}
-                actAsExpander={true}
-              />
-              <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                Thank you to the Fresno tech hub that is Geekwise and Bitwise. Thank you Greg for helping me to make that great leap into learning full stack development.
+                Thanks to <a href="http://redux.js.org/" target="_blank">Redux</a> for simple structure and for making me a better developer.
               </CardText>
             </Card>
             <Card style={{backgroundColor: yellow500}}>
@@ -73,7 +62,8 @@ export default React.createClass({
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                Thank you for making me a better JS developer. Love you two. Composition over inheritance.
+                <a href="https://ericelliottjs.com/" target="_blank">Eric Elliott</a> and <a href="http://getify.com/" target="_blank">Kyle Simpson</a> for making me a better JS developer and overall better thinker. Love you two. Composition over inheritance.
+
               </CardText>
             </Card>
             <Card style={{backgroundColor: green500}}>
@@ -83,7 +73,7 @@ export default React.createClass({
                 actAsExpander={true}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-                Thank you to all that missed. If this app is successful, it's because of the hard work of so many people that I don't even know.
+                If this app is successful, it's because of the hard work of so many people that I don't even know.
                 Thank you for my life and for my son. Thank you for my insatiable love for learning.
               </CardText>
             </Card>
@@ -97,7 +87,12 @@ export default React.createClass({
             actAsExpander={true}
           />
           <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-
+          <List>
+            <ListItem primaryText="We love to learn and to help each other learn." />
+            <ListItem primaryText="Be grateful for differences of opinon in discussion. This leads to deeper learning." />
+            <ListItem primaryText="When altercations arise, keep it constructive and logical." />
+            <ListItem primaryText="Refrain from wasting resources and time with trolling, flaming, spamming, or any malicious behavior" />
+          </List>
           </CardText>
         </Card>
 
@@ -108,7 +103,6 @@ export default React.createClass({
             actAsExpander={true}
           />
           <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
-            To learn something new is the ultimate liberation.
           </CardText>
         </Card>
       </div>

@@ -80,7 +80,7 @@ export const Home = React.createClass({
                   <ToolbarGroup firstChild={true}>
                     <IconMenu
                       iconButtonElement={
-                        <FlatButton labelStyle={{color: '#000000'}} hoverColor='#FF9800' label={user.displayName}/>
+                        <FlatButton labelStyle={{color: '#ffffff'}} hoverColor='#FF9800' label={user.displayName}/>
                       }
                     >
                       <MenuItem primaryText="Profile & Settings" onTouchTap={() => {

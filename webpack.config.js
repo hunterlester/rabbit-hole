@@ -18,6 +18,9 @@ fs.readdirSync('node_modules')
 // add 'react-hot!' to loader where test = jsx
 // uncomment new webpack.HotModuleReplacementPlugin in plugins
 
+// FOR PRODUCTION
+// devtool : 'cheap-module-source-map'
+
 module.exports = [
   {
     devtool: 'cheap-module-source-map',

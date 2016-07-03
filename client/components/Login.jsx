@@ -5,7 +5,6 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import { List, ListItem } from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { ConnectedEchoes } from './Echoes';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -57,7 +56,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus. Community for avid learners."/>
+          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus. Hub for avid learners."/>
           <IconButton touch={true} onTouchTap={() => {
             this.handleOpen();
           }}>
@@ -67,13 +66,13 @@ export default React.createClass({
       </Toolbar>
       <Dialog
         modal={false}
-        bodyStyle={{textAlign: 'center', backgroundColor: orange500}}
+        bodyStyle={{textAlign: 'center', color: white, backgroundColor: green500}}
         open={this.state.open}
         onRequestClose={() => {
           this.handleClose()
         }}
       >
-        <h4 style={{color: '#000000'}}>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.' Welcome and have fun!</h4>
+        <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
       </Dialog>
 
       <Tabs>
@@ -87,24 +86,17 @@ export default React.createClass({
                   <div class='col-xs-12'>
                     <Card style={{marginTop: '15px'}}>
                       <CardHeader
-                        title="HOW IT WORKS"
+                        title="OVERVIEW"
                         titleColor={white}
                         style={{backgroundColor: blue500}}
                         actAsExpander={true} />
 
                       <CardText expandable={true} style={{backgroundColor: green500}}>
                         <List style={{backgroundColor: green500}}>
-                          <ListItem style={listItemStyles} primaryText="Organize your subjects of study" />
-                          <ListItem style={listItemStyles} primaryText="Subscribe to subjects that you care about" />
-                          <ListItem style={listItemStyles} primaryText="Community helps you focus on and waste less time" />
-                        </List>
-
-                        <Divider />
-
-                        <List>
-                          <ListItem style={listItemStyles} primaryText="Help others to discover and to focus on relevant resources" />
-                          <ListItem style={listItemStyles} primaryText="Provide mentorship without great time commitments" />
-                          <ListItem style={listItemStyles} primaryText="Organize your studies so that others can learn and discover from your process" />
+                          <ListItem style={listItemStyles} primaryText="Organize studies" />
+                          <ListItem style={listItemStyles} primaryText="Bookmark resources" />
+                          <ListItem style={listItemStyles} primaryText="Discover and focus" />
+                          <ListItem style={listItemStyles} primaryText="Provide mentorship" />
                         </List>
                       </CardText>
                     </Card>
