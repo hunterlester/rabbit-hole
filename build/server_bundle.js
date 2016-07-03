@@ -1852,6 +1852,9 @@ require("source-map-support").install();
 	// add 'react-hot!' to loader where test = jsx
 	// uncomment new webpack.HotModuleReplacementPlugin in plugins
 
+	// FOR PRODUCTION
+	// devtool : 'cheap-module-source-map'
+
 	module.exports = [{
 	  devtool: 'cheap-module-source-map',
 	  target: 'node',

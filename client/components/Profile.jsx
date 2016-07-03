@@ -80,15 +80,12 @@ export const Profile = React.createClass({
 
     return (
       <div>
-        <h5>
-          Profile: {profile.displayName}
-        </h5>
-        <h5>
-          Points: {profile.points}
-        </h5>
         <h4>
-          Watching subjects:
+          {profile.displayName}
         </h4>
+        <h5>
+          Watching:
+        </h5>
         <Select
           ref='filter'
           value={this.state.value}
