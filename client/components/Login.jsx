@@ -56,7 +56,7 @@ export default React.createClass({
       <div>
       <Toolbar style={{backgroundColor: orange500}}>
         <ToolbarGroup>
-          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus. Hub for avid learners."/>
+          <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus (beta version)"/>
           <IconButton touch={true} onTouchTap={() => {
             this.handleOpen();
           }}>
@@ -72,7 +72,9 @@ export default React.createClass({
           this.handleClose()
         }}
       >
+        <h4>Community for avid learners.</h4>
         <h4>Learnimus is a play on the Latin verb, discimus, meaning 'We learn.'</h4>
+        <h4>Welcome!</h4>
       </Dialog>
 
       <Tabs>

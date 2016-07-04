@@ -77,7 +77,10 @@ export const Home = React.createClass({
             <div className='container-fluid'>
               <div className="row">
                 <Toolbar style={{backgroundColor: '#FF9800'}}>
-                  <ToolbarGroup firstChild={true}>
+                  <ToolbarGroup>
+                    <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus" />
+                  </ToolbarGroup>
+                  <ToolbarGroup lastChild={true} float='right'>
                     <IconMenu
                       iconButtonElement={
                         <FlatButton labelStyle={{color: '#ffffff'}} hoverColor='#FF9800' label={user.displayName}/>
@@ -93,7 +96,6 @@ export const Home = React.createClass({
                         dispatch(logoutUser());
                       }}/>
                     </IconMenu>
-                    <ToolbarTitle style={{color: '#ffffff'}} text="Learnimus" />
                   </ToolbarGroup>
                 </Toolbar>
 
