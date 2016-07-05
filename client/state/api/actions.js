@@ -4,6 +4,7 @@ import {
   API_REQUEST, API_FAILURE,
   STUDY_MAPS_POST_SUCCESS,
   LINK_POST_SUCCESS,
+  LINK_UPDATE_SUCCESS,
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
   MESSAGE_POST_SUCCESS,
@@ -32,6 +33,18 @@ export function postLink(linkObj) {
       endpoint: 'links/studymap',
       authenticated: true,
       types: [API_REQUEST, LINK_POST_SUCCESS, API_FAILURE],
+      formObj: linkObj
+    }
+  }
+}
+
+export function updateLink(linkObj) {
+  return {
+    [CALL_API]: {
+      method: 'PUT',
+      endpoint: `links/${linkObj._id}`,
+      authenticated: true,
+      types: [API_REQUEST, LINK_UPDATE_SUCCESS, API_FAILURE],
       formObj: linkObj
     }
   }

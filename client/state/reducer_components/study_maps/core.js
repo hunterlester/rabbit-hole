@@ -45,6 +45,13 @@ export function postLinkSuccess(state, action) {
   });
 }
 
+export function updateLinkSucess(state, action) {
+  let linkObj = action.response;
+  return state.setIn(['study_maps', linkObj.study_map, 'links', linkObj._id], fromJS(linkObj)).merge({
+    isFetching: false
+  });
+}
+
 export function postBreadcrumbSuccess(state, action) {
   let breadcrumb = action.response;
   return state.setIn(['study_maps', breadcrumb.study_map, 'breadcrumbs', breadcrumb._id], fromJS(breadcrumb)).merge({

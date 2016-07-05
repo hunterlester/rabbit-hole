@@ -4,15 +4,15 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton';
 import Info from 'material-ui/svg-icons/action/info';
 import Dialog from 'material-ui/Dialog';
-
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar';
 import {orange500, green500, blue500, blueGrey500} from 'material-ui/styles/colors';
 
 import MessageForm from './MessageForm.jsx';
 import BreadcrumbForm from './BreadCrumbForm';
-import { updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
+import { updateLink, updateBLinkSeen,updateSeen, postBreadcrumb, postLinkBreadcrumb, postMessage, postLinkMessage } from '../state/api/actions';
 
 function compare(a , b) {
   return Date.parse(a.date) - Date.parse(b.date);
@@ -21,7 +21,11 @@ function compare(a , b) {
 export const StudyMap = React.createClass({
   getInitialState() {
     return {
-      open: false
+      editLink: false,
+      open: false,
+      linkTitle: '',
+      linkUri: '',
+      linkID: ''
     };
   },
   shouldComponentUpdate: function(nextProps, nextState) {
@@ -34,7 +38,8 @@ export const StudyMap = React.createClass({
   },
   handleClose: function() {
     this.setState({
-      open: false
+      open: false,
+      editLink: false
     })
   },
   getLinkBreadcrumbs: function(link) {
@@ -97,6 +102,40 @@ export const StudyMap = React.createClass({
       >
         <h4 style={{color: '#000000'}}>Breadcrumbs can take the form of questions, tips, insights, or any thought that a user would like to record in the community.</h4>
       </Dialog>
+      <Dialog
+        modal={false}
+        open={this.state.editLink}
+        onRequestClose={() => {
+          this.handleClose()
+        }}
+      >
+        <div>
+          <h4>Edit Link</h4>
+          <TextField
+            floatingLabelText="Edit Title"
+            value={this.state.linkTitle}
+            onChange={(e, value) => {
+              this.setState({linkTitle: value})
+            }}
+            fullWidth={true}/>
+            <TextField
+              floatingLabelText="Edit URL"
+              value={this.state.linkUri}
+              onChange={(e, value) => {
+                this.setState({linkUri: value})
+              }}
+              fullWidth={true}/>
+            <RaisedButton label="Update" onTouchTap={() => {
+              let linkObj = {
+                title: this.state.linkTitle,
+                uri: this.state.linkUri,
+                _id: this.state.linkID
+              };
+              this.props.dispatch(updateLink(linkObj));
+              this.setState({editLink: false});
+            }} />
+        </div>
+      </Dialog>
         <h3>
           {study_map.subject}
         </h3>
@@ -122,6 +161,9 @@ export const StudyMap = React.createClass({
                 style={style}
               />
               <CardText expandable={true} style={{backgroundColor: '#ECEFF1'}}>
+                <a onTouchTap={() => {
+                  this.setState({editLink: true, linkTitle: link.title, linkUri: link.uri, linkID: link._id})
+                }}>Edit</a>
                 <div>
                   {this.getLinkBreadcrumbs(link)}
                 </div>

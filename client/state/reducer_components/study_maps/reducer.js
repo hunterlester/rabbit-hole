@@ -4,6 +4,7 @@ import {
   SET_STUDY_MAPS, API_REQUEST, API_FAILURE,
   STUDY_MAPS_POST_SUCCESS,
   LINK_POST_SUCCESS,
+  LINK_UPDATE_SUCCESS,
   BREADCRUMB_POST_SUCCESS,
   LINKBREADCRUMB_POST_SUCCESS,
   MESSAGE_POST_SUCCESS,
@@ -15,6 +16,7 @@ import {
   initialStudyMaps, setStudyMaps, apiRequest, apiFailure,
   postStudyMapSuccess,
   postLinkSuccess,
+  updateLinkSucess,
   postBreadcrumbSuccess,
   postLinkBreadcrumbSuccess,
   postMessageSuccess,
@@ -39,6 +41,9 @@ export default function study_maps(state = initialStudyMaps, action) {
 
     case LINK_POST_SUCCESS:
       return postLinkSuccess(state, action);
+
+    case LINK_UPDATE_SUCCESS:
+      return updateLinkSucess(state, action);
 
     case BREADCRUMB_POST_SUCCESS:
       return postBreadcrumbSuccess(state, action);

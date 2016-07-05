@@ -70,9 +70,30 @@ router.post('/:linkId/linktolink', auth, (req, res) => {
 });
 
 router.put('/:linkId', auth, (req, res) => {
-  req.link.update({$set: req.body}, (err) => {
+  req.link.title = req.body.title;
+  req.link.uri = req.body.uri;
+  req.link.save((err, link) => {
+    if (err) return res.status(400).json(err);
+    link.populate([
+      {
+        path: 'breadcrumbs',
+        populate: [
+          {
+            path: 'messages',
+            model: 'Message',
+            populate: [
+              {
+                path: 'user',
+                model: 'User'
+              }
+            ]
+          }
+        ]
+      }
+    ], (err, link) => {
       if (err) return res.status(400).json(err);
-      res.sendStatus(200);
+      res.json(link);
+    });
   });
 });
 

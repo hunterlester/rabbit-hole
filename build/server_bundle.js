@@ -1456,9 +1456,24 @@ require("source-map-support").install();
 	});
 
 	router.put('/:linkId', auth, function (req, res) {
-	  req.link.update({ $set: req.body }, function (err) {
+	  req.link.title = req.body.title;
+	  req.link.uri = req.body.uri;
+	  req.link.save(function (err, link) {
 	    if (err) return res.status(400).json(err);
-	    res.sendStatus(200);
+	    link.populate([{
+	      path: 'breadcrumbs',
+	      populate: [{
+	        path: 'messages',
+	        model: 'Message',
+	        populate: [{
+	          path: 'user',
+	          model: 'User'
+	        }]
+	      }]
+	    }], function (err, link) {
+	      if (err) return res.status(400).json(err);
+	      res.json(link);
+	    });
 	  });
 	});
 
