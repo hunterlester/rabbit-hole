@@ -36,7 +36,7 @@
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "express-jwt": "^3.3.0",
+    "express-jwt": "^6.0.0",
     "express-useragent": "^0.2.4",
     "immutable": "^3.7.6",
     "isomorphic-fetch": "^2.2.1",
